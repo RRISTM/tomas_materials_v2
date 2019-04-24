@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import Markdown from 'react-markdown';
 import testPath from '../markdown/testfile.md';
-import SyntaxHighlighter from 'react-syntax-highlighter';
+import CodeBlock from './CodeBlock';
 
 export class MarkdownView extends Component {
   constructor(props) {
@@ -21,9 +20,7 @@ export class MarkdownView extends Component {
     return (
       <div className="container">
         <h1>Test</h1>
-        <SyntaxHighlighter>
-          <Markdown source={this.state.mdContent} />
-        </SyntaxHighlighter>
+          <Markdown source={this.state.mdContent} renderers={{ code: CodeBlock }}/>
       </div>
     );
   }
