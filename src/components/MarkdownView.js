@@ -19,8 +19,7 @@ export class MarkdownView extends Component {
   render() {
     return (
       <div className="container">
-        <h1>Test</h1>
-          <Markdown source={this.state.mdContent} renderers={{ code: CodeBlock }}/>
+        <Markdown source={this.state.mdContent} renderers={{ code: CodeBlock }} />
       </div>
     );
   }
