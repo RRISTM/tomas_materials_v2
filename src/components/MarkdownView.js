@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Markdown from 'react-markdown';
+// import Markdown from 'react-markdown';
 import testPath from '../markdown/testfile.md';
 import CodeBlock from './CodeBlock';
 
@@ -19,7 +19,7 @@ export class MarkdownView extends Component {
   render() {
     return (
       <div className="container">
-        <Markdown source={this.state.mdContent} renderers={{ code: CodeBlock }} />
+        {/* <Markdown source={this.state.mdContent} renderers={{ code: CodeBlock }} /> */}
       </div>
     );
   }
