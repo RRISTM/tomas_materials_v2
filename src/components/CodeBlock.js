@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/styles/hljs';
 
-// export default CodeBlock;
-
 export default function CodeBlock({ children, ...props }) {
   
   console.log(props);
@@ -12,8 +10,5 @@ export default function CodeBlock({ children, ...props }) {
       <SyntaxHighlighter language="C" style={docco} showLineNumbers="true">
         {children}
       </SyntaxHighlighter>
-      // <div>
-
-      // </div>
   );
 }

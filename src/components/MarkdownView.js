@@ -50,8 +50,6 @@ export class MarkdownView extends Component {
   }
 
   render() {
-    // return <ReactMarkdown options={options} {...props} />;
-    // return <ReactMarkdown children={this.state.mdContent}/>;
     return (
       <Grid container justify="center" spacing={16} style={{padding:24}}>
         <Grid item>
