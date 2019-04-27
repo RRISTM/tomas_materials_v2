@@ -17,11 +17,13 @@ uint8_t CSP_QSPI_GetInfo    (QSPI_Info* pInfo);
 Function definition for memory chip is in source pair quadspi_xx.c and quadspi_xx.h, where xx stands for memory salestype. This files should be STM32 family independent.
 
 Additionaly is needed to implement functions, which are called by CSP:
+
 ```c
  static uint8_t QSPI_WriteEnable(void);
  static uint8_t QSPI_AutoPollingMemReady(void);
  static uint8_t QSPI_Configuration(void);
 ```
+
 This list of functions is not exhaustive, some ather chip specific functions may be needed. QSPI_Configuration may be very different from one memory to another one, purpose of this function is:
 
 * Set number of needed dummy bytes in memory registers

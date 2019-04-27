@@ -1,33 +1,37 @@
 import React, { Component } from 'react';
 import ReactMarkdown from 'markdown-to-jsx';
-import { withStyles } from '@material-ui/core/styles';
+// import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 
+import CodeBlock from './CodeBlock';
 import testPath from '../markdown/QSPI.md';
 
 
-const styles = theme => ({
-  listItem: {
-    marginTop: theme.spacing(1),
-  },
-});
+// const styles = theme => ({
+//   listItem: {
+//     marginTop: theme.spacing(1),
+//   },
+// });
 
 const options = {
   overrides: {
-    h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4"> {children}  </Typography>)},
+     h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4"> {children}  </Typography>)},
     h2: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h6" > {children}</Typography>)},
     h3: { component: ({ children, ...props }) => (<Typography gutterBottom variant="subtitle1" > {children}</Typography>)},
     h4: { component: ({ children, ...props }) => (<Typography gutterBottom variant="caption" paragraph > {children}</Typography>)},
     p: { component: ({ children, ...props }) => (<Typography paragraph >{children} </Typography>)},
     a: { component: Link },
     li: {
-      component: withStyles(styles)(({ classes, ...props }) => (
-        <li className={classes.listItem}>
-          <Typography component="span" >{props}</Typography>
+      component: ({ children, ...props }) => (
+        <li {...props}>
+          <Typography component="span" >{children}</Typography>
         </li>
-      )),
+      )
     },
+    code: {
+      component: CodeBlock
+    }
   },
 };
 
@@ -40,7 +44,6 @@ export class MarkdownView extends Component {
 
   componentWillMount() {
     fetch(testPath).then((response) => response.text()).then((text) => {
-      console.log(text);
       this.setState({ mdContent: text })
     });
   }
