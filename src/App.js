@@ -1,14 +1,14 @@
 import React from 'react';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+// import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import MarkdownView from './components/MarkdownView';
 
 function App() {
   return (
-    <MuiThemeProvider >
+    // <MuiThemeProvider >
       <div className="App">
         <MarkdownView />
       </div>
-    </MuiThemeProvider>
+    // </MuiThemeProvider>
   );
 }
 

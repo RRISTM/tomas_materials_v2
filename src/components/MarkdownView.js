@@ -6,6 +6,7 @@ import Link from '@material-ui/core/Link';
 
 import CodeBlock from './CodeBlock';
 import testPath from '../markdown/QSPI.md';
+import { Grid } from '@material-ui/core';
 
 
 // const styles = theme => ({
@@ -16,11 +17,11 @@ import testPath from '../markdown/QSPI.md';
 
 const options = {
   overrides: {
-     h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4"> {children}  </Typography>)},
-    h2: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h6" > {children}</Typography>)},
-    h3: { component: ({ children, ...props }) => (<Typography gutterBottom variant="subtitle1" > {children}</Typography>)},
-    h4: { component: ({ children, ...props }) => (<Typography gutterBottom variant="caption" paragraph > {children}</Typography>)},
-    p: { component: ({ children, ...props }) => (<Typography paragraph >{children} </Typography>)},
+    h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4"> {children}  </Typography>) },
+    h2: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h6" > {children}</Typography>) },
+    h3: { component: ({ children, ...props }) => (<Typography gutterBottom variant="subtitle1" > {children}</Typography>) },
+    h4: { component: ({ children, ...props }) => (<Typography gutterBottom variant="caption" paragraph > {children}</Typography>) },
+    p: { component: ({ children, ...props }) => (<Typography paragraph >{children} </Typography>) },
     a: { component: Link },
     li: {
       component: ({ children, ...props }) => (
@@ -51,7 +52,13 @@ export class MarkdownView extends Component {
   render() {
     // return <ReactMarkdown options={options} {...props} />;
     // return <ReactMarkdown children={this.state.mdContent}/>;
-    return <ReactMarkdown children={this.state.mdContent} options={options}/>;
+    return (
+      <Grid container justify="center" spacing={16} style={{padding:24}}>
+        <Grid item>
+        <ReactMarkdown children={this.state.mdContent} options={options} />
+        </Grid>
+      </Grid>
+    );
   }
 }
 
