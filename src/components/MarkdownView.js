@@ -7,12 +7,16 @@ import Link from '@material-ui/core/Link';
 import CodeBlock from './CodeBlock';
 import testPath from '../markdown/QSPI.md';
 import { Grid } from '@material-ui/core';
-
+// import { withStyles } from '@material-ui/core/styles';
 
 // const styles = theme => ({
 //   listItem: {
 //     marginTop: theme.spacing(1),
 //   },
+// });
+
+// const styles = theme => ({
+
 // });
 
 const options = {
@@ -51,7 +55,7 @@ export class MarkdownView extends Component {
 
   render() {
     return (
-      <Grid container justify="center" spacing={16} style={{padding:24}}>
+      <Grid container justify="center" spacing={0} style={{padding:24}}>
         <Grid item>
         <ReactMarkdown children={this.state.mdContent} options={options} />
         </Grid>
@@ -60,4 +64,5 @@ export class MarkdownView extends Component {
   }
 }
 
+// export default withStyles(styles)(MarkdownView);
 export default MarkdownView;

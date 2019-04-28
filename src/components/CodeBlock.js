@@ -3,8 +3,18 @@ import PropTypes from "prop-types";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/styles/hljs';
 import { Grid, Button, Divider } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
-export default function CodeBlock({ children, ...props }) {
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  input: {
+    display: 'none',
+  },
+});
+
+function CodeBlock({ children, ...props }) {
 
   /*copy the clipboard */
   function copyToClipBoard(e)
@@ -48,4 +58,6 @@ export default function CodeBlock({ children, ...props }) {
     </div>
   );
 }
+
+export default withStyles(styles)(CodeBlock);
 
