@@ -36,4 +36,4 @@ Using project with verified CSP interface is very easy to create flashloader fun
 
 ### Linker file for QSPI flashloader
 
-  
+
