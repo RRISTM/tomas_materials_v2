@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ReactMarkdown from 'markdown-to-jsx';
 // import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -7,6 +7,7 @@ import Link from '@material-ui/core/Link';
 import CodeBlock from './CodeBlock';
 import testPath from '../markdown/QSPI.md';
 import { Grid } from '@material-ui/core';
+
 // import { withStyles } from '@material-ui/core/styles';
 
 // const styles = theme => ({
@@ -36,7 +37,8 @@ const options = {
     },
     code: {
       component: CodeBlock
-    }
+    },
+    pre:{ component: ({ children, ...props }) => (<Fragment>{children}</Fragment>) },
   },
 };
 
@@ -55,9 +57,9 @@ export class MarkdownView extends Component {
 
   render() {
     return (
-      <Grid container justify="center" spacing={0} style={{padding:24}}>
+      <Grid container justify="center" spacing={0} style={{ padding: 24 }}>
         <Grid item>
-        <ReactMarkdown children={this.state.mdContent} options={options} />
+          <ReactMarkdown children={this.state.mdContent} options={options} />
         </Grid>
       </Grid>
     );
