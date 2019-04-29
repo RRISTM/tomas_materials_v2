@@ -50,7 +50,7 @@ function CodeBlock({ children, ...props }) {
         </SyntaxHighlighter>
       </div>
       <div>
-        <Button variant="contained" size="small" style={{ marginBottom: 12 }} onClick={copyToClipBoard}>
+        <Button variant="contained" size="small" style={{ marginBottom: 12}} color="primary" onClick={copyToClipBoard}>
           Copy
         </Button>
       </div>
