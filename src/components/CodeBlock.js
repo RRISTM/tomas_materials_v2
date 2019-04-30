@@ -4,6 +4,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/styles/hljs';
 import { Grid, Button, Divider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { withSnackbar } from 'notistack';
 
 const styles = theme => ({
   button: {
@@ -19,7 +20,7 @@ function CodeBlock({ children, ...props }) {
   /*copy the clipboard */
   function copyToClipBoard(e)
   {
-    console.log('Click');  
+    props.enqueueSnackbar('Copied to clipboard!', { variant: 'info'});
     const el = document.createElement('textarea');
       el.value = children;
       document.body.appendChild(el);
