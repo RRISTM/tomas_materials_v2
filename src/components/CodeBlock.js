@@ -33,7 +33,7 @@ function CodeBlock({ children, ...props }) {
     <div>
     <Divider />
       <div>
-        <SyntaxHighlighter language="cpp" style={atomOneLight} showLineNumbers="true" codeTagProps={{style: {fontFamily: 'inherit'} }}>
+        <SyntaxHighlighter language="cs" style={atomOneLight} showLineNumbers="true" codeTagProps={{style: {fontFamily: 'inherit'} }}>
           {children}
         </SyntaxHighlighter>
       </div>
