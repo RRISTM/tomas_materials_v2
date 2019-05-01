@@ -8,7 +8,6 @@ import CodeBlock from './CodeBlock';
 import testPath from '../markdown/QSPI.md';
 import { Grid } from '@material-ui/core';
 
-import { withSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
 
 // import { withStyles } from '@material-ui/core/styles';

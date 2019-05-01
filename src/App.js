@@ -1,9 +1,9 @@
 import React from 'react';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { createMuiTheme } from '@material-ui/core/styles';
-import MarkdownView from './components/MarkdownView';
+import MainScreen from './components/MainScreen';
 import 'typeface-roboto';
-import { SnackbarProvider, withSnackbar } from 'notistack';
+
 
 const theme = createMuiTheme({
   typography: {
@@ -11,7 +11,7 @@ const theme = createMuiTheme({
   }
 });
 
-const MyMarkdownView = withSnackbar(MarkdownView);
+
 
 function App() {
   return (
@@ -19,9 +19,7 @@ function App() {
       theme={theme}>
 
       <div className="App">
-        <SnackbarProvider maxSnack={3}>
-          <MyMarkdownView />
-        </SnackbarProvider>
+        <MainScreen />
       </div>
     </MuiThemeProvider>
   );
