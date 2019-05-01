@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from "prop-types";
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomOneDark } from 'react-syntax-highlighter/dist/styles/hljs';
 import { Button, Divider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { atomOneLight } from 'react-syntax-highlighter/dist/styles/hljs';
