@@ -20,7 +20,7 @@ function CodeBlock({ children, ...props }) {
   /*copy the clipboard */
   function copyToClipBoard(e)
   {
-    props.enqueueSnackbar('Copied to clipboard!', { variant: 'info'});
+    props.enqueueSnackbar('Code is now in your clipboard', { variant: 'info'});
     const el = document.createElement('textarea');
       el.value = children;
       document.body.appendChild(el);
@@ -39,7 +39,7 @@ function CodeBlock({ children, ...props }) {
       </div>
       <div>
         <Button variant="contained" size="small" style={{ marginBottom: 12}} color="primary" onClick={copyToClipBoard}>
-          Copy
+          Copy code
         </Button>
       </div>
       <Divider />
