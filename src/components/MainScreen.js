@@ -3,7 +3,6 @@ import React, { Component, Fragment } from 'react';
 import MarkdownView from './MarkdownView';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { SnackbarProvider, withSnackbar } from 'notistack';
-
 // import testPath from '../markdown/CubeMXImport.md';
 
 const filesToLoadArr = [
