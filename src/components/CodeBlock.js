@@ -1,9 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from "prop-types";
-import SyntaxHighlighter from 'react-syntax-highlighter';
+
 import { Button, Divider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneLight } from 'react-syntax-highlighter/dist/styles/hljs';
+
+// import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+// import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const styles = theme => ({
   button: {
@@ -33,6 +37,7 @@ function CodeBlock({ children, ...props }) {
     <Divider />
       <div>
         <SyntaxHighlighter language="cs" style={atomOneLight} showLineNumbers="true" codeTagProps={{style: {fontFamily: 'inherit'} }}>
+        {/* <SyntaxHighlighter language="cpp" style={prism} showLineNumbers="true" codeTagProps={{style: {fontFamily: 'inherit'} }}> */}
           {children}
         </SyntaxHighlighter>
       </div>

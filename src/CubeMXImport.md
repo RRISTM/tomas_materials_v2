@@ -22,7 +22,24 @@ A simple board for testing with STM32G071 and embedded ST-Link debugger probe
 [Link][linkstm32g0nucleo]
 
 
+```c
+uint32_t variable=0;
+static uint32_t variable=0;
 
+uint32_t test(uint32_t i){
+  if(i>1){
+  }else{
+  }
+}
+
+uint32_t test(uint32_t i){
+  if(i>1){
+  }else{
+  }
+}
+
+
+```
 
 
 
