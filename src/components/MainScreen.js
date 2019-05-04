@@ -7,14 +7,14 @@ import { SnackbarProvider, withSnackbar } from 'notistack';
 // import testPath from '../markdown/CubeMXImport.md';
 
 const filesToLoadArr = [
-  // {
-  //   name: 'CubeMX Import',
-  //   path: '/markdown/CubeMXImport.md',
-  // }
   {
-    name: 'QSPI',
-    path: '/markdown/QSPI.md',
+    name: 'CubeMX Import',
+    path: '/markdown/CubeMXImport.md',
   }
+  // {
+  //   name: 'QSPI',
+  //   path: '/markdown/QSPI.md',
+  // }
 ];
 
 // var mdContent =[];
