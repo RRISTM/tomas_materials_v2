@@ -3,12 +3,15 @@ import React, { Component, Fragment } from 'react';
 import MarkdownView from './MarkdownView';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { SnackbarProvider, withSnackbar } from 'notistack';
-// import testPath from '../markdown/CubeMXImport.md';
-
+//develop
+import mdDevelop from '../CubeMXImport.md';
 const filesToLoadArr = [
   {
     name: 'CubeMX Import',
-    path: '/markdown/CubeMXImport.md',
+    //production
+    // path: '/markdown/CubeMXImport.md',
+    //release
+    path: mdDevelop,
   }
   // {
   //   name: 'QSPI',
@@ -26,6 +29,7 @@ export class MainScreen extends Component {
 
   componentWillMount() {
     var mdFilesContent = [];
+
     let requests = filesToLoadArr.map(value => {
       return fetch(value.path).then((response) => response.text()).then((text) => {
         let preparedContent = { name: value.name, mdContent: text }
@@ -33,6 +37,7 @@ export class MainScreen extends Component {
 
       });
     });
+
     Promise.all(requests).then(() => {
       this.setState({ mdFilesContent: mdFilesContent });
     });
