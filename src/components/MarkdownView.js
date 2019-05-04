@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 
 import CodeBlock from './CodeBlock';
-import testPath from '../markdown/QSPI.md';
 import { Grid } from '@material-ui/core';
 
 import PropTypes from 'prop-types';
@@ -28,14 +27,8 @@ export class MarkdownView extends Component {
   constructor(props) {
     super(props);
     CodeBlock.bind(this.props);
-    this.state = { mdContent: "" };
   }
 
-  componentWillMount() {
-    fetch(testPath).then((response) => response.text()).then((text) => {
-      this.setState({ mdContent: text })
-    });
-  }
   render() {
     const options = {
       overrides: {
@@ -62,7 +55,7 @@ export class MarkdownView extends Component {
     return (
       <Grid container justify="center" spacing={0} style={{ padding: 24 }}>
         <Grid item>
-          <ReactMarkdown children={this.state.mdContent} options={options} />
+          <ReactMarkdown children={this.props.mdContent} options={options} />
         </Grid>
       </Grid>
     );
