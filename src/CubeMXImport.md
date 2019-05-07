@@ -41,11 +41,14 @@ uint32_t test(uint32_t i){
 
 ```
 
+Animated image test
+
+![alt text][imgimport_config]
 
 
 [imgstm32g0nucleo]: ./markdown/img/en.nucleo-G0.jpg "STM32G071 Nucleo"
 [imgcubemx]: ./markdown/img/en.stm32cubemx.jpg "CubeMX"
-
+[imgimport_config]: ./markdown/img/import_config.gif "CubeMX import"
 
 [linkstm32g0nucleo]: https://www.st.com/en/evaluation-tools/nucleo-g071rb.html
 [linkcubemx]: https://www.st.com/en/development-tools/stm32cubemx.html
