@@ -10,7 +10,7 @@ const filesToLoadArr = [
     name: 'CubeMX Import',
     //production
     // path: '/markdown/CubeMXImport.md',
-    //release
+    //develop
     path: mdDevelop,
   }
   // {
