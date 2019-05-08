@@ -12,3 +12,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+
+.STdarkBlue {
+  color: #39A9DC;
+}
+.STlightBlue {
+  color: #002052;
+}

@@ -6,6 +6,7 @@ import Link from '@material-ui/core/Link';
 
 import CodeBlock from './CodeBlock';
 import { Grid } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
 
@@ -21,6 +22,15 @@ import PropTypes from 'prop-types';
 
 // });
 
+const styles =(theme) =>({
+  STdarkBlue: {
+    color: '#39A9DC'
+  },
+  STlightBlue: {
+    color: '#002052',
+    fontSize: '24px'
+  }
+});
 
 
 export class MarkdownView extends Component {
@@ -30,9 +40,10 @@ export class MarkdownView extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     const options = {
       overrides: {
-        h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4"> {children}  </Typography>) },
+        h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4" className={props.classes.STlightBlue}> {children}  </Typography>) , props:{classes:this.props.classes}},
         h2: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h6" > {children}</Typography>) },
         h3: { component: ({ children, ...props }) => (<Typography gutterBottom variant="subtitle1" > {children}</Typography>) },
         h4: { component: ({ children, ...props }) => (<Typography gutterBottom variant="caption" paragraph > {children}</Typography>) },
@@ -72,4 +83,4 @@ MarkdownView.propTypes = {
 
 
 // export default withStyles(styles)(MarkdownView);
-export default MarkdownView;
+export default withStyles(styles)(MarkdownView);

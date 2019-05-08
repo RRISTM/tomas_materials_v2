@@ -15,11 +15,11 @@ const styles = theme => ({
   },
   input: {
     display: 'none',
-  },
+  }
 });
 
 function CodeBlock({ children, ...props }) {
-
+  const { classes } = props;
   /*copy the clipboard */
   function copyToClipBoard(e)
   {

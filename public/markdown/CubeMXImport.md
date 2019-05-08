@@ -46,6 +46,9 @@ Animated image test
 ![alt text][imgimport_config]
 
 
+Snackbar test
+
+
 [imgstm32g0nucleo]: /img/en.nucleo-G0.jpg "STM32G071 Nucleo"
 [imgcubemx]: /img/en.stm32cubemx.jpg "CubeMX"
 [imgimport_config]: /img/import_config.gif "CubeMX import"

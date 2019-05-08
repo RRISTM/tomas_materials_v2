@@ -7,7 +7,10 @@ import 'typeface-roboto';
 
 const theme = createMuiTheme({
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
+    fontFamily: [
+      'Arial'
+    ].join(','),
   }
 });
 
