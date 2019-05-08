@@ -50,12 +50,16 @@ export class MarkdownView extends Component {
           props: this.props
         },
         pre: { component: ({ children, ...props }) => (<Fragment>{children}</Fragment>) },
+        img: {
+          component: ({ children, ...props }) =>
+            (<Fragment><img alt={props.alt} className={props.className} src={this.props.mdInfo.mdPath + props.src} title={props.title}></img></Fragment>)
+        }
       },
     };
     return (
       <Grid container justify="center" spacing={0} style={{ padding: 24 }}>
         <Grid item>
-          <ReactMarkdown children={this.props.mdContent} options={options} />
+          <ReactMarkdown children={this.props.mdInfo.mdContent} options={options} />
         </Grid>
       </Grid>
     );

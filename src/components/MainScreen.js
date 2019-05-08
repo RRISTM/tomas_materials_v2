@@ -4,14 +4,15 @@ import MarkdownView from './MarkdownView';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { SnackbarProvider, withSnackbar } from 'notistack';
 //develop
-import mdDevelop from '../CubeMXImport.md';
+// import mdDevelop from '%PUBLIC_URL%/markdown/CubeMXImport.md';
 const filesToLoadArr = [
   {
     name: 'CubeMX Import',
     //production
-    // path: '/markdown/CubeMXImport.md',
-    //develop
-    path: mdDevelop,
+    path: '/markdown',
+    file: 'CubeMXImport.md'
+    // develop
+    // path: mdDevelop,
   }
   // {
   //   name: 'QSPI',
@@ -31,8 +32,8 @@ export class MainScreen extends Component {
     var mdFilesContent = [];
 
     let requests = filesToLoadArr.map(value => {
-      return fetch(value.path).then((response) => response.text()).then((text) => {
-        let preparedContent = { name: value.name, mdContent: text }
+      return fetch(value.path+"/"+value.file).then((response) => response.text()).then((text) => {
+        let preparedContent = { name: value.name, mdContent: text ,mdPath: value.path}
         mdFilesContent.push(preparedContent);
 
       });
@@ -50,6 +51,7 @@ export class MainScreen extends Component {
     if (this.state.mdFilesContent.length == 0) {
       mdFileToShow.name = "Loading";
       mdFileToShow.mdContent = "";
+      mdFileToShow.mdPath = "";
     }
     else if (this.state.mdFilesContent.length == 1) {
       mdFileToShow = this.state.mdFilesContent[0];
@@ -66,7 +68,7 @@ export class MainScreen extends Component {
           </Toolbar>
         </AppBar>
         <SnackbarProvider maxSnack={3}>
-          <MyMarkdownView mdContent={mdFileToShow.mdContent} />
+          <MyMarkdownView mdInfo={mdFileToShow}/>
         </SnackbarProvider>
       </Fragment>
     )
