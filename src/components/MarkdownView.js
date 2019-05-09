@@ -24,11 +24,10 @@ import PropTypes from 'prop-types';
 
 const styles =(theme) =>({
   STdarkBlue: {
-    color: '#39A9DC'
+    color: '#002052'
   },
   STlightBlue: {
-    color: '#002052',
-    fontSize: '24px'
+    color: '#39A9DC'
   }
 });
 
@@ -43,11 +42,11 @@ export class MarkdownView extends Component {
     const { classes } = this.props;
     const options = {
       overrides: {
-        h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4" className={props.classes.STlightBlue}> {children}  </Typography>) , props:{classes:this.props.classes}},
-        h2: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h6" > {children}</Typography>) },
-        h3: { component: ({ children, ...props }) => (<Typography gutterBottom variant="subtitle1" > {children}</Typography>) },
-        h4: { component: ({ children, ...props }) => (<Typography gutterBottom variant="caption" paragraph > {children}</Typography>) },
-        p: { component: ({ children, ...props }) => (<Typography paragraph >{children} </Typography>) },
+        h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4" className={props.classes.STdarkBlue}> {children}  </Typography>) , props:{classes:this.props.classes}},
+        h2: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h6" className={props.classes.STdarkBlue}> {children}</Typography>) , props:{classes:this.props.classes} },
+        h3: { component: ({ children, ...props }) => (<Typography gutterBottom variant="subtitle1" className={props.classes.STdarkBlue}> {children}</Typography>) , props:{classes:this.props.classes} },
+        h4: { component: ({ children, ...props }) => (<Typography gutterBottom variant="caption" paragraph className={props.classes.STdarkBlue}> {children}</Typography>) , props:{classes:this.props.classes} },
+        p: { component: ({ children, ...props }) => (<Typography paragraph className={props.classes.STdarkBlue}>{children} </Typography>), props:{classes:this.props.classes} },
         a: { component: Link },
         li: {
           component: ({ children, ...props }) => (
@@ -63,12 +62,12 @@ export class MarkdownView extends Component {
         pre: { component: ({ children, ...props }) => (<Fragment>{children}</Fragment>) },
         img: {
           component: ({ children, ...props }) =>
-            (<Fragment><img alt={props.alt} className={props.className} src={this.props.mdInfo.mdPath + props.src} title={props.title}></img></Fragment>)
+            (<Fragment><img alt={props.alt} className={props.className} src={this.props.mdInfo.mdPath +"/img/"+ props.src} title={props.title} style={{ padding: 24 , boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'}}></img></Fragment>)
         }
       },
     };
     return (
-      <Grid container justify="center" spacing={0} style={{ padding: 24 }}>
+      <Grid container justify="center" spacing={0} style={{ padding: 24}}>
         <Grid item>
           <ReactMarkdown children={this.props.mdInfo.mdContent} options={options} />
         </Grid>

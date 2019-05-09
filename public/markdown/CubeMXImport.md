@@ -49,9 +49,9 @@ Animated image test
 Snackbar test
 
 
-[imgstm32g0nucleo]: /img/en.nucleo-G0.jpg "STM32G071 Nucleo"
-[imgcubemx]: /img/en.stm32cubemx.jpg "CubeMX"
-[imgimport_config]: /img/import_config.gif "CubeMX import"
+[imgstm32g0nucleo]: en.nucleo-G0.jpg "STM32G071 Nucleo"
+[imgcubemx]: en.stm32cubemx.jpg "CubeMX"
+[imgimport_config]: import_config.gif "CubeMX import"
 
 [linkstm32g0nucleo]: https://www.st.com/en/evaluation-tools/nucleo-g071rb.html
 [linkcubemx]: https://www.st.com/en/development-tools/stm32cubemx.html
