@@ -32,8 +32,8 @@ export class MainScreen extends Component {
     var mdFilesContent = [];
 
     let requests = filesToLoadArr.map(value => {
-      return fetch(value.path+"/"+value.file).then((response) => response.text()).then((text) => {
-        let preparedContent = { name: value.name, mdContent: text ,mdPath: value.path}
+      return fetch(value.path + "/" + value.file).then((response) => response.text()).then((text) => {
+        let preparedContent = { name: value.name, mdContent: text, mdPath: value.path }
         mdFilesContent.push(preparedContent);
 
       });
@@ -47,6 +47,8 @@ export class MainScreen extends Component {
 
   render() {
     const MyMarkdownView = withSnackbar(MarkdownView);
+
+    /* md files */
     var mdFileToShow = {};
     if (this.state.mdFilesContent.length == 0) {
       mdFileToShow.name = "Loading";
@@ -58,6 +60,11 @@ export class MainScreen extends Component {
     } else {
       console.log('Multiple files is not implemented yet');
     }
+
+
+    /*drawers */
+
+
     return (
       <Fragment>
         <AppBar position="static">
@@ -68,7 +75,7 @@ export class MainScreen extends Component {
           </Toolbar>
         </AppBar>
         <SnackbarProvider maxSnack={3}>
-          <MyMarkdownView mdInfo={mdFileToShow}/>
+          <MyMarkdownView mdInfo={mdFileToShow} />
         </SnackbarProvider>
       </Fragment>
     )
