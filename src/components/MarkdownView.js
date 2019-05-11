@@ -10,19 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
 
-// import { withStyles } from '@material-ui/core/styles';
-
-// const styles = theme => ({
-//   listItem: {
-//     marginTop: theme.spacing(1),
-//   },
-// });
-
-// const styles = theme => ({
-
-// });
-
-const styles =(theme) =>({
+const styles = (theme) => ({
   STdarkBlue: {
     color: '#002052'
   },
@@ -42,18 +30,21 @@ export class MarkdownView extends Component {
     const { classes } = this.props;
     const options = {
       overrides: {
-        h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4" className={props.classes.STdarkBlue}> {children}  </Typography>) , props:{classes:this.props.classes}},
-        h2: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h6" className={props.classes.STdarkBlue}> {children}</Typography>) , props:{classes:this.props.classes} },
-        h3: { component: ({ children, ...props }) => (<Typography gutterBottom variant="subtitle1" className={props.classes.STdarkBlue}> {children}</Typography>) , props:{classes:this.props.classes} },
-        h4: { component: ({ children, ...props }) => (<Typography gutterBottom variant="caption" paragraph className={props.classes.STdarkBlue}> {children}</Typography>) , props:{classes:this.props.classes} },
-        p: { component: ({ children, ...props }) => (<Typography paragraph className={props.classes.STdarkBlue}>{children} </Typography>), props:{classes:this.props.classes} },
+        h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4" className={props.classes.STdarkBlue}> {children}  </Typography>), props: { classes: this.props.classes } },
+        h2: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h6" className={props.classes.STdarkBlue}> {children}</Typography>), props: { classes: this.props.classes } },
+        h3: { component: ({ children, ...props }) => (<Typography gutterBottom variant="subtitle1" className={props.classes.STdarkBlue}> {children}</Typography>), props: { classes: this.props.classes } },
+        h4: { component: ({ children, ...props }) => (<Typography gutterBottom variant="caption" paragraph className={props.classes.STdarkBlue}> {children}</Typography>), props: { classes: this.props.classes } },
+        p: { component: ({ children, ...props }) => (<Typography paragraph className={props.classes.STdarkBlue}>{children} </Typography>), props: { classes: this.props.classes } },
         a: { component: Link },
         li: {
-          component: ({ children, ...props }) => (
-            <li {...props}>
-              <Typography component="span" >{children}</Typography>
-            </li>
-          )
+          component: ({ children, ...props }) => {
+            return (
+              <li className={props.classes.STlightBlue}>
+                <Typography component="span" className={props.classes.STdarkBlue}>{children}</Typography>
+              </li>
+            );
+          }
+          , props: { classes: this.props.classes}
         },
         code: {
           component: CodeBlock,
@@ -62,13 +53,13 @@ export class MarkdownView extends Component {
         pre: { component: ({ children, ...props }) => (<Fragment>{children}</Fragment>) },
         img: {
           component: ({ children, ...props }) =>
-            (<Fragment><img alt={props.alt} className={props.className} src={this.props.mdInfo.mdPath +"/img/"+ props.src} title={props.title} style={{ padding: 24 , boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', maxWidth:'90vw'}}></img></Fragment>)
+            (<Fragment><img alt={props.alt} className={props.className} src={this.props.mdInfo.mdPath + "/img/" + props.src} title={props.title} style={{ padding: 24, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', maxWidth: '90vw' }}></img></Fragment>)
         }
       },
     };
     return (
       // <Box width={1}> 
-      <Grid container justify="center" spacing={0} style={{ padding: 24}}>
+      <Grid container justify="center" spacing={0} style={{ padding: 24 }}>
         <Grid item>
           <ReactMarkdown children={this.props.mdInfo.mdContent} options={options} />
         </Grid>
