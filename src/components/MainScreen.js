@@ -3,6 +3,9 @@ import React, { Component, Fragment } from 'react';
 import MarkdownView from './MarkdownView';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { SnackbarProvider, withSnackbar } from 'notistack';
+import DrawerMenu from './DrawerMenu';
+import { withStyles } from '@material-ui/core/styles';
+import { CodeGenerator } from '@babel/generator';
 //develop
 // import mdDevelop from '%PUBLIC_URL%/markdown/CubeMXImport.md';
 const filesToLoadArr = [
@@ -21,8 +24,40 @@ const filesToLoadArr = [
 ];
 
 // var mdContent =[];
+const drawerWidth = 240;
 
-export class MainScreen extends Component {
+const styles = theme => ({
+  root: {
+    display: 'flex',
+  },
+  drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: `${drawerWidth}px`,
+      flexShrink: 0,
+    },
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  appBar: {
+    marginLeft: drawerWidth,
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+    },
+  },
+  menuButton: {
+    marginRight: 20,
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+  },
+});
+
+class MainScreen extends Component {
   constructor(props) {
     super(props);
     this.state = { mdFilesContent: [] };
@@ -47,6 +82,7 @@ export class MainScreen extends Component {
 
   render() {
     const MyMarkdownView = withSnackbar(MarkdownView);
+    const { classes, theme } = this.props;
 
     /* md files */
     var mdFileToShow = {};
@@ -61,25 +97,26 @@ export class MainScreen extends Component {
       console.log('Multiple files is not implemented yet');
     }
 
-
+    console.log(classes);
     /*drawers */
 
 
     return (
-      <Fragment>
-        <AppBar position="static">
+      <Fragment className={classes.root}>
+        <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
             <Typography variant="h6" color="inherit">
               {mdFileToShow.name}
             </Typography>
           </Toolbar>
         </AppBar>
+        <DrawerMenu className={classes.drawer}/>
         <SnackbarProvider maxSnack={3}>
-          <MyMarkdownView mdInfo={mdFileToShow} />
+          <MyMarkdownView mdInfo={mdFileToShow}/>
         </SnackbarProvider>
       </Fragment>
     )
   }
 }
 
-export default MainScreen
+export default withStyles(styles)(MainScreen)
