@@ -26,7 +26,7 @@ export class MarkdownView extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     const options = {
       overrides: {
         h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4" className={props.classes.STdarkBlue}> {children}  </Typography>), props: { classes: this.props.classes } },

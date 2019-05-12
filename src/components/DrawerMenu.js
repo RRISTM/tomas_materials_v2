@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Hidden, Drawer, List, ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core';
+import {  Drawer, List, ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 // import {MenuIcon,InboxIcon,MailIcon} from '@material-ui/icons';
 import MailIcon from '@material-ui/icons/Mail';
-import MenuIcon from '@material-ui/icons/Menu';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 
 const styles = theme => ({

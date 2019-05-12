@@ -1,11 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import MarkdownView from './MarkdownView';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { SnackbarProvider, withSnackbar } from 'notistack';
 import DrawerMenu from './DrawerMenu';
 import { withStyles } from '@material-ui/core/styles';
-import { CodeGenerator } from '@babel/generator';
 //develop
 // import mdDevelop from '%PUBLIC_URL%/markdown/CubeMXImport.md';
 const filesToLoadArr = [
@@ -13,7 +12,7 @@ const filesToLoadArr = [
     name: 'CubeMX Import',
     //production
     path: '/markdown',
-    file: 'CubeMXImport.md'
+    file: 'CubeMXImport.md',
     // develop
     // path: mdDevelop,
   }
@@ -22,6 +21,21 @@ const filesToLoadArr = [
   //   path: '/markdown/QSPI.md',
   // }
 ];
+
+const menuStructure =
+  [
+    {
+      type: 'Folder',
+      name: 'CubeMX basics',
+      children:
+        [
+          {
+            type: 'File',
+            name: 'CubeMX Import'
+          }
+        ]
+    }
+  ];
 
 // var mdContent =[];
 const drawerWidth = 240;
@@ -101,7 +115,7 @@ class MainScreen extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
-        <DrawerMenu classesToUse={classes} />
+        <DrawerMenu classesToUse={classes} menuItems={menuStructure}/>
 
         <div className={classes.content}>
           <SnackbarProvider maxSnack={3}>
