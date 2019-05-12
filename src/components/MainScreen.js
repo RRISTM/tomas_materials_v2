@@ -31,25 +31,15 @@ const styles = theme => ({
     display: 'flex',
   },
   drawer: {
-    [theme.breakpoints.up('sm')]: {
-      width: `${drawerWidth}px`,
-      flexShrink: 0,
-    },
+    width: drawerWidth,
+    flexShrink: 0,
   },
   drawerPaper: {
     width: drawerWidth,
   },
   appBar: {
+    width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
-    [theme.breakpoints.up('sm')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-    },
-  },
-  menuButton: {
-    marginRight: 20,
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    },
   },
   content: {
     flexGrow: 1,
@@ -102,7 +92,7 @@ class MainScreen extends Component {
 
 
     return (
-      <Fragment className={classes.root}>
+      <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
             <Typography variant="h6" color="inherit">
@@ -110,11 +100,12 @@ class MainScreen extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
-        <DrawerMenu className={classes.drawer}/>
+        <DrawerMenu classesToUse={classes} />
+
         <SnackbarProvider maxSnack={3}>
           <MyMarkdownView mdInfo={mdFileToShow}/>
         </SnackbarProvider>
-      </Fragment>
+      </div>
     )
   }
 }

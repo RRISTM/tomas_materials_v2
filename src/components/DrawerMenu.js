@@ -20,10 +20,18 @@ export class DrawerMenu extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+     const classes  = this.props.classesToUse;
 
-    const drawer = (
-      <div>
+    console.log(this.props);
+    return (
+      <Drawer
+        className={classes.drawer}
+        variant="permanent"
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+        anchor="left"
+      >
         <div className={classes.toolbar} />
         <Divider />
         <List>
@@ -43,38 +51,7 @@ export class DrawerMenu extends Component {
             </ListItem>
           ))}
         </List>
-      </div>
-    );
-    console.log(this.props);
-    return (
-      <nav className={classes.drawer}>
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="css">
-          <Drawer
-            container={this.props.container}
-            variant="temporary"
-            anchor='left'
-            open={this.state.mobileOpen}
-            onClose={this.handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-        <Hidden xsDown implementation="css">
-          <Drawer
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            variant="permanent"
-            open
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-      </nav>
+      </Drawer>
     )
   }
 }
