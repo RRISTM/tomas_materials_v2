@@ -45,6 +45,7 @@ const styles = theme => ({
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
   },
+  toolbar: theme.mixins.toolbar
 });
 
 class MainScreen extends Component {
@@ -102,9 +103,12 @@ class MainScreen extends Component {
         </AppBar>
         <DrawerMenu classesToUse={classes} />
 
-        <SnackbarProvider maxSnack={3}>
-          <MyMarkdownView mdInfo={mdFileToShow}/>
-        </SnackbarProvider>
+        <div className={classes.content}>
+          <SnackbarProvider maxSnack={3}>
+            <div className={classes.toolbar} />
+            <MyMarkdownView mdInfo={mdFileToShow} />
+          </SnackbarProvider>
+        </div>
       </div>
     )
   }
