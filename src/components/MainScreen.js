@@ -59,7 +59,10 @@ const styles = theme => ({
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
   },
-  toolbar: theme.mixins.toolbar
+  toolbar: theme.mixins.toolbar,
+  nested: {
+    paddingLeft: theme.spacing.unit * 4
+  }
 });
 
 class MainScreen extends Component {
