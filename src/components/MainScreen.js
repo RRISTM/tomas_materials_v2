@@ -77,7 +77,7 @@ const menuStructure =
   ];
 
 // var mdContent =[];
-const drawerWidth = 240;
+const drawerWidth = 320;
 
 const styles = theme => ({
   root: {
@@ -129,25 +129,22 @@ class MainScreen extends Component {
 
   render() {
     const MyMarkdownView = withSnackbar(MarkdownView);
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
 
     /* md files */
     var mdFileToShow = {};
-    if (this.state.mdFilesContent.length == 0) {
+    if (this.state.mdFilesContent.length === 0) {
       mdFileToShow.name = "Loading";
       mdFileToShow.mdContent = "";
       mdFileToShow.mdPath = "";
     }
-    else if (this.state.mdFilesContent.length == 1) {
+    else if (this.state.mdFilesContent.length === 1) {
       mdFileToShow = this.state.mdFilesContent[0];
     } else {
       console.log('Multiple files is not implemented yet');
     }
 
-    console.log(classes);
     /*drawers */
-
-
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>

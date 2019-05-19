@@ -1,5 +1,4 @@
-import React, { PureComponent } from 'react';
-import PropTypes from "prop-types";
+import React from 'react';
 
 import { Button, Divider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -19,7 +18,7 @@ const styles = theme => ({
 });
 
 function CodeBlock({ children, ...props }) {
-  const { classes } = props;
+  // const { classes } = props;
   /*copy the clipboard */
   function copyToClipBoard(e)
   {

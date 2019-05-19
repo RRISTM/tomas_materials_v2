@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import { ListItem, ListItemText, Collapse, List } from '@material-ui/core';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+
+});
 
 export class DrawerMenuItem extends Component {
   constructor(props) {
@@ -11,19 +16,24 @@ export class DrawerMenuItem extends Component {
   }
 
   render() {
+    const { theme } = this.props;
     let item = this.props.item;
-    let shortName = item.name.replace(/\s/g, '');
+    // let shortName = item.name.replace(/\s/g, '');
     let itemNested = {};
     if (this.props.depth > 0) {
-      itemNested = this.props.classesToUse.nested;
+      // console.log(this.props.classesToUse);
+      // itemNested = this.props.classesToUse.nested;
+      let leftPadding = theme.spacing.unit*4*this.props.depth;
+      console.log(leftPadding);
+      itemNested={paddingLeft: leftPadding};
     }
     let completeItem = {};
-    if (item.type == 'Folder') {
+    if (item.type === 'Folder') {
       /*folder */
-      let subFolder = item.children.map((value) => <DrawerMenuItem key={value.name} item={value} depth={this.props.depth + 1} selectCb={this.props.selectCb} classesToUse={this.props.classesToUse}/>);
+      let subFolder = item.children.map((value) => <DrawerMenuItem key={value.name} item={value} depth={this.props.depth + 1} selectCb={this.props.selectCb} theme={theme}/>);
       let folderItem = (
         <Fragment>
-          <ListItem button className={itemNested} onClick={(e) => this.setState({ expand: !this.state.expand })} >
+          <ListItem button style={itemNested} onClick={(e) => this.setState({ expand: !this.state.expand })} >
             <ListItemText inset primary={item.name} />
             {this.state.expand ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
@@ -35,10 +45,10 @@ export class DrawerMenuItem extends Component {
         </Fragment>
       );
       completeItem = folderItem;
-    } else if (item.type == 'File') {
+    } else if (item.type === 'File') {
       /*file */
       let fileItem = (
-        <ListItem button className={itemNested}>
+        <ListItem button style={itemNested}>
           <ListItemText inset primary={item.name} />
         </ListItem>
       );
@@ -58,8 +68,7 @@ DrawerMenuItem.propTypes = {
   // classes: PropTypes.array.isRequired,
   selectCb: PropTypes.func.isRequired,
   depth: PropTypes.number.isRequired,
-  item: PropTypes.object.isRequired,
-  classesToUse: PropTypes.object.isRequired
+  item: PropTypes.object.isRequired
 };
 
-export default DrawerMenuItem;
+export default withStyles(styles,{ withTheme: true })(DrawerMenuItem);
