@@ -34,6 +34,45 @@ const menuStructure =
             name: 'CubeMX Import'
           }
         ]
+    },
+    {
+      type: 'File',
+      name: 'About CubeMX'
+  
+    },
+    {
+      type: 'Folder',
+      name: 'CubeMX More Folders',
+      children:
+        [
+          {
+            type: 'File',
+            name: 'CubeMX Import'
+          },
+          {
+            type: 'Folder',
+            name: 'Nested',
+            children:
+            [
+              {
+                type: 'File',
+                name: 'Nested item'
+              },
+              {
+                type: 'Folder',
+                name: 'Nested more nested',
+                children:
+                [
+                  {
+                    type: 'File',
+                    name: 'More nested item'
+                  },
+                  
+                ]
+              }
+            ]
+          }
+        ]
     }
   ];
 
