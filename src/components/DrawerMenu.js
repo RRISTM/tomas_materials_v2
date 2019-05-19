@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Drawer, List, Divider, ListSubheader, } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -49,6 +49,8 @@ export class DrawerMenu extends Component {
 }
 DrawerMenu.propTypes = {
   // selectCb: PropTypes.func.isRequired
+  classesToUse: PropTypes.object.isRequired,
+  menuItems:PropTypes.array.isRequired
 };
 
 export default withStyles(styles)(DrawerMenu);

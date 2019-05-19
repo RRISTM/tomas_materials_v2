@@ -46,13 +46,12 @@ export class MarkdownView extends Component {
           , props: { classes: this.props.classes}
         },
         code: {
-          component: CodeBlock,
-          props: this.props
+          component: CodeBlock
         },
         pre: { component: ({ children, ...props }) => (<Fragment>{children}</Fragment>) },
         img: {
           component: ({ children, ...props }) =>
-            (<Fragment><img alt={props.alt} className={props.className} src={this.props.mdInfo.mdPath + "/img/" + props.src} title={props.title} style={{ padding: 24, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', maxWidth: 'calc(90vw - 300px)' }}></img></Fragment>)//TODO fix the max width
+            (<Fragment><img alt={props.alt} src={this.props.mdInfo.mdPath + "/img/" + props.src} title={props.title} style={{ padding: 24, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', maxWidth: 'calc(90vw - 300px)' }}></img></Fragment>)//TODO fix the max width
         }
       },
     };
