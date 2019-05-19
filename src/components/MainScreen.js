@@ -5,6 +5,7 @@ import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { SnackbarProvider, withSnackbar } from 'notistack';
 import DrawerMenu from './DrawerMenu';
 import { withStyles } from '@material-ui/core/styles';
+
 //develop
 // import mdDevelop from '%PUBLIC_URL%/markdown/CubeMXImport.md';
 const filesToLoadArr = [
@@ -15,11 +16,11 @@ const filesToLoadArr = [
     file: 'CubeMXImport.md',
     // develop
     // path: mdDevelop,
+  },
+  {
+    name: 'QSPI',
+    path: '/markdown/QSPI.md',
   }
-  // {
-  //   name: 'QSPI',
-  //   path: '/markdown/QSPI.md',
-  // }
 ];
 
 const menuStructure =
@@ -38,7 +39,7 @@ const menuStructure =
     {
       type: 'File',
       name: 'About CubeMX'
-  
+
     },
     {
       type: 'Folder',
@@ -53,24 +54,24 @@ const menuStructure =
             type: 'Folder',
             name: 'Nested',
             children:
-            [
-              {
-                type: 'File',
-                name: 'Nested item'
-              },
-              {
-                type: 'Folder',
-                name: 'Nested more nested',
-                children:
-                [
-                  {
-                    type: 'File',
-                    name: 'More nested item'
-                  },
-                  
-                ]
-              }
-            ]
+              [
+                {
+                  type: 'File',
+                  name: 'Nested item'
+                },
+                {
+                  type: 'Folder',
+                  name: 'Nested more nested',
+                  children:
+                    [
+                      {
+                        type: 'File',
+                        name: 'More nested item'
+                      },
+
+                    ]
+                }
+              ]
           }
         ]
     }
@@ -107,7 +108,11 @@ const styles = theme => ({
 class MainScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = { mdFilesContent: [] };
+    this.state = {
+      mdFilesContent: [],
+      mdSelected: "",
+    };
+    this.itemSelectedCb = this.itemSelectedCb.bind(this);
   }
 
   componentWillMount() {
@@ -126,13 +131,17 @@ class MainScreen extends Component {
     });
 
   }
-
+  itemSelectedCb(itemName) {
+    this.setState({ mdSelected: itemName });
+  }
   render() {
     const MyMarkdownView = withSnackbar(MarkdownView);
     const { classes } = this.props;
 
     /* md files */
-    var mdFileToShow = {};
+    let mdFileToShow = {};
+    let showDrawer = [];
+    let showMd = [];
     if (this.state.mdFilesContent.length === 0) {
       mdFileToShow.name = "Loading";
       mdFileToShow.mdContent = "";
@@ -140,8 +149,22 @@ class MainScreen extends Component {
     }
     else if (this.state.mdFilesContent.length === 1) {
       mdFileToShow = this.state.mdFilesContent[0];
+      showDrawer.push(<DrawerMenu classesToUse={classes} menuItems={menuStructure} selectCb={this.itemSelectedCb} />);
+      showMd.push(<MyMarkdownView mdInfo={mdFileToShow} />);
     } else {
-      console.log('Multiple files is not implemented yet');
+      showDrawer.push(<DrawerMenu classesToUse={classes} menuItems={menuStructure} selectCb={this.itemSelectedCb} />);
+      mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
+      console.log(mdFileToShow);
+      console.log(this.state.mdFilesContent);
+      if (mdFileToShow !== undefined) {
+        showMd.push(<MyMarkdownView mdInfo={mdFileToShow} />);
+      } else {
+        mdFileToShow = {};
+        mdFileToShow.name = "Loading";
+        mdFileToShow.mdContent = "";
+        mdFileToShow.mdPath = "";
+      }
+      // console.log('Multiple files is not implemented yet');
     }
 
     /*drawers */
@@ -154,12 +177,11 @@ class MainScreen extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
-        <DrawerMenu classesToUse={classes} menuItems={menuStructure}/>
-
+        {showDrawer}
         <div className={classes.content}>
           <SnackbarProvider maxSnack={3}>
             <div className={classes.toolbar} />
-            <MyMarkdownView mdInfo={mdFileToShow} />
+            {showMd}
           </SnackbarProvider>
         </div>
       </div>

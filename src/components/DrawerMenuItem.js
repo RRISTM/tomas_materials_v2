@@ -24,7 +24,6 @@ export class DrawerMenuItem extends Component {
       // console.log(this.props.classesToUse);
       // itemNested = this.props.classesToUse.nested;
       let leftPadding = theme.spacing.unit*4*this.props.depth;
-      console.log(leftPadding);
       itemNested={paddingLeft: leftPadding};
     }
     let completeItem = {};
@@ -48,7 +47,7 @@ export class DrawerMenuItem extends Component {
     } else if (item.type === 'File') {
       /*file */
       let fileItem = (
-        <ListItem button style={itemNested}>
+        <ListItem button style={itemNested} onClick={(e) => this.props.selectCb(item.name)}>
           <ListItemText inset primary={item.name} />
         </ListItem>
       );

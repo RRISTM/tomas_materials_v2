@@ -46,7 +46,8 @@ export class MarkdownView extends Component {
           , props: { classes: this.props.classes}
         },
         code: {
-          component: CodeBlock
+          component: CodeBlock,
+          props: {enqueueSnackbar: this.props.enqueueSnackbar}
         },
         pre: { component: ({ children, ...props }) => (<Fragment>{children}</Fragment>) },
         img: {

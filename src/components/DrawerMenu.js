@@ -11,17 +11,11 @@ const styles = theme => ({
 });
 
 export class DrawerMenu extends Component {
-  constructor(props) {
-    super(props); 
-    this.cbClick=this.cbClick.bind(this);
-  }
-  cbClick(toOpen){
-    console.log('Open file '+toOpen)
-  }
+
   render() {
     const classes = this.props.classesToUse;
 
-    let listToShow = this.props.menuItems.map((value) => (<DrawerMenuItem key={value.name} item={value} depth={0} selectCb={this.cbClick} classesToUse={this.props.classesToUse}/>));
+    let listToShow = this.props.menuItems.map((value) => (<DrawerMenuItem key={value.name} item={value} depth={0} selectCb={this.props.selectCb} classesToUse={this.props.classesToUse}/>));
 
     let listCore = (
       <List
@@ -48,7 +42,7 @@ export class DrawerMenu extends Component {
   }
 }
 DrawerMenu.propTypes = {
-  // selectCb: PropTypes.func.isRequired
+  selectCb: PropTypes.func.isRequired,
   classesToUse: PropTypes.object.isRequired,
   menuItems:PropTypes.array.isRequired
 };
