@@ -130,14 +130,16 @@ Next is necessary to put all your variables on .bss or .data sections plus all l
 
 The .ARM, .fini_array, .init_array and .preinit_array are library functions, usually they are present in all GCC linkers. .data is section reserved to initialized variables, here is not necessary to initialize the variale to copy from FLASH to RAM because they will be loaded directly to RAM. .bss section is for uninitialized variables. 
 
-Behind the RAM ontent must be the code area named .text. The area for read only ate .rodata and descriptin for the loader in .DevInfo.
+Behind the data data must be the code area named .text. The area for read only are .rodata and descriptin for the loader in .DevInfo.
+
+![alt text][memory_map]
 
 The area for stack is not used in flash loader. The loader will not use it at all the stack is reserved behind last area belogned to .text, .rodate or .DevInfo. And is set to 0x400. 
 
 The rest of the RAM memory is used for as buffer for reading or writing functions. 
 If the device is using multipe memories the loader is using only one main memory.
 
-
+[memory_map]: memory_map.svg "Memory map organization for flash loader"
 
 
 
