@@ -26,6 +26,10 @@ const filesToLoadArr = [
 const menuStructure =
   [
     {
+      type: 'File',
+      name: 'QSPI'
+    },
+    {
       type: 'Folder',
       name: 'CubeMX basics',
       children:

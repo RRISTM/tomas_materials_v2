@@ -34,6 +34,35 @@ For non-volatile external memories is important to have some way how to load dat
 
 Using project with verified CSP interface is very easy to create flashloader functionality - adding platform independent Loader_Src.c and Dev_inf.c (holding info of external memory structure and parameters) with Dev_inf.h. Then it's only necesarry to link all needed functions according to  STM32 ST-Link Utility and STM32CubeProgrammer expectation.
 
-### Linker file for QSPI flashloader
+### Linker file for External Memory Loader
+The External memory loader for the ST-Link utility or STM32Cube programmer must have specific position of the code. MAinly whole code must be in RAM memory area.
+The first word is reserved for usage by ST-Link utility or STM32Cube programmer. Here the programs will place the BKPT instruction. This wil guaranteee that the program will stop when he leave the Loader functions. Reservation can be done by moving the RAM allocation to point where we want to start like this:
+
+```c
+. = . + 0x200;
+```
+
+This will move the RAM ld pointer by 0x200. In our case the first are would be NVIC vector table. This is reason whe cannot reserve only 0x4. But the NVIC can be reserved only by multiplies of 0x200(device dependent). Result will looks like this:
+```c
+  .isr_vector :
+  {
+  	. = . + 0x200;
+    . = ALIGN(4);
+    KEEP(*(.isr_vector)) /* Startup code */
+    . = ALIGN(4);
+  } >RAM :Loader
+```
+In this code we can see that NVIC interrupt vecotr (.isr_vector section in GCC) is mooved by 0x200. It will be at address 0x20000200. Also we can see that code is inside RAM. Done by:
+```c
+  } >RAM :Loader
+```
+
+
+
+
+
+
+
+
 
 
