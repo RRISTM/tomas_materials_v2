@@ -43,6 +43,7 @@ The first word is reserved for usage by ST-Link utility or STM32Cube programmer.
 ```
 
 This will move the RAM ld pointer by 0x200. In our case the first are would be NVIC vector table. This is reason whe cannot reserve only 0x4. But the NVIC can be reserved only by multiplies of 0x200(device dependent). Result will looks like this:
+
 ```c
   .isr_vector :
   {
@@ -52,10 +53,89 @@ This will move the RAM ld pointer by 0x200. In our case the first are would be N
     . = ALIGN(4);
   } >RAM :Loader
 ```
+
 In this code we can see that NVIC interrupt vecotr (.isr_vector section in GCC) is mooved by 0x200. It will be at address 0x20000200. Also we can see that code is inside RAM. Done by:
-```c
+
+```
   } >RAM :Loader
 ```
+
+Plae the NVIC table is optional but if you plant to use the HAL libraries it is neccesary. Some parts of the code require the Delay function also you code can use interrupts. If you code is not useng them you can remove using the .isr_vector section.
+
+Next is necessary to put all your variables on .bss or .data sections plus all library functions like:
+
+```c
+  .ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >RAM
+  .ARM : {
+    __exidx_start = .;
+    *(.ARM.exidx*)
+    __exidx_end = .;
+  } >RAM :Loader
+
+  .preinit_array     :
+  {
+    PROVIDE_HIDDEN (__preinit_array_start = .);
+    KEEP (*(.preinit_array*))
+    PROVIDE_HIDDEN (__preinit_array_end = .);
+  } >RAM :Loader
+  
+  .init_array :
+  {
+    PROVIDE_HIDDEN (__init_array_start = .);
+    KEEP (*(SORT(.init_array.*)))
+    KEEP (*(.init_array*))
+    PROVIDE_HIDDEN (__init_array_end = .);
+  } >RAM :Loader
+  
+  .fini_array :
+  {
+    PROVIDE_HIDDEN (__fini_array_start = .);
+    KEEP (*(SORT(.fini_array.*)))
+    KEEP (*(.fini_array*))
+    PROVIDE_HIDDEN (__fini_array_end = .);
+  } >RAM :Loader
+
+  /* used by the startup to initialize data */
+  _sidata = LOADADDR(.data);
+
+  /* Initialized data sections goes into RAM, load LMA copy after code */
+  .data : 
+  {
+    . = ALIGN(4);
+    _sdata = .;        /* create a global symbol at data start */
+    *(.data)           /* .data sections */
+    *(.data*)          /* .data* sections */
+
+    . = ALIGN(4);
+    _edata = .;        /* define a global symbol at data end */
+  } >RAM :Loader
+
+  
+  /* Uninitialized data section */
+  . = ALIGN(4);
+  .bss :
+  {
+    /* This is used by the startup in order to initialize the .bss secion */
+    _sbss = .;         /* define a global symbol at bss start */
+    __bss_start__ = _sbss;
+    *(.bss)
+    *(.bss*)
+    *(COMMON)
+
+    . = ALIGN(4);
+    _ebss = .;         /* define a global symbol at bss end */
+    __bss_end__ = _ebss;
+  } >RAM :Loader
+```
+
+The .ARM, .fini_array, .init_array and .preinit_array are library functions, usually they are present in all GCC linkers. .data is section reserved to initialized variables, here is not necessary to initialize the variale to copy from FLASH to RAM because they will be loaded directly to RAM. .bss section is for uninitialized variables. 
+
+Behind the RAM ontent must be the code area named .text. The area for read only ate .rodata and descriptin for the loader in .DevInfo.
+
+The area for stack is not used in flash loader. The loader will not use it at all the stack is reserved behind last area belogned to .text, .rodate or .DevInfo. And is set to 0x400. 
+
+The rest of the RAM memory is used for as buffer for reading or writing functions. 
+If the device is using multipe memories the loader is using only one main memory.
 
 
 

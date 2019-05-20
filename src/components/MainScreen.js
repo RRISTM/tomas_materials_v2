@@ -19,7 +19,8 @@ const filesToLoadArr = [
   },
   {
     name: 'QSPI',
-    path: '/markdown/QSPI.md',
+    path: '/markdown',
+    file: 'QSPI.md',
   }
 ];
 
