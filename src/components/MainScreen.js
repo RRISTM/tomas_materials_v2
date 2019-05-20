@@ -160,7 +160,7 @@ class MainScreen extends Component {
         showMd.push(<MyMarkdownView mdInfo={mdFileToShow} />);
       } else {
         mdFileToShow = {};
-        mdFileToShow.name = "Loading";
+        mdFileToShow.name = "";
         mdFileToShow.mdContent = "";
         mdFileToShow.mdPath = "";
       }
