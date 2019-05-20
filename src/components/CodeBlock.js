@@ -20,31 +20,38 @@ const styles = theme => ({
 function CodeBlock({ children, ...props }) {
   // const { classes } = props;
   /*copy the clipboard */
-  function copyToClipBoard(e)
-  {
-    props.enqueueSnackbar('Code is now in your clipboard', { variant: 'info'});
+  function copyToClipBoard(e) {
+    props.enqueueSnackbar('Code is now in your clipboard', { variant: 'info' });
     const el = document.createElement('textarea');
-      el.value = children;
-      document.body.appendChild(el);
-      el.select();
-      
-      document.execCommand('copy');
-      document.body.removeChild(el);
+    el.value = children;
+    document.body.appendChild(el);
+    el.select();
+
+    document.execCommand('copy');
+    document.body.removeChild(el);
   };
+  let buttonShow;
+  if (props.className !== undefined) {
+    buttonShow = (
+    <div>
+      <Button variant="contained" size="small" style={{ marginBottom: 12 }} color="primary" onClick={copyToClipBoard}>
+        Copy code
+    </Button>
+    </div>);
+  } else {
+    buttonShow = [];
+  }
+  console.log(props);
   return (
     <div>
-    <Divider />
+      <Divider />
       <div>
-        <SyntaxHighlighter language="cs" style={atomOneLight} showLineNumbers="true" codeTagProps={{style: {fontFamily: 'inherit'} }}>
-        {/* <SyntaxHighlighter language="cpp" style={prism} showLineNumbers="true" codeTagProps={{style: {fontFamily: 'inherit'} }}> */}
+        <SyntaxHighlighter language="cs" style={atomOneLight} showLineNumbers="true" codeTagProps={{ style: { fontFamily: 'inherit' } }}>
+          {/* <SyntaxHighlighter language="cpp" style={prism} showLineNumbers="true" codeTagProps={{style: {fontFamily: 'inherit'} }}> */}
           {children}
         </SyntaxHighlighter>
       </div>
-      <div>
-        <Button variant="contained" size="small" style={{ marginBottom: 12}} color="primary" onClick={copyToClipBoard}>
-          Copy code
-        </Button>
-      </div>
+      {buttonShow}
       <Divider />
     </div>
   );

@@ -64,7 +64,7 @@ Plae the NVIC table is optional but if you plant to use the HAL libraries it is 
 
 Next is necessary to put all your variables on .bss or .data sections plus all library functions like:
 
-```c
+```st
   .ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >RAM
   .ARM : {
     __exidx_start = .;
