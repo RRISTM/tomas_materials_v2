@@ -73,7 +73,10 @@ const menuStructure =
                         type: 'File',
                         name: 'More nested item'
                       },
-
+                      {
+                        type: 'File',
+                        name: 'QSPI'
+                      }
                     ]
                 }
               ]
