@@ -11,7 +11,8 @@ const styles = theme => ({
     fontWeight: 'bold'
   },
   File: {
-    color: '#002052'
+    color: '#002052',
+    fontWeight: '500'
   }
 });
 
