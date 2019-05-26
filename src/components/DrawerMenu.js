@@ -20,7 +20,7 @@ export class DrawerMenu extends Component {
     let listCore = (
       <List
         component="nav"
-        subheader={<ListSubheader component="div">Nested List Items</ListSubheader>}
+        // subheader={<ListSubheader component="div">Nested List Items</ListSubheader>}
       >
         {listToShow}
       </List>

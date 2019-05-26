@@ -12,6 +12,7 @@ const theme = createMuiTheme({
     fontFamily: [
       'Arial'
     ].join(','),
+    color:'#39A9DC'
   },
   palette: {
     primary: blue,

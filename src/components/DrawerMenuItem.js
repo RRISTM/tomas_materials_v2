@@ -6,7 +6,13 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
-
+  Folder: {
+    color: '#002052',
+    fontWeight: 'bold'
+  },
+  File: {
+    color: '#002052'
+  }
 });
 
 export class DrawerMenuItem extends Component {
@@ -16,7 +22,9 @@ export class DrawerMenuItem extends Component {
   }
 
   render() {
-    const { theme } = this.props;
+    const { theme,classes } = this.props;
+    console.log(classes);
+    console.log(this.props);
     let item = this.props.item;
     // let shortName = item.name.replace(/\s/g, '');
     let itemNested = {};
@@ -29,11 +37,11 @@ export class DrawerMenuItem extends Component {
     let completeItem = {};
     if (item.type === 'Folder') {
       /*folder */
-      let subFolder = item.children.map((value) => <DrawerMenuItem key={value.name} item={value} depth={this.props.depth + 1} selectCb={this.props.selectCb} theme={theme}/>);
+      let subFolder = item.children.map((value) => <DrawerMenuItem key={value.name} item={value} depth={this.props.depth + 1} selectCb={this.props.selectCb} theme={theme} classes={classes}/>);
       let folderItem = (
         <Fragment>
           <ListItem button style={itemNested} onClick={(e) => this.setState({ expand: !this.state.expand })} >
-            <ListItemText inset primary={item.name} />
+            <ListItemText inset primary={item.name} disableTypography className={classes.Folder}/>
             {this.state.expand ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={this.state.expand} timeout="auto" unmountOnExit>
@@ -48,7 +56,7 @@ export class DrawerMenuItem extends Component {
       /*file */
       let fileItem = (
         <ListItem button style={itemNested} onClick={(e) => this.props.selectCb(item.name)}>
-          <ListItemText inset primary={item.name} />
+          <ListItemText disableTypography inset primary={item.name} className={classes.File}/>
         </ListItem>
       );
       completeItem = fileItem;
