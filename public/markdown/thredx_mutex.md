@@ -1,22 +1,31 @@
 # Mutex
+
 Mutex is ery similar to sempahore but conts onely to 1.
-Also mute have one spetial behaviour which differ from semaphore and that is priority inherience. Where thread owning mutex will have increased priority to same level as thread waiting for this mutex. 
+Also mute have one spetial behaviour which differ from semaphore and that is priority inherience. Where thread owning mutex will have increased priority to same level as thread waiting for this mutex.
+
 ![mutex](./img/24.svg)
+
 ## Mutex creation
+
 Mutex is created by function `tx_mutex_create`. First parameter is mutex handle
+
 ```c
 TX_MUTEX mutex_ptr;
 ```
-Second parameter is mutex name `"my_mutex"`. Third parameter is priority inherience option. `TX_NO_INHERIT` With this mutex is behaving as binary semaphore. `TX_INHERIT` mutex can inherit priority of waiting thread. 
+
+Second parameter is mutex name `"my_mutex"`. Third parameter is priority inherience option. `TX_NO_INHERIT` With this mutex is behaving as binary semaphore. `TX_INHERIT` mutex can inherit priority of waiting thread.
 
 ```c
 tx_mutex_create(&mutex_ptr,"my_mutex", TX_INHERIT);
 ```
+
 ## Mutex get
-Mutex get is similar to queue we will use `tx_mutex_get`. 
+
+Mutex get is similar to queue we will use `tx_mutex_get`.
 First parameter is mutex handle `mutex_ptr` second is waiting time from TX_NO_WAIT(0x0) to TX_WAIT_FOREVER(0xFFFFFFFF).
 
-As example mutex is protecting the GPIO to give access only one thread. 
+As example mutex is protecting the GPIO to give access only one thread.
+
 ```c
 VOID my_thread_entry (ULONG initial_input)
 {
@@ -29,12 +38,15 @@ VOID my_thread_entry (ULONG initial_input)
 	}
 }
 ```
+
 ![mutex get](./img/25.svg)
 
 ## Mutex put
-Mutex put will allow mutex to be used by other threads and wake up waiting suspended threads. 
+
+Mutex put will allow mutex to be used by other threads and wake up waiting suspended threads.
 It use `tx_mutex_put` with mutex handle as parameter `mutex_ptr`
 Same example as in mutex get part.
+
 ```c
 VOID my_thread_entry (ULONG initial_input)
 {
@@ -47,15 +59,17 @@ VOID my_thread_entry (ULONG initial_input)
 	}
 }
 ```
+
 ![mutex put](./img/26.svg)
 
 ## Mutex priority inherience
-Here we have an example of three threads. T1 prority 13,T2 priority 15,T3 priority 14. 
-At beginning T2 will get mutex. After while the T3 is resumed and because have bigger priroity it will preempty T2. After some time T1 is ready and will try to take mutex. But this will be not possible because it is owned by T2. So T1 will suspend. But T2 will newer continue because it is preempted by T3. So only T3 will run. 
+
+Here we have an example of three threads. T1 prority 13,T2 priority 15,T3 priority 14.
+At beginning T2 will get mutex. After while the T3 is resumed and because have bigger priroity it will preempty T2. After some time T1 is ready and will try to take mutex. But this will be not possible because it is owned by T2. So T1 will suspend. But T2 will newer continue because it is preempted by T3. So only T3 will run.
 
 ![mutex no inherit](./img/27.svg)
 
-This we can solve by using `TX_INHERIT` when we creating out mutex. 
+This we can solve by using `TX_INHERIT` when we creating out mutex.
 As result when T1 is resumed and take mutex. It will again suspend T1 but T2 will get same priority as T1. So T2 can finish job. Return mutex. And T1 will be resumed and can work.
 
 ![mutex inherit](./img/28.svg)
