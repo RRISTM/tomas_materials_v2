@@ -33,11 +33,11 @@ function CodeBlock({ children, ...props }) {
   let buttonShow;
   if (props.className !== undefined) {
     buttonShow = (
-    <div>
-      <Button variant="contained" size="small" style={{ marginBottom: 12 }} color="primary" onClick={copyToClipBoard}>
-        Copy code
+      <div>
+        <Button variant="contained" size="small" style={{ marginBottom: 12 }} color="primary" onClick={copyToClipBoard}>
+          Copy code
     </Button>
-    </div>);
+      </div>);
   } else {
     buttonShow = [];
   }
@@ -46,7 +46,7 @@ function CodeBlock({ children, ...props }) {
     <div>
       <Divider />
       <div>
-        <SyntaxHighlighter language="cs" style={atomOneLight} showLineNumbers="true" codeTagProps={{ style: { fontFamily: 'inherit' } }}>
+        <SyntaxHighlighter language="cs" style={atomOneLight} showLineNumbers="true" wrapLongLines="true" codeTagProps={{ style: { fontFamily: 'inherit' } }}>
           {/* <SyntaxHighlighter language="cpp" style={prism} showLineNumbers="true" codeTagProps={{style: {fontFamily: 'inherit'} }}> */}
           {children}
         </SyntaxHighlighter>

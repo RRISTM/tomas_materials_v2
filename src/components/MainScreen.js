@@ -5,85 +5,10 @@ import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { SnackbarProvider, withSnackbar } from 'notistack';
 import DrawerMenu from './DrawerMenu';
 import { withStyles } from '@material-ui/core/styles';
+import { filesToLoadArr, menuStructure } from './markdownFilesToLoad';
 
 //develop
 // import mdDevelop from '%PUBLIC_URL%/markdown/CubeMXImport.md';
-const filesToLoadArr = [
-  {
-    name: 'CubeMX Import',
-    //production
-    path: '/markdown',
-    file: 'CubeMXImport.md',
-    // develop
-    // path: mdDevelop,
-  },
-  {
-    name: 'QSPI',
-    path: '/markdown/QSPI',
-    file: 'QSPI.md',
-  }
-];
-
-const menuStructure =
-  [
-    {
-      type: 'File',
-      name: 'QSPI'
-    },
-    {
-      type: 'Folder',
-      name: 'CubeMX basics',
-      children:
-        [
-          {
-            type: 'File',
-            name: 'CubeMX Import'
-          }
-        ]
-    },
-    {
-      type: 'File',
-      name: 'About CubeMX'
-
-    },
-    {
-      type: 'Folder',
-      name: 'CubeMX More Folders',
-      children:
-        [
-          {
-            type: 'File',
-            name: 'CubeMX Import'
-          },
-          {
-            type: 'Folder',
-            name: 'Nested',
-            children:
-              [
-                {
-                  type: 'File',
-                  name: 'Nested item'
-                },
-                {
-                  type: 'Folder',
-                  name: 'Nested more nested',
-                  children:
-                    [
-                      {
-                        type: 'File',
-                        name: 'More nested item'
-                      },
-                      {
-                        type: 'File',
-                        name: 'QSPI'
-                      }
-                    ]
-                }
-              ]
-          }
-        ]
-    }
-  ];
 
 // var mdContent =[];
 const drawerWidth = 320;
