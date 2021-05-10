@@ -127,7 +127,7 @@ class MainScreen extends Component {
     var mdFilesContent = [];
 
     let requests = filesToLoadArr.map(value => {
-      return fetch(value.path + "/" + value.file).then((response) => response.text()).then((text) => {
+      return fetch(process.env.PUBLIC_URL + value.path + "/" + value.file).then((response) => response.text()).then((text) => {
         let preparedContent = { name: value.name, mdContent: text, mdPath: value.path }
         mdFilesContent.push(preparedContent);
 
@@ -136,6 +136,7 @@ class MainScreen extends Component {
 
     Promise.all(requests).then(() => {
       this.setState({ mdFilesContent: mdFilesContent });
+      console.log(mdFilesContent);
     });
 
   }
