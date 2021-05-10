@@ -1,22 +1,25 @@
 # ThreadX memory allocations
 
 ThreadX support two basic aproaches how to manage memory allocation:
+
 1. Static allocation
 2. Dynamic allocation
 
 ## Static memory allocation
 
 In CubeMX generated ThreadX files the static memory alloication is created in function
-```tx_application_define``` 
-in this function use created buffer ```tx_byte_pool_buffer``` based on user stack size ```TX_APP_MEM_POOL_SIZE```
-Function create new byte pool ```tx_app_byte_pool``` with ```tx_byte_pool_create``` and call ```App_ThreadX_Init``` with ```tx_app_byte_pool``` as argument. There the buffer can be used for allocation. Or user can use own buffers. 
+`tx_application_define`
+in this function use created buffer `tx_byte_pool_buffer` based on user stack size `TX_APP_MEM_POOL_SIZE`
+Function create new byte pool `tx_app_byte_pool` with `tx_byte_pool_create` and call `App_ThreadX_Init` with `tx_app_byte_pool` as argument. There the buffer can be used for allocation. Or user can use own buffers.
 
-  ![Static memory allocation](./img/02.svg)
+![Static memory allocation](./img/02.svg)
 
 ### Select static memory allocation
+
 ![Select static memory allocation](./img/09.png)
 
 In generated code in app_azure_rtos.c
+
 ```c
     static UCHAR tx_byte_pool_buffer[TX_APP_MEM_POOL_SIZE];  /*!This is used as pool source!*/
     static TX_BYTE_POOL tx_app_byte_pool;
@@ -63,13 +66,14 @@ In generated code in app_azure_rtos.c
 
 ```
 
-## Dynamic meory allocation 
+## Dynamic meory allocation
 
-In dynamic allocation the approach is different. 
-The buffer is providem from ```tx_application_define``` function argument ```first_unused_memory```. Here the user can use this buffer to create his own byte pool and manage with it his memory. 
-The ```first_unused_memory``` is provided directly by ThreadX. Based on CubeMX implementation. Here is necessary to add this allocation to linker file. 
+In dynamic allocation the approach is different.
+The buffer is providem from `tx_application_define` function argument `first_unused_memory`. Here the user can use this buffer to create his own byte pool and manage with it his memory.
+The `first_unused_memory` is provided directly by ThreadX. Based on CubeMX implementation. Here is necessary to add this allocation to linker file.
 To STM32H723GTX_FLASH.ld is added this code:
-```
+
+```c
   ._threadx_heap :
   {
     . = ALIGN(8);
@@ -80,14 +84,16 @@ To STM32H723GTX_FLASH.ld is added this code:
 
 ```
 
-  Code must be put before ```._user_heap_stack``` section in linker. 
+Code must be put before `._user_heap_stack` section in linker.
 
-  ![Dynamic memory allocation](./img/01.svg)
+![Dynamic memory allocation](./img/01.svg)
 
 ### Select dynamic memory allocation
+
 ![Select dynamic memory allocation](./img/10.png)
 
 In generated code in app_azure_rtos.c
+
 ```c
 /**
   * @brief  Define the initial system.

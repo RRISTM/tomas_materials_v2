@@ -41,20 +41,40 @@ function CodeBlock({ children, ...props }) {
   } else {
     buttonShow = [];
   }
-  console.log(props);
-  return (
-    <div>
-      <Divider />
+  let code_content;
+  if (props.className === "lang-c") {
+    let codeLines = children.split(/\r\n|\r|\n/).length;
+    let showLineNumbers;
+    if (codeLines === 1) {
+      showLineNumbers = false;
+    } else {
+      showLineNumbers = true;
+    }
+    code_content = (
       <div>
-        <SyntaxHighlighter language="cs" style={atomOneLight} showLineNumbers="true" wrapLongLines="true" codeTagProps={{ style: { fontFamily: 'inherit' } }}>
-          {/* <SyntaxHighlighter language="cpp" style={prism} showLineNumbers="true" codeTagProps={{style: {fontFamily: 'inherit'} }}> */}
-          {children}
-        </SyntaxHighlighter>
+        <Divider />
+        <div>
+          <SyntaxHighlighter language="cs" style={atomOneLight} showLineNumbers={showLineNumbers} wrapLongLines={true} codeTagProps={{ style: { fontFamily: 'inherit' } }}>
+            {/* <SyntaxHighlighter language="cpp" style={prism} showLineNumbers="true" codeTagProps={{style: {fontFamily: 'inherit'} }}> */}
+            {children}
+          </SyntaxHighlighter>
+        </div>
+        {buttonShow}
+        <Divider />
       </div>
-      {buttonShow}
-      <Divider />
-    </div>
-  );
+    );
+  } else {
+    code_content = (
+      <i>
+
+        <code>
+          {children}
+        </code>
+      </i>
+    );
+  }
+
+  return code_content;
 }
 
 export default withStyles(styles)(CodeBlock);

@@ -61,7 +61,6 @@ class MainScreen extends Component {
 
     Promise.all(requests).then(() => {
       this.setState({ mdFilesContent: mdFilesContent });
-      console.log(mdFilesContent);
     });
 
   }
@@ -88,8 +87,6 @@ class MainScreen extends Component {
     } else {
       showDrawer.push(<DrawerMenu classesToUse={classes} menuItems={menuStructure} selectCb={this.itemSelectedCb} />);
       mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
-      console.log(mdFileToShow);
-      console.log(this.state.mdFilesContent);
       if (mdFileToShow !== undefined) {
         showMd.push(<MyMarkdownView mdInfo={mdFileToShow} />);
       } else {

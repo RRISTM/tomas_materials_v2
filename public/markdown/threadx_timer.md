@@ -1,15 +1,17 @@
 # Timer
+
 Timer can be used to create delay between operations. Or to simply measure time.
+
 # Timer create
-To create a timer we will used function `tx_timer_create`. 
-First function argum,ent is pointer to timer handle `timer_ptr`. 
+
+To create a timer we will used function `tx_timer_create`.
+First function argum,ent is pointer to timer handle `timer_ptr`.
 Second argument is name of timer `my_timer`.
 Third argument is function which will be called when timer expires `my_timer_expire`.
 Forth argument is input value for expire function `0x12`.
 Fifth argument is initial tick value `100`. It is time between first activation and timer expire
-Sisth argument is reschedule tick value `200`. This value is used periodicaly after first initiali tick expire. If 0 timer is in One shot mode. 
+Sisth argument is reschedule tick value `200`. This value is used periodicaly after first initiali tick expire. If 0 timer is in One shot mode.
 Seventh argument is timer autostart. It can be set to `TX_NO_ACTIVATE` or `TX_ACTIVATE`.
-
 
 ```c
 /*timer handle*/
@@ -23,14 +25,17 @@ VOID my_timer_expire(ULONG input_value){
 	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
 }
 ```
+
 # Timer use
-To use timer in repetitive mode we set repetition value to value between 0x1 to 0xFFFFFFFF. Then when timer is activated we get first initial tick delay and then periodic repetitive delays. 
+
+To use timer in repetitive mode we set repetition value to value between 0x1 to 0xFFFFFFFF. Then when timer is activated we get first initial tick delay and then periodic repetitive delays.
 
 ![Timer use](./img/41.svg)
 
 If is used `TX_ACTIVATE` timer is started by `tx_timer_create`. If `TX_NO_ACTIVATE` is used we must start timer with `tx_timer_activate`.
 
 Example of reperitive timer
+
 ```c
 /* USER CODE BEGIN PV */
 #define THRAD_STACK_SIZE 1024
@@ -85,9 +90,9 @@ VOID my_thread_entry (ULONG initial_input)
 
 ```
 
-
 # One shot timer
-One shot timer is used when repetitive argument is 0. 
+
+One shot timer is used when repetitive argument is 0.
 ![Timer one shot](./img/42.svg)
 
 Then the timer runs only once. To restart timer we must first call `tx_timer_change` and then `tx_timer_activate`.

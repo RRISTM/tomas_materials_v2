@@ -1,12 +1,16 @@
 # Messageq queue
-The queue again is very simalar to semaphore. But here the thread is possible to put and get from queue also coneten. So queue is used mainly to echange data between threads. 
+
+The queue again is very simalar to semaphore. But here the thread is possible to put and get from queue also coneten. So queue is used mainly to echange data between threads.
+
 ## Message queue create
+
 To create queue we will use `tx_queue_create`.
 First argument is queue handle `queue_ptr`.
 Second argument is name os queue `my_queue`.
 Third argument is queue message size 1-16words. In out case `1`.
 Forth argument is queue buffer `queue_stack`.
 Fifth argument is queue buffer size in bytes `256`.
+
 ```c
 TX_QUEUE queue_ptr;
 #define QUEUE_STACK_SIZE 256
@@ -19,10 +23,12 @@ uint8_t queue_stack[QUEUE_STACK_SIZE];
 ![queue](./img/29.svg)
 
 ### Message queue send
+
 To add message to queue we use function `tx_queue_send`.
 First argument is queue handle `queue_ptr`.
 Second argument is pointer to messagge `message`.
 Third argument is waiting time TX_NO_WAIT (0x0) to TX_WAIT_FOREVER(0xFFFFFFFF).
+
 ```c
 VOID my_thread_entry3 (ULONG initial_input)
 {
@@ -34,9 +40,11 @@ VOID my_thread_entry3 (ULONG initial_input)
 	}
 }
 ```
+
 ![queue send](./img/31.svg)
 
 ### Message queue receive
+
 To remove message from queue we use function `tx_queue_receive`
 First argument is queue handle `queue_ptr`.
 Second argument is pointer to messagge `message`.
@@ -61,14 +69,17 @@ VOID my_thread_entry (ULONG initial_input)
 
 ## Queue usage example
 
-We will create one thread which will receive messages from queue and based on message it will set GREEN or YELLOW led. 
-Also we will create two threads which will send messages to this queue to toggle with GREEN or YELLO led. 
+We will create one thread which will receive messages from queue and based on message it will set GREEN or YELLOW led.
+Also we will create two threads which will send messages to this queue to toggle with GREEN or YELLO led.
 
 ![queue example](./img/30.svg)
+
 What is application flow:
+
 ![queue flow](./img/33.svg)
 
-Main code: 
+Main code:
+
 ```c
 /* USER CODE BEGIN PV */
 #define THRAD_STACK_SIZE 1024

@@ -23,26 +23,24 @@ export class DrawerMenuItem extends Component {
   }
 
   render() {
-    const { theme,classes } = this.props;
-    console.log(classes);
-    console.log(this.props);
+    const { theme, classes } = this.props;
     let item = this.props.item;
     // let shortName = item.name.replace(/\s/g, '');
     let itemNested = {};
     if (this.props.depth > 0) {
       // console.log(this.props.classesToUse);
       // itemNested = this.props.classesToUse.nested;
-      let leftPadding = theme.spacing.unit*4*this.props.depth;
-      itemNested={paddingLeft: leftPadding};
+      let leftPadding = theme.spacing.unit * 4 * this.props.depth;
+      itemNested = { paddingLeft: leftPadding };
     }
     let completeItem = {};
     if (item.type === 'Folder') {
       /*folder */
-      let subFolder = item.children.map((value) => <DrawerMenuItem key={value.name} item={value} depth={this.props.depth + 1} selectCb={this.props.selectCb} theme={theme} classes={classes}/>);
+      let subFolder = item.children.map((value) => <DrawerMenuItem key={value.name} item={value} depth={this.props.depth + 1} selectCb={this.props.selectCb} theme={theme} classes={classes} />);
       let folderItem = (
         <Fragment>
           <ListItem button style={itemNested} onClick={(e) => this.setState({ expand: !this.state.expand })} >
-            <ListItemText inset primary={item.name} disableTypography className={classes.Folder}/>
+            <ListItemText inset primary={item.name} disableTypography className={classes.Folder} />
             {this.state.expand ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={this.state.expand} timeout="auto" unmountOnExit>
@@ -57,12 +55,12 @@ export class DrawerMenuItem extends Component {
       /*file */
       let fileItem = (
         <ListItem button style={itemNested} onClick={(e) => this.props.selectCb(item.name)}>
-          <ListItemText disableTypography inset primary={item.name} className={classes.File}/>
+          <ListItemText disableTypography inset primary={item.name} className={classes.File} />
         </ListItem>
       );
       completeItem = fileItem;
     } else {
-      console.log('Not defined item')
+      // console.log('Not defined item')
     }
 
     return (
@@ -79,4 +77,4 @@ DrawerMenuItem.propTypes = {
   item: PropTypes.object.isRequired
 };
 
-export default withStyles(styles,{ withTheme: true })(DrawerMenuItem);
+export default withStyles(styles, { withTheme: true })(DrawerMenuItem);
