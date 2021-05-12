@@ -66,14 +66,14 @@ function CodeBlock({ children, ...props }) {
     );
   } else {
     code_content = (
-      // <i>
-      <Typography variant="i">
+      <i>
+        {/* // <Typography variant="i"> */}
 
         <code>
           {children}
         </code>
-      </Typography>
-      // </i>
+        {/* // </Typography> */}
+      </i>
     );
   }
 
