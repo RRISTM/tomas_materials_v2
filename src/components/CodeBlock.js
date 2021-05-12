@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Button, Divider } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneLight } from 'react-syntax-highlighter/dist/styles/hljs';
@@ -54,7 +55,7 @@ function CodeBlock({ children, ...props }) {
       <div>
         <Divider />
         <div>
-          <SyntaxHighlighter language="cs" style={atomOneLight} showLineNumbers={showLineNumbers} wrapLongLines={true} codeTagProps={{ style: { fontFamily: 'inherit' } }}>
+          <SyntaxHighlighter language="c" style={atomOneLight} showLineNumbers={showLineNumbers} wrapLongLines={true} codeTagProps={{ style: { fontFamily: 'inherit' } }}>
             {/* <SyntaxHighlighter language="cpp" style={prism} showLineNumbers="true" codeTagProps={{style: {fontFamily: 'inherit'} }}> */}
             {children}
           </SyntaxHighlighter>
@@ -65,12 +66,14 @@ function CodeBlock({ children, ...props }) {
     );
   } else {
     code_content = (
-      <i>
+      // <i>
+      <Typography variant="i">
 
         <code>
           {children}
         </code>
-      </i>
+      </Typography>
+      // </i>
     );
   }
 

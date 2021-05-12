@@ -93,6 +93,7 @@ VOID my_thread_entry (ULONG initial_input)
 # One shot timer
 
 One shot timer is used when repetitive argument is 0.
+
 ![Timer one shot](./img/42.svg)
 
 Then the timer runs only once. To restart timer we must first call `tx_timer_change` and then `tx_timer_activate`.
