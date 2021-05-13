@@ -4,7 +4,7 @@ import { Button, Divider } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomOneLight } from 'react-syntax-highlighter/dist/styles/hljs';
+import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 // import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 // import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
