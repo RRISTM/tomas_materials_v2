@@ -3,7 +3,7 @@ import ReactMarkdown from 'markdown-to-jsx';
 
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import { Container } from '@material-ui/core';
+import { Container, Box } from '@material-ui/core';
 
 import CodeBlock from './CodeBlock';
 // import Box from '@material-ui/core/Box';
@@ -56,7 +56,7 @@ export class MarkdownView extends Component {
         pre: { component: ({ children, ...props }) => (<Fragment>{children}</Fragment>) },
         img: {
           component: ({ children, ...props }) => {
-            return (<Container><img alt={props.alt} src={process.env.PUBLIC_URL + this.props.mdInfo.mdPath + "/img/" + props.src.replace('./img/', '')} title={props.title} style={{ padding: 24, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', maxWidth: '100%' }}></img></Container>)
+            return (<Box><img alt={props.alt} src={process.env.PUBLIC_URL + this.props.mdInfo.mdPath + "/img/" + props.src.replace('./img/', '')} title={props.title} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', maxWidth: '100%', height: 'auto' }}></img></Box>)
 
           }
         }

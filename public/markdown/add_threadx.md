@@ -16,7 +16,7 @@ In CubeMX Tab:
    1. Select HW_Profile: STM32H723ZG_NUCLEO
    2. Select Application: azure_rtos_app    
 5. Click OK
-   
+
 ![ThreadX pack selection](./img/07.png)
 
 ## Configure ThreadX mode
