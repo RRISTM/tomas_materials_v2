@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import MarkdownView from './MarkdownView';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 import { SnackbarProvider, withSnackbar } from 'notistack';
 import DrawerMenu from './DrawerMenu';
 import { withStyles } from '@material-ui/core/styles';
@@ -44,8 +45,11 @@ class MainScreen extends Component {
     this.state = {
       mdFilesContent: [],
       mdSelected: "",
+      isDrawerOpen: false
     };
     this.itemSelectedCb = this.itemSelectedCb.bind(this);
+    this.drawerOpenClose = this.drawerOpenClose.bind(this);
+    this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
   }
 
   componentWillMount() {
@@ -67,6 +71,13 @@ class MainScreen extends Component {
   itemSelectedCb(itemName) {
     this.setState({ mdSelected: itemName });
   }
+  handleDrawerOpen() {
+    console.log(this);
+    this.drawerOpenClose(true);
+  }
+  drawerOpenClose(isOpen) {
+    this.setState({ isDrawerOpen: isOpen });
+  }
   render() {
     const MyMarkdownView = withSnackbar(MarkdownView);
     const { classes } = this.props;
@@ -82,10 +93,10 @@ class MainScreen extends Component {
     }
     else if (this.state.mdFilesContent.length === 1) {
       mdFileToShow = this.state.mdFilesContent[0];
-      showDrawer.push(<DrawerMenu classesToUse={classes} menuItems={menuStructure} selectCb={this.itemSelectedCb} />);
+      showDrawer.push(<DrawerMenu classesToUse={classes} menuItems={menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} />);
       showMd.push(<MyMarkdownView mdInfo={mdFileToShow} />);
     } else {
-      showDrawer.push(<DrawerMenu classesToUse={classes} menuItems={menuStructure} selectCb={this.itemSelectedCb} />);
+      showDrawer.push(<DrawerMenu classesToUse={classes} menuItems={menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} />);
       mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
       if (mdFileToShow !== undefined) {
         showMd.push(<MyMarkdownView mdInfo={mdFileToShow} />);
@@ -103,6 +114,15 @@ class MainScreen extends Component {
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={this.handleDrawerOpen}
+              edge="start"
+            // className={clsx(classes.menuButton, open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
             <Typography variant="h6" color="inherit">
               {mdFileToShow.name}
             </Typography>
