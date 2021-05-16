@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Drawer, List, Divider, ListSubheader, IconButton } from '@material-ui/core';
+import { Drawer, List, Divider, ListSubheader, IconButton, Toolbar } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import DrawerMenuItem from './DrawerMenuItem';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -45,14 +45,21 @@ export class DrawerMenu extends Component {
         anchor="left"
       >
         {/* <div className={classes.toolbar} /> */}
-        <div className={classes.toolbar}>
-          <IconButton onClick={this.closeDrawer}>
+        <Toolbar className={{ alignItems: 'center', display: 'flex' }}>
+
+          {/* <div className={classes.toolbar}> */}
+          <IconButton
+            onClick={this.closeDrawer}
+            color="inherit"
+            aria-label="open drawer"
+            edge="start">
             <ChevronLeftIcon />
           </IconButton>
-        </div>
+          {/* </div> */}
+        </Toolbar>
         <Divider />
-        {listCore}
-      </Drawer>
+        { listCore}
+      </Drawer >
     )
   }
 }

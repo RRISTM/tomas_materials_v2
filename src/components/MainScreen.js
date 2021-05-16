@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import MarkdownView from './MarkdownView';
-import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, IconButton, Box } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { SnackbarProvider, withSnackbar } from 'notistack';
 import DrawerMenu from './DrawerMenu';
@@ -25,9 +25,20 @@ const styles = theme => ({
   drawerPaper: {
     width: drawerWidth,
   },
-  appBar: {
+  appBarClose: {
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    })
+  },
+  appBarOpen: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   content: {
     flexGrow: 1,
@@ -108,33 +119,44 @@ class MainScreen extends Component {
       }
       // console.log('Multiple files is not implemented yet');
     }
-
+    let appBarStyle;
+    let iconMenu;
+    if (this.state.isDrawerOpen) {
+      appBarStyle = classes.appBarOpen;
+    } else {
+      iconMenu = (<IconButton
+        color="inherit"
+        aria-label="open drawer"
+        onClick={this.handleDrawerOpen}
+        edge="start"
+      // className={clsx(classes.menuButton, open && classes.hide)}
+      >
+        <MenuIcon />
+      </IconButton>);
+      appBarStyle = classes.appBarClose;
+      showDrawer = null;
+    }
     /*drawers */
     return (
       <div className={classes.root}>
-        <AppBar position="fixed" className={classes.appBar}>
+        {/* <Box className={appBarStyle}> */}
+        {showDrawer}
+
+        <AppBar position="fixed" className={appBarStyle}>
           <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={this.handleDrawerOpen}
-              edge="start"
-            // className={clsx(classes.menuButton, open && classes.hide)}
-            >
-              <MenuIcon />
-            </IconButton>
+            {iconMenu}
             <Typography variant="h6" color="inherit">
               {mdFileToShow.name}
             </Typography>
           </Toolbar>
         </AppBar>
-        {showDrawer}
-        <div className={classes.content}>
+        <Box className={classes.content}>
           <SnackbarProvider maxSnack={3}>
             <div className={classes.toolbar} />
             {showMd}
           </SnackbarProvider>
-        </div>
+        </Box>
+        {/* </Box> */}
       </div>
     )
   }
