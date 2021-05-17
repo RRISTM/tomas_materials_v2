@@ -3,7 +3,8 @@ import ReactMarkdown from 'markdown-to-jsx';
 
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import { Container, Box } from '@material-ui/core';
+import { Container, Box, Fab } from '@material-ui/core';
+import { KeyboardArrowUp } from '@material-ui/icons';
 
 import CodeBlock from './CodeBlock';
 // import Box from '@material-ui/core/Box';
@@ -19,6 +20,11 @@ const styles = (theme) => ({
   },
   STlightBlue: {
     color: '#39A9DC'
+  },
+  fab: {
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
   }
 });
 
@@ -29,8 +35,12 @@ export class MarkdownView extends Component {
     //CodeBlock.bind(this.props);
   }
 
+  scrollTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   render() {
-    // const { classes } = this.props;
+    const { classes } = this.props;
     const options = {
       overrides: {
         h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4" className={props.classes.STdarkBlue}> {children}  </Typography>), props: { classes: this.props.classes } },
@@ -64,11 +74,16 @@ export class MarkdownView extends Component {
     };
     return (
       // <Box width={1}> 
-      <Grid container justify="center" spacing={0} style={{ padding: 24 }}>
-        <Grid item>
-          <ReactMarkdown children={this.props.mdInfo.mdContent} options={options} />
-        </Grid>
-      </Grid>
+      <Box justify="flex-start" spacing={0} style={{ padding: 24 }}>
+        {/* <Grid container justify="flex-start" spacing={0} style={{ padding: 24 }}> */}
+        {/* <Grid item> */}
+        <ReactMarkdown children={this.props.mdInfo.mdContent} options={options} />
+        {/* </Grid> */}
+        <Fab aria-label={'Add'} className={classes.fab} color={'primary'} onClick={this.scrollTop}>
+          <KeyboardArrowUp />
+        </Fab>
+        {/* </Grid> */}
+      </Box>
       //  </Box> 
     );
   }

@@ -40,9 +40,26 @@ const styles = theme => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+  // content: {
+  //   flexGrow: 1,
+  //   padding: theme.spacing.unit * 3,
+  // },
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    // marginLeft: -drawerWidth,
+    marginLeft: 0,
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
   },
   toolbar: theme.mixins.toolbar,
   nested: {
@@ -120,9 +137,11 @@ class MainScreen extends Component {
       // console.log('Multiple files is not implemented yet');
     }
     let appBarStyle;
+    let contentStyle;
     let iconMenu;
     if (this.state.isDrawerOpen) {
       appBarStyle = classes.appBarOpen;
+      contentStyle = classes.contentShift;
     } else {
       iconMenu = (<IconButton
         color="inherit"
@@ -135,6 +154,7 @@ class MainScreen extends Component {
       </IconButton>);
       appBarStyle = classes.appBarClose;
       showDrawer = null;
+      contentStyle = classes.content;
     }
     /*drawers */
     return (
@@ -150,7 +170,7 @@ class MainScreen extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
-        <Box className={classes.content}>
+        <Box className={contentStyle}>
           <SnackbarProvider maxSnack={3}>
             <div className={classes.toolbar} />
             {showMd}
