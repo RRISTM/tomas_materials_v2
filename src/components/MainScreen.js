@@ -73,7 +73,7 @@ class MainScreen extends Component {
     this.state = {
       mdFilesContent: [],
       mdSelected: "",
-      isDrawerOpen: false
+      isDrawerOpen: true
     };
     this.itemSelectedCb = this.itemSelectedCb.bind(this);
     this.drawerOpenClose = this.drawerOpenClose.bind(this);
