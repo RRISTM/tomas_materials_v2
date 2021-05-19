@@ -2,6 +2,7 @@
 
 ## Software Pack
 In CubeMX Tab:
+
 1. Software packs
 2. Select components
 
