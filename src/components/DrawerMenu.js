@@ -33,7 +33,6 @@ export class DrawerMenu extends Component {
         {listToShow}
       </List>
     );
-    console.log(this.props);
     return (
       <Drawer
         className={classes.drawer}

@@ -6,7 +6,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { SnackbarProvider, withSnackbar } from 'notistack';
 import DrawerMenu from './DrawerMenu';
 import { withStyles } from '@material-ui/core/styles';
-import { filesToLoadArr, menuStructure } from './markdownFilesToLoad';
+// import { filesToLoadArr, menuStructure } from './markdownFilesToLoad';
 
 //develop
 // import mdDevelop from '%PUBLIC_URL%/markdown/CubeMXImport.md';
@@ -73,7 +73,8 @@ class MainScreen extends Component {
     this.state = {
       mdFilesContent: [],
       mdSelected: "",
-      isDrawerOpen: true
+      isDrawerOpen: true,
+      menuStructure: []
     };
     this.itemSelectedCb = this.itemSelectedCb.bind(this);
     this.drawerOpenClose = this.drawerOpenClose.bind(this);
@@ -82,18 +83,25 @@ class MainScreen extends Component {
 
   componentWillMount() {
     var mdFilesContent = [];
+    let filesToLoad;
+    let fileListFetchPromise = fetch(process.env.PUBLIC_URL + '/filesToLoad.json').then((response) => {
+      return response.json();
+    }).then((jsonData) => {
+      filesToLoad = jsonData;
+    }).then(() => {
+      let requests = filesToLoad.filesToLoadArr.map(value => {
+        return fetch(process.env.PUBLIC_URL + value.path + "/" + value.file).then((response) => response.text()).then((text) => {
+          let preparedContent = { name: value.name, mdContent: text, mdPath: value.path }
+          mdFilesContent.push(preparedContent);
 
-    let requests = filesToLoadArr.map(value => {
-      return fetch(process.env.PUBLIC_URL + value.path + "/" + value.file).then((response) => response.text()).then((text) => {
-        let preparedContent = { name: value.name, mdContent: text, mdPath: value.path }
-        mdFilesContent.push(preparedContent);
-
+        });
       });
-    });
+      Promise.all(requests).then(() => {
+        this.setState({ mdFilesContent: mdFilesContent, menuStructure: filesToLoad.menuStructure });
+      });
 
-    Promise.all(requests).then(() => {
-      this.setState({ mdFilesContent: mdFilesContent });
-    });
+    })
+
 
   }
   itemSelectedCb(itemName) {
@@ -121,10 +129,10 @@ class MainScreen extends Component {
     }
     else if (this.state.mdFilesContent.length === 1) {
       mdFileToShow = this.state.mdFilesContent[0];
-      showDrawer.push(<DrawerMenu classesToUse={classes} menuItems={menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} />);
+      showDrawer.push(<DrawerMenu classesToUse={classes} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} />);
       showMd.push(<MyMarkdownView mdInfo={mdFileToShow} />);
     } else {
-      showDrawer.push(<DrawerMenu classesToUse={classes} menuItems={menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} />);
+      showDrawer.push(<DrawerMenu classesToUse={classes} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} />);
       mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
       if (mdFileToShow !== undefined) {
         showMd.push(<MyMarkdownView mdInfo={mdFileToShow} />);

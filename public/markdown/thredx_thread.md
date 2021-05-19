@@ -197,7 +197,7 @@ VOID my_thread_entry2 (ULONG initial_input)
 
 ```
 
-## Thread Preemption Threshold<SUP>TM</SUP>
+## Thread Preemption Threshold<sup>TM</sup>
 
 Can be enabled in CubeMX by setting the `TX_DISABLE_PREEMPTION_TRESHOLD` to **disable**
 
