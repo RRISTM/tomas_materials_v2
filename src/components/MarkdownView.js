@@ -72,6 +72,9 @@ export class MarkdownView extends Component {
         }
       },
     };
+    const mdChapterRegex = /(##\s.*\r\n)/g;
+    let mdChapters = this.props.mdInfo.mdContent.split(mdChapterRegex);
+    console.log(mdChapters)
     return (
       // <Box width={1}> 
       <Box justify="flex-start" spacing={0} style={{ padding: 24 }}>
