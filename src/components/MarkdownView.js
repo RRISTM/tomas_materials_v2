@@ -4,11 +4,8 @@ import ReactMarkdown from 'markdown-to-jsx';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import { Container, Box, Fab } from '@material-ui/core';
-import { KeyboardArrowUp } from '@material-ui/icons';
 
 import CodeBlock from './CodeBlock';
-// import Box from '@material-ui/core/Box';
-import { Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 
@@ -27,17 +24,11 @@ const styles = (theme) => ({
     right: theme.spacing(2),
   }
 });
-
-
 export class MarkdownView extends Component {
   constructor(props) {
     super(props);
     //CodeBlock.bind(this.props);
   }
-
-  scrollTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   render() {
     const { classes } = this.props;
@@ -72,22 +63,10 @@ export class MarkdownView extends Component {
         }
       },
     };
-    const mdChapterRegex = /(##\s.*\r\n)/g;
-    let mdChapters = this.props.mdInfo.mdContent.split(mdChapterRegex);
-    console.log(mdChapters)
     return (
-      // <Box width={1}> 
-      <Box justify="flex-start" spacing={0} style={{ padding: 24 }}>
-        {/* <Grid container justify="flex-start" spacing={0} style={{ padding: 24 }}> */}
-        {/* <Grid item> */}
-        <ReactMarkdown children={this.props.mdInfo.mdContent} options={options} />
-        {/* </Grid> */}
-        <Fab aria-label={'Add'} className={classes.fab} color={'primary'} onClick={this.scrollTop}>
-          <KeyboardArrowUp />
-        </Fab>
-        {/* </Grid> */}
-      </Box>
-      //  </Box> 
+      <Fragment>
+        <ReactMarkdown children={this.props.children} options={options} />
+      </Fragment>
     );
   }
 }
@@ -95,7 +74,6 @@ export class MarkdownView extends Component {
 MarkdownView.propTypes = {
   enqueueSnackbar: PropTypes.func.isRequired,
 };
-
 
 // export default withStyles(styles)(MarkdownView);
 export default withStyles(styles)(MarkdownView);

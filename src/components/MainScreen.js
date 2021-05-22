@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import MarkdownView from './MarkdownView';
+import SelectView from './SelectView';
 import { AppBar, Toolbar, Typography, IconButton, Box } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { SnackbarProvider, withSnackbar } from 'notistack';
@@ -115,7 +116,7 @@ class MainScreen extends Component {
     this.setState({ isDrawerOpen: isOpen });
   }
   render() {
-    const MyMarkdownView = withSnackbar(MarkdownView);
+    const MySelectView = withSnackbar(SelectView);
     const { classes } = this.props;
 
     /* md files */
@@ -130,12 +131,12 @@ class MainScreen extends Component {
     else if (this.state.mdFilesContent.length === 1) {
       mdFileToShow = this.state.mdFilesContent[0];
       showDrawer.push(<DrawerMenu classesToUse={classes} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} />);
-      showMd.push(<MyMarkdownView mdInfo={mdFileToShow} />);
+      showMd.push(<MySelectView mdInfo={mdFileToShow} />);
     } else {
       showDrawer.push(<DrawerMenu classesToUse={classes} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} />);
       mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
       if (mdFileToShow !== undefined) {
-        showMd.push(<MyMarkdownView mdInfo={mdFileToShow} />);
+        showMd.push(<MySelectView mdInfo={mdFileToShow} />);
       } else {
         mdFileToShow = {};
         mdFileToShow.name = "";
