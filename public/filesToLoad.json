@@ -54,6 +54,11 @@
       "name": "11. Timer",
       "path": "/markdown",
       "file": "threadx_timer.md"
+    },
+    {
+      "name": "TestPresentation",
+      "path": "/markdown",
+      "file": "TestPresentation.md"
     }
   ],
 
@@ -123,6 +128,12 @@
       "name": "11. Timer",
       "path": "/markdown",
       "file": "threadx_timer.md"
+    },
+    {
+      "type": "File",
+      "name": "TestPresentation",
+      "path": "/markdown",
+      "file": "TestPresentation.md"
     }
   ]
 }

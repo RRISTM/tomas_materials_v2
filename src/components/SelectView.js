@@ -6,18 +6,20 @@ import { withStyles } from '@material-ui/core/styles';
 
 export class SelectView extends Component {
     render() {
-        const separateHeader = /----!\r\nPresentation\r\n----!/;
+        const separateHeader = /^----!\r\nPresentation\r\n----!/;
         /*find presentation*/
-        let presentation = false;
         let mdChapters = this.props.mdInfo.mdContent;
-        let selectedView = (<DocumentView mdChapters={mdChapters} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />);
-        if (mdChapters.search(separateHeader) > 0) {
+        let selectedView;
+        console.log(mdChapters.search(separateHeader));
+        console.log(mdChapters);
+        if (mdChapters.search(separateHeader) >= 0) {
             /* presenatation mode */
             console.log('presenation mode');
-            presentation = true;
             mdChapters = mdChapters.split(separateHeader).pop();
+            selectedView = (<PresentationView mdChapters={mdChapters} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />);
         } else {
             console.log('document mode');
+            selectedView = (<DocumentView mdChapters={mdChapters} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />);
         }
         return (
             <Fragment>
