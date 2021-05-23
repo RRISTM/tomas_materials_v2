@@ -28,3 +28,7 @@
 .STlightBlue {
   color: '#002052';
 } */
+
+.react-swipeable-view-container > div {
+  overflow: unset !important;
+}

@@ -85,7 +85,7 @@ export class PresentationView extends Component {
         {/* <MarkdownView children={mdChapters[index]} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} /> */ }
         return (
             <Box justify="flex-start" spacing={0} style={{ padding: 24 }}>
-                <SwipeableViews index={this.state.slideIndex}>
+                <SwipeableViews index={this.state.slideIndex} slideStyle={{ overflow: 'visible', padding: '5px' }} style={{ overflow: 'visible' }} containerStyle={{ overflow: 'visible' }}>
                     {separatedMdContent}
                 </SwipeableViews>
                 <Fab aria-label={'Previous slide'} className={classes.fabL} color={'primary'} onClick={this.previousSlide}>
