@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import MarkdownView from './MarkdownView';
-import { Box, Fab } from '@material-ui/core';
-import { KeyboardArrowRight, KeyboardArrowLeft } from '@material-ui/icons';
+import { Box, Fab, Slide, Tooltip } from '@material-ui/core';
+import { KeyboardArrowRight, KeyboardArrowLeft, Replay } from '@material-ui/icons';
 import SwipeableViews from 'react-swipeable-views';
 import { virtualize } from 'react-swipeable-views-utils';
 import { withStyles } from '@material-ui/core/styles';
@@ -15,10 +15,20 @@ const styles = (theme) => ({
         bottom: theme.spacing(2),
         right: theme.spacing(2),
     },
+    fabC: {
+        position: 'fixed',
+        bottom: theme.spacing(10),
+        right: theme.spacing(2),
+    },
     fabL: {
         position: 'fixed',
         bottom: theme.spacing(2),
-        right: theme.spacing(12),
+        right: theme.spacing(10),
+    },
+    fabLL: {
+        position: 'fixed',
+        bottom: theme.spacing(2),
+        right: theme.spacing(18),
     }
 });
 export class PresentationView extends Component {
@@ -38,14 +48,26 @@ export class PresentationView extends Component {
         this.state = {
             slideIndex: 0,
             mdChapters: mdChapters,
-            mdChapterSize: mdChapterSize
+            mdChapterSize: mdChapterSize,
+            slide: true,
+            previousIndex: 0
         };
 
         this.nextSlide = this.nextSlide.bind(this);
         this.previousSlide = this.previousSlide.bind(this);
+        this.firstSlide = this.firstSlide.bind(this);
+    }
+
+    firstSlide() {
+        let previousIndex = this.state.slideIndex;
+        this.setState({
+            previousIndex: previousIndex,
+            slideIndex: 0
+        });
     }
 
     nextSlide() {
+        let previousIndex = this.state.slideIndex;
         let nextSlideIdex = this.state.slideIndex + 1;
         if (nextSlideIdex >= this.state.mdChapterSize) {
             console.log('çondition fail');
@@ -53,17 +75,22 @@ export class PresentationView extends Component {
         }
         console.log(nextSlideIdex);
         this.setState({
-            slideIndex: nextSlideIdex
+            previousIndex: previousIndex,
+            slideIndex: nextSlideIdex,
+            slide: !this.state.slide
         });
     }
 
     previousSlide() {
+        let previousIndex = this.state.slideIndex;
         let previousSlide = this.state.slideIndex - 1;
         if (previousSlide < 0) {
             previousSlide = 0;
         }
         this.setState({
-            slideIndex: previousSlide
+            previousIndex: previousIndex,
+            slideIndex: previousSlide,
+            slide: !this.state.slide
         });
     }
 
@@ -72,33 +99,41 @@ export class PresentationView extends Component {
 
         /*check first line */
         let separatedMdContent = this.state.mdChapters.map(mdPart => (<MarkdownView children={mdPart} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />));
-        // const slideRenderer = (params) => {
-        //     let { key, index } = params;
-        //     if (index < 0) {
-        //         return <Fragment />;
-        //     }
-        //     if (index >= this.state.mdChapterSize) {
-        //         return <Fragment />;
-        //     }
-        //     return <MarkdownView children={this.state.mdChapters[index]} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />
-        // };
-        {/* <MarkdownView children={mdChapters[index]} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} /> */ }
+        const mdToShowIn = (
+            <Slide direction="up" in={true}>
+                <MarkdownView children={this.state.mdChapters[this.state.slideIndex]} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />
+            </Slide>
+        );
+        // const mdToShowOut = (
+        //     <Slide direction="up" in={false}>
+        //         <MarkdownView children={this.state.mdChapters[this.state.previousIndex]} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />
+        //     </Slide>
+        // );
         return (
             <Box justify="flex-start" spacing={0} style={{ padding: 24 }}>
-                <SwipeableViews index={this.state.slideIndex} slideStyle={{ overflow: 'visible', padding: '5px' }} style={{ overflow: 'visible' }} containerStyle={{ overflow: 'visible' }}>
-                    {separatedMdContent}
-                </SwipeableViews>
-                <Fab aria-label={'Previous slide'} className={classes.fabL} color={'primary'} onClick={this.previousSlide}>
-                    <KeyboardArrowLeft />
+                {mdToShowIn}
+                <Tooltip title="First slide" aria-label="First slide">
+                    <Fab aria-label={'First slide'} className={classes.fabLL} color={'primary'} onClick={this.firstSlide}>
+                        <Replay />
+                    </Fab>
+                </Tooltip>
+                <Tooltip title="Previous slide" aria-label="Previous slide">
+                    <Fab aria-label={'Previous slide'} className={classes.fabL} color={'primary'} onClick={this.previousSlide}>
+                        <KeyboardArrowLeft />
+                    </Fab>
+                </Tooltip>
+                <Fab aria-label={'Slide'} className={classes.fabC} variant="extended">
+                    {`  ${this.state.slideIndex + 1} / ${this.state.mdChapters.length}  `}
                 </Fab>
-                <Fab aria-label={'Next slide'} className={classes.fabR} color={'primary'} onClick={this.nextSlide}>
-                    <KeyboardArrowRight />
-                </Fab>
+                <Tooltip title="Next slide" aria-label="Next slide">
+                    <Fab aria-label={'Next slide'} className={classes.fabR} color={'primary'} onClick={this.nextSlide}>
+                        <KeyboardArrowRight />
+                    </Fab>
+                </Tooltip>
+
             </Box>
         )
     }
 }
-
-// export default PresentationView;
 
 export default withStyles(styles)(PresentationView);
