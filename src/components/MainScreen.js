@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import MarkdownView from './MarkdownView';
 import SelectView from './SelectView';
 import { AppBar, Toolbar, Typography, IconButton, Box } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -85,7 +84,7 @@ class MainScreen extends Component {
   componentWillMount() {
     var mdFilesContent = [];
     let filesToLoad;
-    let fileListFetchPromise = fetch(process.env.PUBLIC_URL + '/filesToLoad.json').then((response) => {
+    fetch(process.env.PUBLIC_URL + '/filesToLoad.json').then((response) => {
       return response.json();
     }).then((jsonData) => {
       filesToLoad = jsonData;

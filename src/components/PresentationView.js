@@ -1,13 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import MarkdownView from './MarkdownView';
-import { Box, Fab, Slide, Tooltip } from '@material-ui/core';
+import { Box, Fab, Fade, Tooltip } from '@material-ui/core';
 import { KeyboardArrowRight, KeyboardArrowLeft, Replay } from '@material-ui/icons';
-import SwipeableViews from 'react-swipeable-views';
-import { virtualize } from 'react-swipeable-views-utils';
 import { withStyles } from '@material-ui/core/styles';
 // import PropTypes from 'prop-types';
 // import { withStyles } from '@material-ui/core/styles';
-const VirtualizeSwipeableViews = virtualize(SwipeableViews);
 
 const styles = (theme) => ({
     fabR: {
@@ -50,47 +47,50 @@ export class PresentationView extends Component {
             mdChapters: mdChapters,
             mdChapterSize: mdChapterSize,
             slide: true,
-            previousIndex: 0
+            slideToShow: 0
         };
 
         this.nextSlide = this.nextSlide.bind(this);
         this.previousSlide = this.previousSlide.bind(this);
         this.firstSlide = this.firstSlide.bind(this);
+        this.onExited = this.onExited.bind(this);
     }
 
     firstSlide() {
         let previousIndex = this.state.slideIndex;
         this.setState({
             previousIndex: previousIndex,
-            slideIndex: 0
+            slideIndex: 0,
+            slide: false
         });
     }
 
     nextSlide() {
-        let previousIndex = this.state.slideIndex;
         let nextSlideIdex = this.state.slideIndex + 1;
         if (nextSlideIdex >= this.state.mdChapterSize) {
             console.log('çondition fail');
             return;
         }
-        console.log(nextSlideIdex);
         this.setState({
-            previousIndex: previousIndex,
             slideIndex: nextSlideIdex,
-            slide: !this.state.slide
+            slide: false
         });
     }
 
     previousSlide() {
-        let previousIndex = this.state.slideIndex;
         let previousSlide = this.state.slideIndex - 1;
         if (previousSlide < 0) {
             previousSlide = 0;
         }
         this.setState({
-            previousIndex: previousIndex,
             slideIndex: previousSlide,
-            slide: !this.state.slide
+            slide: false
+        });
+    }
+    onExited() {
+        this.setState({
+            slideToShow: this.state.slideIndex,
+            slide: true
         });
     }
 
@@ -98,11 +98,14 @@ export class PresentationView extends Component {
         const { classes } = this.props;
 
         /*check first line */
-        let separatedMdContent = this.state.mdChapters.map(mdPart => (<MarkdownView children={mdPart} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />));
+        //let separatedMdContent = this.state.mdChapters.map(mdPart => (<MarkdownView children={mdPart} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />));
         const mdToShowIn = (
-            <Slide direction="up" in={true}>
-                <MarkdownView children={this.state.mdChapters[this.state.slideIndex]} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />
-            </Slide>
+            <Fade in={this.state.slide} unmountOnExit={true} mountOnEnter={true} onExited={this.onExited}>
+                {/*div is here to make fade work. fade is not accept custome component as child */}
+                <div>
+                    <MarkdownView children={this.state.mdChapters[this.state.slideToShow]} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />
+                </div>
+            </Fade>
         );
         // const mdToShowOut = (
         //     <Slide direction="up" in={false}>

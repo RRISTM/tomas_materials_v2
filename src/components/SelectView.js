@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import DocumentView from './DocumentView';
 import PresentationView from './PresentationView';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 
 export class SelectView extends Component {
     render() {
@@ -10,8 +9,6 @@ export class SelectView extends Component {
         /*find presentation*/
         let mdChapters = this.props.mdInfo.mdContent;
         let selectedView;
-        console.log(mdChapters.search(separateHeader));
-        console.log(mdChapters);
         if (mdChapters.search(separateHeader) >= 0) {
             /* presenatation mode */
             console.log('presenation mode');

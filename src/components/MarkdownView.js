@@ -3,7 +3,7 @@ import ReactMarkdown from 'markdown-to-jsx';
 
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import { Container, Box, Fab } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 
 import CodeBlock from './CodeBlock';
 import { withStyles } from '@material-ui/core/styles';
@@ -25,13 +25,13 @@ const styles = (theme) => ({
   }
 });
 export class MarkdownView extends Component {
-  constructor(props) {
-    super(props);
-    //CodeBlock.bind(this.props);
-  }
+  // constructor(props) {
+  //   super(props);
+  //   //CodeBlock.bind(this.props);
+  // }
 
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     const options = {
       overrides: {
         h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4" className={props.classes.STdarkBlue}> {children}  </Typography>), props: { classes: this.props.classes } },

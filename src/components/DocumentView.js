@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MarkdownView from './MarkdownView';
-import { Container, Box, Fab } from '@material-ui/core';
+import { Box, Fab } from '@material-ui/core';
 import { KeyboardArrowUp } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -14,10 +14,10 @@ const styles = (theme) => ({
 });
 
 export class DocumentView extends Component {
-    constructor(props) {
-        super(props);
-        //CodeBlock.bind(this.props);
-    }
+    // constructor(props) {
+    //     super(props);
+    //     //CodeBlock.bind(this.props);
+    // }
 
     scrollTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -29,7 +29,6 @@ export class DocumentView extends Component {
         let mdChapters = this.props.mdChapters;
         mdChapters = mdChapters.split(mdChapterRegex);
         let separatedMdContent = mdChapters.map(mdPart => (<MarkdownView children={mdPart} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />));
-        console.log(mdChapters)
         return (
             <Box justify="flex-start" spacing={0} style={{ padding: 24 }}>
                 {separatedMdContent}

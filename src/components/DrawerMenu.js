@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Drawer, List, Divider, ListSubheader, IconButton, Toolbar } from '@material-ui/core';
+import { Drawer, List, Divider, IconButton, Toolbar } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import DrawerMenuItem from './DrawerMenuItem';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
