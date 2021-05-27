@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import MarkdownView from './MarkdownView';
 import { Box, Fab, Fade, Tooltip } from '@material-ui/core';
-import { KeyboardArrowRight, KeyboardArrowLeft, Replay } from '@material-ui/icons';
+import { KeyboardArrowRight, KeyboardArrowLeft, Replay, CallMerge } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
+
+import { Route } from "react-router-dom";
+
 // import PropTypes from 'prop-types';
 // import { withStyles } from '@material-ui/core/styles';
 
@@ -100,12 +103,18 @@ export class PresentationView extends Component {
         /*check first line */
         //let separatedMdContent = this.state.mdChapters.map(mdPart => (<MarkdownView children={mdPart} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />));
         const mdToShowIn = (
-            <Fade in={this.state.slide} unmountOnExit={true} mountOnEnter={true} onExited={this.onExited}>
-                {/*div is here to make fade work. fade is not accept custome component as child */}
-                <div>
-                    <MarkdownView children={this.state.mdChapters[this.state.slideToShow]} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />
-                </div>
-            </Fade>
+            <Route exact path="/post/:id" render={({ match }) => {
+                console.log(this);
+                return (
+                    // <Post post={posts.find(p => p.id === match.params.id)} />
+                    <Fade in={this.state.slide} unmountOnExit={true} mountOnEnter={true} onExited={this.onExited}>
+                        {/*div is here to make fade work. fade is not accept custome component as child */}
+                        <div>
+                            <MarkdownView children={this.state.mdChapters[this.state.slideToShow]} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />
+                        </div>
+                    </Fade>
+                )
+            }} />
         );
         // const mdToShowOut = (
         //     <Slide direction="up" in={false}>

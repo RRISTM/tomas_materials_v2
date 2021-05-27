@@ -1,9 +1,10 @@
 import React from 'react';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { createMuiTheme } from '@material-ui/core/styles';
-import {blue,pink} from '@material-ui/core/colors';
+import { blue, pink } from '@material-ui/core/colors';
 import MainScreen from './components/MainScreen';
 import 'typeface-roboto';
+import { BrowserRouter as Router } from "react-router-dom";
 
 
 const theme = createMuiTheme({
@@ -12,7 +13,7 @@ const theme = createMuiTheme({
     fontFamily: [
       'Arial'
     ].join(','),
-    color:'#39A9DC'
+    color: '#39A9DC'
   },
   palette: {
     primary: blue,
@@ -24,13 +25,15 @@ const theme = createMuiTheme({
 
 function App() {
   return (
-    <MuiThemeProvider
-      theme={theme}>
+    <Router>
+      <MuiThemeProvider
+        theme={theme}>
 
-      <div className="App">
-        <MainScreen />
-      </div>
-    </MuiThemeProvider>
+        <div className="App">
+          <MainScreen />
+        </div>
+      </MuiThemeProvider>
+    </Router>
   );
 }
 
