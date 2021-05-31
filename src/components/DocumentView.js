@@ -28,7 +28,7 @@ export class DocumentView extends Component {
         const mdChapterRegex = /(^#\s.*\r\n\r\n)/g;
         let mdChapters = this.props.mdChapters;
         mdChapters = mdChapters.split(mdChapterRegex);
-        let separatedMdContent = mdChapters.map(mdPart => (<MarkdownView children={mdPart} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />));
+        let separatedMdContent = mdChapters.map((mdPart, key) => (<MarkdownView children={mdPart} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} key={key} routerLocation={this.props.routerLocation} />));
         return (
             <Box justify="flex-start" spacing={0} style={{ padding: 24 }}>
                 {separatedMdContent}

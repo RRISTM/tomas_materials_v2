@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import DocumentView from './DocumentView';
 import PresentationView from './PresentationView';
 import PropTypes from 'prop-types';
+import { Route } from "react-router-dom";
 
 export class SelectView extends Component {
     render() {
@@ -13,7 +14,11 @@ export class SelectView extends Component {
             /* presenatation mode */
             console.log('presenation mode');
             mdChapters = mdChapters.split(separateHeader).pop();
-            selectedView = (<PresentationView mdChapters={mdChapters} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />);
+            selectedView = (
+                <Route to={`${this.props.match.path}`} render={(routeProps) => (
+                    <PresentationView mdChapters={mdChapters} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} {...routeProps} />
+                )} />
+            );
         } else {
             console.log('document mode');
             selectedView = (<DocumentView mdChapters={mdChapters} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />);

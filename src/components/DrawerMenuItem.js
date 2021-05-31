@@ -4,6 +4,7 @@ import { ListItem, ListItemText, Collapse, List } from '@material-ui/core';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/styles';
+import { Link, Route } from "react-router-dom";
 
 const styles = theme => ({
   Folder: {
@@ -30,13 +31,17 @@ export class DrawerMenuItem extends Component {
     if (this.props.depth > 0) {
       // console.log(this.props.classesToUse);
       // itemNested = this.props.classesToUse.nested;
-      let leftPadding = theme.spacing.unit * 4 * this.props.depth;
+      let leftPadding = theme.spacing(4) * this.props.depth;
       itemNested = { paddingLeft: leftPadding };
     }
     let completeItem = {};
     if (item.type === 'Folder') {
       /*folder */
-      let subFolder = item.children.map((value) => <DrawerMenuItem key={value.name} item={value} depth={this.props.depth + 1} selectCb={this.props.selectCb} theme={theme} classes={classes} />);
+      let subFolder = item.children.map((value) => (
+        <Route to={`${this.props.match.path}`} render={(routeProps) => (
+          <DrawerMenuItem key={value.name} item={value} depth={this.props.depth + 1} selectCb={this.props.selectCb} theme={theme} classes={classes} {...routeProps} />
+        )} />
+      ));
       let folderItem = (
         <Fragment>
           <ListItem button style={itemNested} onClick={(e) => this.setState({ expand: !this.state.expand })} >
@@ -54,9 +59,11 @@ export class DrawerMenuItem extends Component {
     } else if (item.type === 'File') {
       /*file */
       let fileItem = (
-        <ListItem button style={itemNested} onClick={(e) => this.props.selectCb(item.name)}>
-          <ListItemText disableTypography inset primary={item.name} className={classes.File} />
-        </ListItem>
+        <Link to={`/${item.file}`} style={{ textDecoration: 'none' }}>
+          <ListItem button style={itemNested} onClick={(e) => this.props.selectCb(item.name)}>
+            <ListItemText disableTypography inset primary={item.name} className={classes.File} />
+          </ListItem>
+        </Link>
       );
       completeItem = fileItem;
     } else {
@@ -74,7 +81,8 @@ DrawerMenuItem.propTypes = {
   // classes: PropTypes.array.isRequired,
   selectCb: PropTypes.func.isRequired,
   depth: PropTypes.number.isRequired,
-  item: PropTypes.object.isRequired
+  item: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(DrawerMenuItem);

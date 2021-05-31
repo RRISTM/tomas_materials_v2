@@ -4,7 +4,7 @@ import { Box, Fab, Fade, Tooltip } from '@material-ui/core';
 import { KeyboardArrowRight, KeyboardArrowLeft, Replay, CallMerge } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 
-import { Route } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 // import PropTypes from 'prop-types';
 // import { withStyles } from '@material-ui/core/styles';
@@ -99,22 +99,25 @@ export class PresentationView extends Component {
 
     render() {
         const { classes } = this.props;
-
+        console.log(this.props)
         /*check first line */
         //let separatedMdContent = this.state.mdChapters.map(mdPart => (<MarkdownView children={mdPart} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />));
         const mdToShowIn = (
-            <Route exact path="/post/:id" render={({ match }) => {
-                console.log(this);
-                return (
-                    // <Post post={posts.find(p => p.id === match.params.id)} />
-                    <Fade in={this.state.slide} unmountOnExit={true} mountOnEnter={true} onExited={this.onExited}>
-                        {/*div is here to make fade work. fade is not accept custome component as child */}
-                        <div>
-                            <MarkdownView children={this.state.mdChapters[this.state.slideToShow]} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />
-                        </div>
-                    </Fade>
-                )
-            }} />
+            <Switch>
+                <Route exact path={`${this.props.location.pathname}/:id`} render={({ match }) => {
+                    console.log(this);
+                    return (
+                        // <Post post={posts.find(p => p.id === match.params.id)} />
+                        <Fade in={this.state.slide} unmountOnExit={true} mountOnEnter={true} onExited={this.onExited}>
+                            {/*div is here to make fade work. fade is not accept custome component as child */}
+                            <div>
+                                <MarkdownView children={this.state.mdChapters[this.state.slideToShow]} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />
+                            </div>
+                        </Fade>
+                    )
+                }} />
+                <Redirect exact from={`${this.props.location.pathname}`} to={`${this.props.location.pathname}/0`} />
+            </Switch>
         );
         // const mdToShowOut = (
         //     <Slide direction="up" in={false}>

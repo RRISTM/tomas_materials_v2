@@ -4,6 +4,7 @@ import { Drawer, List, Divider, IconButton, Toolbar } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import DrawerMenuItem from './DrawerMenuItem';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { Route } from "react-router-dom";
 // import {MenuIcon,InboxIcon,MailIcon} from '@material-ui/icons';
 
 
@@ -22,8 +23,11 @@ export class DrawerMenu extends Component {
   }
   render() {
     const classes = this.props.classesToUse;
-
-    let listToShow = this.props.menuItems.map((value) => (<DrawerMenuItem key={value.name} item={value} depth={0} selectCb={this.props.selectCb} classesToUse={this.props.classesToUse} />));
+    let listToShow = this.props.menuItems.map((value) => (
+      <Route to={`${this.props.match.path}`} render={(routeProps) => (
+        <DrawerMenuItem key={value.name} item={value} depth={0} selectCb={this.props.selectCb} classesToUse={this.props.classesToUse} {...routeProps} />
+      )} />
+    ));
 
     let listCore = (
       <List
@@ -66,7 +70,7 @@ DrawerMenu.propTypes = {
   selectCb: PropTypes.func.isRequired,
   classesToUse: PropTypes.object.isRequired,
   menuItems: PropTypes.array.isRequired,
-  isDrawerOpen: PropTypes.bool.isRequired
+  isDrawerOpen: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(DrawerMenu);

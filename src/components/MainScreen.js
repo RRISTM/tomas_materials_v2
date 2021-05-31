@@ -6,6 +6,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { SnackbarProvider, withSnackbar } from 'notistack';
 import DrawerMenu from './DrawerMenu';
 import { withStyles } from '@material-ui/core/styles';
+
+import { Route } from "react-router-dom";
 // import { filesToLoadArr, menuStructure } from './markdownFilesToLoad';
 
 //develop
@@ -63,7 +65,7 @@ const styles = theme => ({
   },
   toolbar: theme.mixins.toolbar,
   nested: {
-    paddingLeft: theme.spacing.unit * 4
+    paddingLeft: theme.spacing(4)
   }
 });
 
@@ -81,7 +83,7 @@ class MainScreen extends Component {
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     var mdFilesContent = [];
     let filesToLoad;
     fetch(process.env.PUBLIC_URL + '/filesToLoad.json').then((response) => {
@@ -117,11 +119,10 @@ class MainScreen extends Component {
   render() {
     const MySelectView = withSnackbar(SelectView);
     const { classes } = this.props;
-
     /* md files */
     let mdFileToShow = {};
-    let showDrawer = [];
-    let showMd = [];
+    let showDrawer;
+    let showMd;
     if (this.state.mdFilesContent.length === 0) {
       mdFileToShow.name = "Loading";
       mdFileToShow.mdContent = "";
@@ -129,13 +130,33 @@ class MainScreen extends Component {
     }
     else if (this.state.mdFilesContent.length === 1) {
       mdFileToShow = this.state.mdFilesContent[0];
-      showDrawer.push(<DrawerMenu classesToUse={classes} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} />);
-      showMd.push(<MySelectView mdInfo={mdFileToShow} />);
+      let mdFileToPath = this.state.menuStructure[0];
+      console.log(mdFileToShow);
+      showDrawer = (
+        <Route to={`${this.props.match.path}`} render={(routeProps) => (
+          <DrawerMenu classesToUse={classes} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} match={this.props.match} {...routeProps} />
+        )} />
+      );
+      showMd = (
+        <Route to={`${this.props.match.path}/${mdFileToPath.file}`} render={(routeProps) => (
+          <MySelectView mdInfo={mdFileToShow} {...routeProps} />
+        )} />
+      );
     } else {
-      showDrawer.push(<DrawerMenu classesToUse={classes} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} />);
+      showDrawer = (
+        <Route to={`${this.props.match.path}`} render={(routeProps) => (
+          <DrawerMenu classesToUse={classes} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} match={this.props.match} {...routeProps} />
+        )} />
+      );
       mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
+      let mdFileToPath = this.state.menuStructure.find((menuStructureContent) => (menuStructureContent.name === this.state.mdSelected));
+      console.log(mdFileToPath);
       if (mdFileToShow !== undefined) {
-        showMd.push(<MySelectView mdInfo={mdFileToShow} />);
+        showMd = (
+          <Route to={`${this.props.match.path}/${mdFileToPath.file}`} render={(routeProps) => (
+            <MySelectView mdInfo={mdFileToShow} {...routeProps} />
+          )} />
+        );
       } else {
         mdFileToShow = {};
         mdFileToShow.name = "";
@@ -183,6 +204,9 @@ class MainScreen extends Component {
             <div className={classes.toolbar} />
             {showMd}
           </SnackbarProvider>
+          <Route path={`${this.props.match}/About`}>
+            About
+        </Route>
         </Box>
         {/* </Box> */}
       </div>
