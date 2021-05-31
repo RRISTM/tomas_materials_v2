@@ -4,7 +4,7 @@ import { Box, Fab, Fade, Tooltip } from '@material-ui/core';
 import { KeyboardArrowRight, KeyboardArrowLeft, Replay, CallMerge } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, Link } from "react-router-dom";
 
 // import PropTypes from 'prop-types';
 // import { withStyles } from '@material-ui/core/styles';
@@ -104,7 +104,7 @@ export class PresentationView extends Component {
         //let separatedMdContent = this.state.mdChapters.map(mdPart => (<MarkdownView children={mdPart} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />));
         const mdToShowIn = (
             <Switch>
-                <Route exact path={`${this.props.location.pathname}/:id`} render={({ match }) => {
+                <Route exact path={`${this.props.match.url}/:id`} render={({ match }) => {
                     console.log(this);
                     return (
                         // <Post post={posts.find(p => p.id === match.params.id)} />
@@ -116,7 +116,7 @@ export class PresentationView extends Component {
                         </Fade>
                     )
                 }} />
-                <Redirect exact from={`${this.props.location.pathname}`} to={`${this.props.location.pathname}/0`} />
+                <Redirect exact from={`${this.props.match.url}`} to={`${this.props.match.url}/0`} />
             </Switch>
         );
         // const mdToShowOut = (
@@ -128,7 +128,8 @@ export class PresentationView extends Component {
             <Box justify="flex-start" spacing={0} style={{ padding: 24 }}>
                 {mdToShowIn}
                 <Tooltip title="First slide" aria-label="First slide">
-                    <Fab aria-label={'First slide'} className={classes.fabLL} color={'primary'} onClick={this.firstSlide}>
+                    {/* <Fab aria-label={'First slide'} className={classes.fabLL} color={'primary'} onClick={this.firstSlide}> */}
+                    <Fab aria-label={'First slide'} className={classes.fabLL} color={'primary'} component={Link} to={`${this.props.match.url}/0`}>
                         <Replay />
                     </Fab>
                 </Tooltip>

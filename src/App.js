@@ -4,7 +4,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { blue, pink } from '@material-ui/core/colors';
 import MainScreen from './components/MainScreen';
 import 'typeface-roboto';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 
 
 const theme = createMuiTheme({
@@ -30,7 +30,11 @@ function App() {
         theme={theme}>
 
         <div className="App">
-          <Route to='/' component={MainScreen} />
+          <Switch>
+
+            <Route path='/show' component={MainScreen} />
+            <Redirect from='/' to='/show' />
+          </Switch>
           {/* <MainScreen /> */}
         </div>
       </MuiThemeProvider>

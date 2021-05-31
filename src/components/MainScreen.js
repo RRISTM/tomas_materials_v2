@@ -131,14 +131,13 @@ class MainScreen extends Component {
     else if (this.state.mdFilesContent.length === 1) {
       mdFileToShow = this.state.mdFilesContent[0];
       let mdFileToPath = this.state.menuStructure[0];
-      console.log(mdFileToShow);
       showDrawer = (
         <Route to={`${this.props.match.path}`} render={(routeProps) => (
           <DrawerMenu classesToUse={classes} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} match={this.props.match} {...routeProps} />
         )} />
       );
       showMd = (
-        <Route to={`${this.props.match.path}/${mdFileToPath.file}`} render={(routeProps) => (
+        <Route path={`${this.props.match.path}/${mdFileToPath.file}`} render={(routeProps) => (
           <MySelectView mdInfo={mdFileToShow} {...routeProps} />
         )} />
       );
@@ -150,10 +149,9 @@ class MainScreen extends Component {
       );
       mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
       let mdFileToPath = this.state.menuStructure.find((menuStructureContent) => (menuStructureContent.name === this.state.mdSelected));
-      console.log(mdFileToPath);
       if (mdFileToShow !== undefined) {
         showMd = (
-          <Route to={`${this.props.match.path}/${mdFileToPath.file}`} render={(routeProps) => (
+          <Route path={`${this.props.match.path}/${mdFileToPath.file}`} render={(routeProps) => (
             <MySelectView mdInfo={mdFileToShow} {...routeProps} />
           )} />
         );

@@ -59,11 +59,11 @@ export class DrawerMenuItem extends Component {
     } else if (item.type === 'File') {
       /*file */
       let fileItem = (
-        <Link to={`/${item.file}`} style={{ textDecoration: 'none' }}>
-          <ListItem button style={itemNested} onClick={(e) => this.props.selectCb(item.name)}>
-            <ListItemText disableTypography inset primary={item.name} className={classes.File} />
-          </ListItem>
-        </Link>
+        // <Link to={`${this.props.match.url}/${item.file}`} style={{ textDecoration: 'none' }}>
+        <ListItem button style={itemNested} onClick={(e) => this.props.selectCb(item.name)} component={Link} to={`${this.props.match.url}/${item.file}`}>
+          <ListItemText disableTypography inset primary={item.name} className={classes.File} />
+        </ListItem>
+        // </Link>
       );
       completeItem = fileItem;
     } else {
