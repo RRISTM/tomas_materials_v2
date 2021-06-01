@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import MarkdownView from './MarkdownView';
 import { Box, Fab, Fade, Tooltip } from '@material-ui/core';
 import { KeyboardArrowRight, KeyboardArrowLeft, Replay, CallMerge } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 
-import { Route, Switch, Redirect, Link } from "react-router-dom";
+import { Route, Switch, Redirect, Link, matchPath } from "react-router-dom";
 
 // import PropTypes from 'prop-types';
 // import { withStyles } from '@material-ui/core/styles';
@@ -50,9 +50,10 @@ export class PresentationView extends Component {
             mdChapters: mdChapters,
             mdChapterSize: mdChapterSize,
             slide: true,
-            slideToShow: 0
+            slideToShow: 0,
+            reroute: false,
+            enter: true
         };
-
         this.nextSlide = this.nextSlide.bind(this);
         this.previousSlide = this.previousSlide.bind(this);
         this.firstSlide = this.firstSlide.bind(this);
@@ -60,6 +61,7 @@ export class PresentationView extends Component {
     }
 
     firstSlide() {
+        console.log('first');
         let previousIndex = this.state.slideIndex;
         this.setState({
             previousIndex: previousIndex,
@@ -69,6 +71,7 @@ export class PresentationView extends Component {
     }
 
     nextSlide() {
+        console.log('next slide');
         let nextSlideIdex = this.state.slideIndex + 1;
         if (nextSlideIdex >= this.state.mdChapterSize) {
             console.log('çondition fail');
@@ -81,6 +84,7 @@ export class PresentationView extends Component {
     }
 
     previousSlide() {
+        console.log('previous');
         let previousSlide = this.state.slideIndex - 1;
         if (previousSlide < 0) {
             previousSlide = 0;
@@ -91,43 +95,47 @@ export class PresentationView extends Component {
         });
     }
     onExited() {
+        console.log('exited');
         this.setState({
             slideToShow: this.state.slideIndex,
-            slide: true
+            slide: true,
+            reroute: true
         });
     }
 
     render() {
         const { classes } = this.props;
-        console.log(this.props)
         /*check first line */
         //let separatedMdContent = this.state.mdChapters.map(mdPart => (<MarkdownView children={mdPart} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />));
-        const mdToShowIn = (
-            <Switch>
-                <Route exact path={`${this.props.match.url}/:id`} render={({ match }) => {
-                    if ((match.params.id >= 0) && (match.params.id < this.state.mdChapterSize)) {
-                        this.setState({ slideIndex: match.params.id });
+        const routesHandling = (<Switch>
+            <Route exact path={`${this.props.match.url}/:id`} render={({ match }) => {
+                console.log(this.state);
+                let routeIndex = parseInt(match.params.id);
+                if (this.state.reroute) {
+                    console.log('reroute');
+                    return (<Redirect push to={`${this.props.match.url}/${this.state.slideIndex}`} />);
+                } else {
+                    if (this.state.enter) {
+                        this.setState({ slideIndex: routeIndex, slideToShow: routeIndex, enter: false });
                     }
-                    return (
-                        // <Post post={posts.find(p => p.id === match.params.id)} />
-                        <Fade in={this.state.slide} unmountOnExit={true} mountOnEnter={true} onExited={this.onExited}>
-                            {/*div is here to make fade work. fade is not accept custome component as child */}
-                            <div>
-                                <MarkdownView children={this.state.mdChapters[this.state.slideToShow]} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />
-                            </div>
-                        </Fade>
-                    )
-                }} />
-                <Redirect exact from={`${this.props.match.url}`} to={`${this.props.match.url}/0`} />
-            </Switch>
+                }
+                return (<Fragment></Fragment>);
+            }} />
+            <Redirect exact from={`${this.props.match.url}`} to={`${this.props.match.url}/0`} />
+        </Switch>);
+        const mdToShowIn = (
+            <Fragment>
+                <Fade in={this.state.slide} unmountOnExit={true} mountOnEnter={true} onExited={this.onExited}>
+                    {/*div is here to make fade work. fade is not accept custome component as child */}
+                    <div>
+                        <MarkdownView children={this.state.mdChapters[this.state.slideToShow]} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />
+                    </div>
+                </Fade>
+            </Fragment>
         );
-        // const mdToShowOut = (
-        //     <Slide direction="up" in={false}>
-        //         <MarkdownView children={this.state.mdChapters[this.state.previousIndex]} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />
-        //     </Slide>
-        // );
         return (
             <Box justify="flex-start" spacing={0} style={{ padding: 24 }}>
+                {routesHandling}
                 {mdToShowIn}
                 <Tooltip title="First slide" aria-label="First slide">
                     {/* <Fab aria-label={'First slide'} className={classes.fabLL} color={'primary'} onClick={this.firstSlide}> */}
