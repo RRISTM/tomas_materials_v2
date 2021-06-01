@@ -61,7 +61,6 @@ export class PresentationView extends Component {
     }
 
     firstSlide() {
-        console.log('first');
         let previousIndex = this.state.slideIndex;
         this.setState({
             previousIndex: previousIndex,
@@ -71,7 +70,6 @@ export class PresentationView extends Component {
     }
 
     nextSlide() {
-        console.log('next slide');
         let nextSlideIdex = this.state.slideIndex + 1;
         if (nextSlideIdex >= this.state.mdChapterSize) {
             console.log('çondition fail');
@@ -84,7 +82,6 @@ export class PresentationView extends Component {
     }
 
     previousSlide() {
-        console.log('previous');
         let previousSlide = this.state.slideIndex - 1;
         if (previousSlide < 0) {
             previousSlide = 0;
@@ -95,7 +92,6 @@ export class PresentationView extends Component {
         });
     }
     onExited() {
-        console.log('exited');
         this.setState({
             slideToShow: this.state.slideIndex,
             slide: true,
@@ -109,10 +105,8 @@ export class PresentationView extends Component {
         //let separatedMdContent = this.state.mdChapters.map(mdPart => (<MarkdownView children={mdPart} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />));
         const routesHandling = (<Switch>
             <Route exact path={`${this.props.match.url}/:id`} render={({ match }) => {
-                console.log(this.state);
                 let routeIndex = parseInt(match.params.id);
                 if (this.state.reroute) {
-                    console.log('reroute');
                     return (<Redirect push to={`${this.props.match.url}/${this.state.slideIndex}`} />);
                 } else {
                     if (this.state.enter) {
