@@ -105,7 +105,9 @@ export class PresentationView extends Component {
         const mdToShowIn = (
             <Switch>
                 <Route exact path={`${this.props.match.url}/:id`} render={({ match }) => {
-                    console.log(this);
+                    if ((match.params.id >= 0) && (match.params.id < this.state.mdChapterSize)) {
+                        this.setState({ slideIndex: match.params.id });
+                    }
                     return (
                         // <Post post={posts.find(p => p.id === match.params.id)} />
                         <Fade in={this.state.slide} unmountOnExit={true} mountOnEnter={true} onExited={this.onExited}>
