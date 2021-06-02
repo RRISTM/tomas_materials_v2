@@ -8,6 +8,7 @@ import DrawerMenu from './DrawerMenu';
 import { withStyles } from '@material-ui/core/styles';
 
 import { Route } from "react-router-dom";
+import { Fragment } from 'react';
 // import { filesToLoadArr, menuStructure } from './markdownFilesToLoad';
 
 //develop
@@ -93,7 +94,7 @@ class MainScreen extends Component {
     }).then(() => {
       let requests = filesToLoad.filesToLoadArr.map(value => {
         return fetch(process.env.PUBLIC_URL + value.path + "/" + value.file).then((response) => response.text()).then((text) => {
-          let preparedContent = { name: value.name, mdContent: text, mdPath: value.path }
+          let preparedContent = { name: value.name, mdContent: text, mdPath: value.path, mdFile: value.file }
           mdFilesContent.push(preparedContent);
 
         });
@@ -149,18 +150,21 @@ class MainScreen extends Component {
       );
       mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
       let mdFileToPath = this.state.menuStructure.find((menuStructureContent) => (menuStructureContent.name === this.state.mdSelected));
-      if (mdFileToShow !== undefined) {
-        showMd = (
-          <Route path={`${this.props.match.path}/${mdFileToPath.file}`} render={(routeProps) => (
-            <MySelectView mdInfo={mdFileToShow} {...routeProps} />
-          )} />
-        );
-      } else {
+      showMd = this.state.mdFilesContent.map((mdFileContent) => {
+        return (<Route path={`${this.props.match.path}/${mdFileContent.mdFile}`} render={(routeProps) => {
+          return (<MySelectView mdInfo={mdFileContent} {...routeProps} />);
+        }} />)
+      });
+      showMd.push(<Route exact path={`${this.props.match.path}`} render={(routeProps) => {
+        return (<Fragment></Fragment>);
+      }} />)
+      if (mdFileToShow === undefined) {
         mdFileToShow = {};
         mdFileToShow.name = "";
         mdFileToShow.mdContent = "";
         mdFileToShow.mdPath = "";
       }
+
       // console.log('Multiple files is not implemented yet');
     }
     let appBarStyle;
