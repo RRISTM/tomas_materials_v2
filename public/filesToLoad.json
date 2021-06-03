@@ -59,6 +59,11 @@
       "name": "TestPresentation",
       "path": "/markdown",
       "file": "TestPresentation.md"
+    },
+    {
+      "name": "1_prepare_project",
+      "path": "/markdown/Workshop",
+      "file": "1_prepare_project.md"
     }
   ],
 
@@ -134,6 +139,12 @@
       "name": "TestPresentation",
       "path": "/markdown",
       "file": "TestPresentation.md"
+    },
+    {
+      "type": "File",
+      "name": "1_prepare_project",
+      "path": "/markdown/Workshop",
+      "file": "1_prepare_project.md"
     }
   ]
 }
