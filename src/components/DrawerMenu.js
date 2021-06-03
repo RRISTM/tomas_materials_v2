@@ -23,8 +23,8 @@ export class DrawerMenu extends Component {
   }
   render() {
     const classes = this.props.classesToUse;
-    let listToShow = this.props.menuItems.map((value) => (
-      <Route to={`${this.props.match.path}`} render={(routeProps) => (
+    let listToShow = this.props.menuItems.map((value, index) => (
+      <Route key={index} to={`${this.props.match.path}`} render={(routeProps) => (
         <DrawerMenuItem key={value.name} item={value} depth={0} selectCb={this.props.selectCb} classesToUse={this.props.classesToUse} {...routeProps} />
       )} />
     ));
@@ -48,7 +48,7 @@ export class DrawerMenu extends Component {
         anchor="left"
       >
         {/* <div className={classes.toolbar} /> */}
-        <Toolbar className={{ alignItems: 'center', display: 'flex' }}>
+        <Toolbar >
 
           {/* <div className={classes.toolbar}> */}
           <IconButton
@@ -62,7 +62,7 @@ export class DrawerMenu extends Component {
         </Toolbar>
         <Divider />
         { listCore}
-      </Drawer >
+      </Drawer>
     )
   }
 }
