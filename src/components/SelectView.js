@@ -6,7 +6,7 @@ import { Route } from "react-router-dom";
 
 export class SelectView extends Component {
     render() {
-        const separateHeader = /^----!\r\nPresentation\r\n----!/;
+        const separateHeader = /^----!(\r\n|\n)Presentation(\r\n|\n)----!/;
         /*find presentation*/
         let mdChapters = this.props.mdInfo.mdContent;
         let selectedView;

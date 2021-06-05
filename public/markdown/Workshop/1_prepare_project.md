@@ -4,14 +4,14 @@ Presentation
 
 # Start led blink from scratch
 
-* This short hands-on will show you how to start a project from scratch
-* The point is to a get first running led blink in few clicks
-* We will then use this base to go further with ThreadX
+- This short hands-on will show you how to start a project from scratch
+- The point is to a get first running led blink in few clicks
+- We will then use this base to go further with ThreadX
 
 ![Create MX project](./img/12.svg)
 
 # Launch STM32CubeIDE
-   
+
 ![CubeMX icon](./img/01.png)
 
 # Select a workspace, click on Launch
@@ -20,20 +20,20 @@ Presentation
 
 # Start a new project
 
-* Or use File>New>STM32Project (IDE)
+- Or use File>New>STM32Project (IDE)
 
 ![New project](./img/03.png)
 
 # Board selector
 
-* Click on board selector
+- Click on board selector
 
 ![Board](./img/04.png)
 
 # Look for Nucleo H723
 
 1. Type H723 in the search box
-2. Then click on  Nucleo H723
+2. Then click on Nucleo H723
 
 ![Nucleo board](./img/05.png)
 
@@ -46,7 +46,7 @@ Presentation
 
 # Project name
 
-1. Type the project name 
+1. Type the project name
 2. Next
 3. Check FW version
 4. Finish
@@ -76,7 +76,7 @@ Presentation
 ![main.c](./img/11.png)
 
 2. Answer yes to the open perspective
-3. Then go down to the main() function and find the while(1) loop line 129 
+3. Then go down to the main() function and find the while(1) loop line 129
 
 ```c
 /* USER CODE BEGIN WHILE */
@@ -91,7 +91,7 @@ Presentation
 
 # Adding LED toggling using code completion
 
-1. Just before comment /* USER CODE END WHILE */ type:
+1. Just before comment /_ USER CODE END WHILE _/ type:
 2. HAL_GPIO_T and the CTRL-Space bar you should get:
 
 ![gpio toggle pin](./img/12.png)
@@ -110,11 +110,12 @@ Or copy here:
 
 # HAL GPIO Toggle
 
-* Each time HAL_GPIO_TogglePin is called
-  * LED will turn on/off
+- Each time HAL_GPIO_TogglePin is called
 
-* Without delay impossible to see in run
-  * Only in debug stepping
+  - LED will turn on/off
+
+- Without delay impossible to see in run
+  - Only in debug stepping
 
 ![gpio toggle pin hal](./img/13.svg)
 
@@ -124,18 +125,17 @@ Or copy here:
 
 ![adding delay](./img/14.png)
 
-2. Type HAL_Delay 
+2. Type HAL_Delay
 3. Choose a delay in ms : 500
 
 ![hal delay](./img/15.png)
-
 
 ```c
 HAL_Delay(500);
 ```
 
 4. Add final semicolon `;`
-5. Now compile the project using the hammer  
+5. Now compile the project using the hammer
 
 ![compile](./img/16.png)
 
@@ -145,20 +145,19 @@ HAL_Delay(500);
 
 # Connect the board to the computer
 
-* Time to transfer firmware to the board
-* First connect the Nucleo board to the computer
+- Time to transfer firmware to the board
+- First connect the Nucleo board to the computer
 
 ![connect board](./img/18.png)
 
 # Download firmware and Run on target
 
-* First click on the project name
-* Then menu Run/Run As/STM32 …
-* In Edit Configuration window click OK
+- First click on the project name
+- Then menu Run/Run As/STM32 …
+- In Edit Configuration window click OK
 
 ![run debug](./img/19.png)
 
 # LED is Blinking
 
 ![run code](./img/20.png)
-

@@ -33,13 +33,15 @@ const styles = (theme) => ({
 });
 export class PresentationView extends Component {
     constructor(props) {
-        super(props)
+        super(props);
 
-        const mdChapterRegex = /(?=#\s.*\r\n\r\n)/g;
-        const emptyLine = /^\r\n\r\n/;
+        const mdChapterRegex = /(?=#\s.*[\r\n\r\n|\n\n])/g;
+        //const mdChapterRegex = /(?=#\s.*\r\n\r\n)/g;
+        const emptyLine = /^[\r\n\r\n|\n\n]/;
+        //const emptyLine = /^\r\n\r\n/;
         let mdChapters = this.props.mdChapters;
         mdChapters = mdChapters.split(mdChapterRegex);
-
+        console.log(mdChapters);
         if (mdChapters[0].search(emptyLine) >= 0) {
             mdChapters.shift();
         }
