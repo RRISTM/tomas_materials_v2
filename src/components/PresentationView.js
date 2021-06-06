@@ -41,7 +41,6 @@ export class PresentationView extends Component {
         //const emptyLine = /^\r\n\r\n/;
         let mdChapters = this.props.mdChapters;
         mdChapters = mdChapters.split(mdChapterRegex);
-        console.log(mdChapters);
         if (mdChapters[0].search(emptyLine) >= 0) {
             mdChapters.shift();
         }
