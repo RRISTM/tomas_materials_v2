@@ -61,9 +61,14 @@
       "file": "TestPresentation.md"
     },
     {
-      "name": "1_prepare_project",
+      "name": "12. prepare project",
       "path": "/markdown/Workshop",
       "file": "1_prepare_project.md"
+    },
+    {
+      "name": "13. HandsOn 1 copy",
+      "path": "/markdown/Workshop",
+      "file": "copy_sheet.md"
     }
   ],
 
@@ -133,18 +138,18 @@
       "name": "11. Timer",
       "path": "/markdown",
       "file": "threadx_timer.md"
-    },
+    }
     {
       "type": "File",
-      "name": "TestPresentation",
-      "path": "/markdown",
-      "file": "TestPresentation.md"
-    },
-    {
-      "type": "File",
-      "name": "1_prepare_project",
+      "name": "12. prepare project",
       "path": "/markdown/Workshop",
       "file": "1_prepare_project.md"
+    },
+    {
+      "type": "File",
+      "name": "13. HandsOn 1 copy",
+      "path": "/markdown/Workshop",
+      "file": "copy_sheet.md"
     }
   ]
 }

@@ -33,7 +33,7 @@ Presentation
 # Look for Nucleo H723
 
 1. Type H723 in the search box
-2. Then click on Nucleo H723
+2. Then click on Nucleo H723
 
 ![Nucleo board](./img/05.png)
 
