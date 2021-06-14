@@ -14,21 +14,21 @@ Or copy here:
 
 # Creating first thread : variables declarations
 
-1. Open Core\Src \app_threadx_rtos.c and add
-2. To line 36 /* USER CODE BEGIN PD */ add:
+1. Open `Core\Src\app_threadx_rtos.c` and add
+2. To line 36 `/* USER CODE BEGIN PD */` add:
 
 ```c
 #define THRAD_STACK_SIZE 1024
 ```
 
-3. To line 47 just after /* USER CODE BEGIN PV */ add:
+3. To line 47 just after `/* USER CODE BEGIN PV */` add:
 
 ```c
 uint8_t thread_stack[THRAD_STACK_SIZE];
 	TX_THREAD thread_ptr;
 ```
 
-4. To line 52 after /* USER CODE BEGIN PFP */ add:
+4. To line 52 after `/* USER CODE BEGIN PFP */` add:
 
 ```c
 VOID my_thread_entry(ULONG initial_input);
@@ -42,14 +42,16 @@ tx_thread_create( &thread_ptr, "my_thread", my_thread_entry, 0x1234, thread_stac
 
 # STEP 3: Create the thread’s main function
 
-1. At line 27, just after /* USER CODE BEGIN Includes */
+1. At line 27, just after `/* USER CODE BEGIN Includes */`
+
 
 ```c
 #include "main.h“
 ```
 
-2. Then after line 77, /* USER CODE BEGIN 1 */
+2. Then after line 77, `/* USER CODE BEGIN 1 */`
    
+
 ```c
 VOID my_thread_entry (ULONG initial_input)
 {
@@ -62,7 +64,7 @@ VOID my_thread_entry (ULONG initial_input)
 
 # Memory dedicated to trace
 
-1. In app_threadx.c into section /* USER CODE BEGIN PV */ add
+1. In `app_threadx.c` into section `/* USER CODE BEGIN PV */` add
 
 ```c
 #define TRACEX_BUFFER_SIZE 64000
@@ -78,7 +80,7 @@ tx_trace_enable(&tracex_buffer,TRACEX_BUFFER_SIZE,30);
 
 # Put trace buffer to AXI SRAM
 
-1. Add this to STM32H723ZGTX_FLASH.ld file
+1. Add this to `STM32H723ZGTX_FLASH.ld` file
 
 ```c
  .trace :
@@ -98,7 +100,7 @@ HAL_Delay(500);
 
 # Add a second thread
 
-1. To App_threadx.c add new thread handle and stack
+1. To `App_threadx.c` add new thread handle and stack
 
 ```c
 uint8_t thread_stack2[THRAD_STACK_SIZE];
@@ -132,7 +134,7 @@ VOID my_thread_entry2 (ULONG initial_input)
 
 # Activation of preemption threshold feature
 
-1. Change my_thread preemption priority to 13
+1. Change my_thread preemption priority to 13
 
 ```c
       my_thread_entry, 0x1234, thread_stack, THRAD_STACK_SIZE, 15, 13, 1, TX_AUTO_START);
