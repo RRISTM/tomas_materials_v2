@@ -45,7 +45,7 @@ tx_thread_create( &thread_ptr, "my_thread", my_thread_entry, 0x1234, thread_stac
 1. At line 27, just after /* USER CODE BEGIN Includes */
 
 ```c
-#include "main.h“
+#include "main.h"
 ```
 
 2. Then after line 77, /* USER CODE BEGIN 1 */
@@ -54,8 +54,8 @@ tx_thread_create( &thread_ptr, "my_thread", my_thread_entry, 0x1234, thread_stac
 VOID my_thread_entry (ULONG initial_input)
 {
     while(1){
-        HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
-	tx_thread_sleep(500);
+        HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
+        tx_thread_sleep(20);
     }
 }
 ```
