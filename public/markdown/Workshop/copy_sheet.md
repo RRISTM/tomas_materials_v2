@@ -73,7 +73,6 @@ uint8_t tracex_buffer[64000] __attribute__ ((section (".trace")));
 
 ```c
 tx_trace_enable(&tracex_buffer,TRACEX_BUFFER_SIZE,30);
-  /* USER CODE END App_ThreadX_Init */
 ```
 
 # Put trace buffer to AXI SRAM
@@ -91,7 +90,7 @@ tx_trace_enable(&tracex_buffer,TRACEX_BUFFER_SIZE,30);
 # Change behaviour
 
 1. In MainThread add the following lines:
-	
+
 ```c
 HAL_Delay(500);
 ```
@@ -123,16 +122,16 @@ VOID my_thread_entry2(ULONG initial_input);
 VOID my_thread_entry2 (ULONG initial_input)
 {
     while(1){
-        HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_1);
-        HAL_Delay(500);
-        tx_thread_sleep(50);
+        HAL_GPIO_TogglePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin);
+        HAL_Delay(200);
+        tx_thread_sleep(20);
     }
 }
 ```
 
 # Activation of preemption threshold feature
 
-1. Change my_thread preemption priority to 13
+1. Change my_thread preemption priority to 13
 
 ```c
       my_thread_entry, 0x1234, thread_stack, THRAD_STACK_SIZE, 15, 13, 1, TX_AUTO_START);
