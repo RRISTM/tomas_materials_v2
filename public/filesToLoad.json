@@ -2,72 +2,67 @@
   "filesToLoadArr": [
     {
       "name": "1. Add ThreadX",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "add_threadx.md"
     },
     {
       "name": "2. Add TraceX",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "adding_tracex.md"
     },
     {
       "name": "3. ThreadX basic",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "threadx_basic stucture_flow.md"
     },
     {
       "name": "4. ThreadX memory",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "threadx_memory_allocation.md"
     },
     {
       "name": "5. Memory pools",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "threadx_memory_pools.md"
     },
     {
       "name": "6. Threads",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "thredx_thread.md"
     },
     {
       "name": "7. Semaphore",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "thredx_semaphore.md"
     },
     {
       "name": "8. Mutex",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "thredx_mutex.md"
     },
     {
       "name": "9. Queue",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "thredx_queue.md"
     },
     {
       "name": "10. Event flags",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "thredx_events.md"
     },
     {
       "name": "11. Timer",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "threadx_timer.md"
     },
     {
-      "name": "TestPresentation",
-      "path": "/markdown",
-      "file": "TestPresentation.md"
-    },
-    {
       "name": "12. prepare project",
-      "path": "/markdown/Workshop",
+      "path": "/workshop",
       "file": "1_prepare_project.md"
     },
     {
       "name": "13. HandsOn 1 copy",
-      "path": "/markdown/Workshop",
+      "path": "/workshop",
       "file": "copy_sheet.md"
     }
   ],
@@ -76,79 +71,79 @@
     {
       "type": "File",
       "name": "1. Add ThreadX",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "add_threadx.md"
     },
     {
       "type": "File",
       "name": "2. Add TraceX",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "adding_tracex.md"
     },
     {
       "type": "File",
       "name": "3. ThreadX basic",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "threadx_basic stucture_flow.md"
     },
     {
       "type": "File",
       "name": "4. ThreadX memory",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "threadx_memory_allocation.md"
     },
     {
       "type": "File",
       "name": "5. Memory pools",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "threadx_memory_pools.md"
     },
     {
       "type": "File",
       "name": "6. Threads",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "thredx_thread.md"
     },
     {
       "type": "File",
       "name": "7. Semaphore",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "thredx_semaphore.md"
     },
     {
       "type": "File",
       "name": "8. Mutex",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "thredx_mutex.md"
     },
     {
       "type": "File",
       "name": "9. Queue",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "thredx_queue.md"
     },
     {
       "type": "File",
       "name": "10. Event flags",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "thredx_events.md"
     },
     {
       "type": "File",
       "name": "11. Timer",
-      "path": "/markdown",
+      "path": "/theory_utility",
       "file": "threadx_timer.md"
-    }
+    },
     {
       "type": "File",
       "name": "12. prepare project",
-      "path": "/markdown/Workshop",
+      "path": "/workshop",
       "file": "1_prepare_project.md"
     },
     {
       "type": "File",
       "name": "13. HandsOn 1 copy",
-      "path": "/markdown/Workshop",
+      "path": "/workshop",
       "file": "copy_sheet.md"
     }
   ]
