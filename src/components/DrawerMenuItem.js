@@ -58,12 +58,14 @@ export class DrawerMenuItem extends Component {
       completeItem = folderItem;
     } else if (item.type === 'File') {
       /*file */
+      let selectedItem = false;
+      if (this.props.location.pathname.includes(`${this.props.match.url}/${item.file}`)) {
+        selectedItem = true;
+      }
       let fileItem = (
-        // <Link to={`${this.props.match.url}/${item.file}`} style={{ textDecoration: 'none' }}>
-        <ListItem button style={itemNested} onClick={(e) => this.props.selectCb(item.name)} component={Link} to={`${this.props.match.url}/${item.file}`}>
+        <ListItem button selected={selectedItem} style={itemNested} onClick={(e) => this.props.selectCb(item.name)} component={Link} to={`${this.props.match.url}/${item.file}`}>
           <ListItemText disableTypography inset primary={item.name} className={classes.File} />
         </ListItem>
-        // </Link>
       );
       completeItem = fileItem;
     } else {
