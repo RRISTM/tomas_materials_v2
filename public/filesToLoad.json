@@ -146,10 +146,16 @@
       "file": "1_prepare_project.md"
     },
     {
-      "type": "File",
-      "name": "13. HandsOn 1 copy",
-      "path": "/markdown/Workshop",
-      "file": "copy_sheet.md"
+      "type": "Folder",
+      "name": "Test",
+      "children": [
+        {
+          "type": "File",
+          "name": "13. HandsOn 1 copy",
+          "path": "/markdown/Workshop",
+          "file": "copy_sheet.md"
+        }
+      ]
     }
   ]
 }
