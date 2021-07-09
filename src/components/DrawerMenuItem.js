@@ -20,8 +20,28 @@ const styles = theme => ({
 export class DrawerMenuItem extends Component {
   constructor(props) {
     super(props);
-    this.state = { expand: false };
+
+    // this.searchFolder = this.searchFolder.bind(this);
+    // this.searchItem = this.searchItem.bind(this);
+    function searchFolder(item) {
+      return item.children.find((item) => searchItem(item));
+    }
+    function searchItem(item) {
+      if (item.type === 'Folder') {
+        return searchFolder(item);
+      } else {
+        if (props.location.pathname.includes(`${props.match.url}/${item.file}`)) {
+          console.log("found");
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    let item_inside = searchItem(this.props.item);
+    this.state = { expand: item_inside };
   }
+
 
   render() {
     const { theme, classes } = this.props;
