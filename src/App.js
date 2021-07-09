@@ -11,7 +11,7 @@ const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
     fontFamily: [
-      'Arial'
+      'Roboto', 'Arial'
     ].join(','),
     color: '#39A9DC'
   },

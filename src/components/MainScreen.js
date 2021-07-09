@@ -202,7 +202,7 @@ class MainScreen extends Component {
       let hrefAddr = `${this.state.mdGithubLoc}${mdFileSource.path}/${mdFileSource.file}`;
       mdFileToShow.name = mdFileSource.name;
       githubButton = (
-        <Button target="_blank" href={hrefAddr}>
+        <Button target="_blank" href={hrefAddr} color="inherit">
           EDIT THIS PAGE
         </Button>
       );
