@@ -20,8 +20,28 @@ const styles = theme => ({
 export class DrawerMenuItem extends Component {
   constructor(props) {
     super(props);
-    this.state = { expand: false };
+
+    // this.searchFolder = this.searchFolder.bind(this);
+    // this.searchItem = this.searchItem.bind(this);
+    function searchFolder(item) {
+      return item.children.find((item) => searchItem(item));
+    }
+    function searchItem(item) {
+      if (item.type === 'Folder') {
+        return searchFolder(item);
+      } else {
+        if (props.location.pathname.includes(`${props.match.url}/${item.file}`)) {
+          console.log("found");
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    let item_inside = searchItem(this.props.item);
+    this.state = { expand: item_inside };
   }
+
 
   render() {
     const { theme, classes } = this.props;
@@ -58,12 +78,14 @@ export class DrawerMenuItem extends Component {
       completeItem = folderItem;
     } else if (item.type === 'File') {
       /*file */
+      let selectedItem = false;
+      if (this.props.location.pathname.includes(`${this.props.match.url}/${item.file}`)) {
+        selectedItem = true;
+      }
       let fileItem = (
-        // <Link to={`${this.props.match.url}/${item.file}`} style={{ textDecoration: 'none' }}>
-        <ListItem button style={itemNested} onClick={(e) => this.props.selectCb(item.name)} component={Link} to={`${this.props.match.url}/${item.file}`}>
+        <ListItem button selected={selectedItem} style={itemNested} onClick={(e) => this.props.selectCb(item.name)} component={Link} to={`${this.props.match.url}/${item.file}`}>
           <ListItemText disableTypography inset primary={item.name} className={classes.File} />
         </ListItem>
-        // </Link>
       );
       completeItem = fileItem;
     } else {
