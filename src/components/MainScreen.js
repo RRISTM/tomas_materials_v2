@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import SelectView from './SelectView';
-import { AppBar, Toolbar, Typography, IconButton, Box } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, IconButton, Box, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { SnackbarProvider, withSnackbar } from 'notistack';
 import DrawerMenu from './DrawerMenu';
@@ -67,6 +67,9 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
   nested: {
     paddingLeft: theme.spacing(4)
+  },
+  title: {
+    flexGrow: 1,
   }
 });
 
@@ -77,7 +80,9 @@ class MainScreen extends Component {
       mdFilesContent: [],
       mdSelected: "",
       isDrawerOpen: true,
-      menuStructure: []
+      menuStructure: [],
+      mdfilesToLoadArr: [],
+      mdGithubLoc: ''
     };
     this.itemSelectedCb = this.itemSelectedCb.bind(this);
     this.drawerOpenClose = this.drawerOpenClose.bind(this);
@@ -100,7 +105,7 @@ class MainScreen extends Component {
         });
       });
       Promise.all(requests).then(() => {
-        this.setState({ mdFilesContent: mdFilesContent, menuStructure: filesToLoad.menuStructure });
+        this.setState({ mdFilesContent: mdFilesContent, menuStructure: filesToLoad.menuStructure, mdfilesToLoadArr: filesToLoad.filesToLoadArr, mdGithubLoc: filesToLoad.githubLoc });
       });
 
     })
@@ -187,6 +192,21 @@ class MainScreen extends Component {
       showDrawer = null;
       contentStyle = classes.content;
     }
+    let githubButton;
+    /* create githup source page button */
+
+    let mdFileSource = this.state.mdfilesToLoadArr.find(element => {
+      return this.props.location.pathname.includes(element.file);
+    });
+    if (mdFileSource !== undefined) {
+      let hrefAddr = `${this.state.mdGithubLoc}${mdFileSource.path}/${mdFileSource.file}`;
+      mdFileToShow.name = mdFileSource.name;
+      githubButton = (
+        <Button target="_blank" href={hrefAddr}>
+          EDIT THIS PAGE
+        </Button>
+      );
+    }
     /*drawers */
     return (
       <div className={classes.root}>
@@ -196,9 +216,10 @@ class MainScreen extends Component {
         <AppBar position="fixed" className={appBarStyle}>
           <Toolbar>
             {iconMenu}
-            <Typography variant="h6" color="inherit">
+            <Typography variant="h6" color="inherit" className={classes.title}>
               {mdFileToShow.name}
             </Typography>
+            {githubButton}
           </Toolbar>
         </AppBar>
         <Box className={contentStyle}>
@@ -208,7 +229,7 @@ class MainScreen extends Component {
           </SnackbarProvider>
           <Route path={`${this.props.match}/About`}>
             About
-        </Route>
+          </Route>
         </Box>
         {/* </Box> */}
       </div>
