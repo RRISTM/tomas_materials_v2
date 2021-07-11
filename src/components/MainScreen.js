@@ -123,7 +123,6 @@ class MainScreen extends Component {
     this.setState({ isDrawerOpen: isOpen });
   }
   render() {
-    const MySelectView = withSnackbar(SelectView);
     const { classes } = this.props;
     /* md files */
     let mdFileToShow = {};
@@ -144,7 +143,7 @@ class MainScreen extends Component {
       );
       showMd = (
         <Route path={`${this.props.match.path}/${mdFileToPath.file}`} render={(routeProps) => (
-          <MySelectView mdInfo={mdFileToShow} {...routeProps} />
+          <SelectView mdInfo={mdFileToShow} {...routeProps} />
         )} />
       );
     } else {
@@ -157,7 +156,7 @@ class MainScreen extends Component {
       // let mdFileToPath = this.state.menuStructure.find((menuStructureContent) => (menuStructureContent.name === this.state.mdSelected));
       showMd = this.state.mdFilesContent.map((mdFileContent, index) => {
         return (<Route key={index} path={`${this.props.match.path}/${mdFileContent.mdFile}`} render={(routeProps) => {
-          return (<MySelectView mdInfo={mdFileContent} {...routeProps} />);
+          return (<SelectView mdInfo={mdFileContent} {...routeProps} />);
         }} />)
       });
       showMd.push(<Route key={'main screen not selected item'} exact path={`${this.props.match.path}`} render={(routeProps) => {

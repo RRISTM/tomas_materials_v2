@@ -32,6 +32,7 @@ export class MarkdownView extends Component {
 
   render() {
     // const { classes } = this.props;
+    console.log(this);
     const options = {
       overrides: {
         h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4" className={props.classes.STdarkBlue}> {children}  </Typography>), props: { classes: this.props.classes } },
@@ -51,8 +52,7 @@ export class MarkdownView extends Component {
           , props: { classes: this.props.classes }
         },
         code: {
-          component: CodeBlock,
-          props: { enqueueSnackbar: this.props.enqueueSnackbar }
+          component: CodeBlock
         },
         pre: { component: ({ children, ...props }) => (<Fragment>{children}</Fragment>) },
         img: {
@@ -72,7 +72,6 @@ export class MarkdownView extends Component {
 }
 
 MarkdownView.propTypes = {
-  enqueueSnackbar: PropTypes.func.isRequired,
 };
 
 // export default withStyles(styles)(MarkdownView);

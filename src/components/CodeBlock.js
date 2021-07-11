@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { compose } from 'redux';
 
 import { Button, Divider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
+import { withSnackbar } from 'notistack';
 
 // import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 // import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -27,7 +30,7 @@ class CodeBlock extends Component {
   }
 
   copyToClipBoard(e) {
-    //this.props.enqueueSnackbar('Code is now in your clipboard', { variant: 'info' });
+    this.props.enqueueSnackbar('Code is now in your clipboard', { variant: 'info' });
     const el = document.createElement('textarea');
     el.value = this.props.children;
     document.body.appendChild(el);
@@ -50,13 +53,13 @@ class CodeBlock extends Component {
   }
 
   render() {
-
+    console.log(this);
     let buttonShow;
     let buttonText;
     let buttonColor;
     if (this.state.timeoutCnt > 0) {
       buttonText = '!!   Copied   !!';
-      buttonColor = 'secondary';
+      buttonColor = 'primary';
     } else {
       buttonText = 'Copy code';
       buttonColor = 'primary';
@@ -112,5 +115,7 @@ class CodeBlock extends Component {
   }
 }
 
-export default withStyles(styles)(CodeBlock);
+// export default compose(withStyles(styles))(CodeBlock);
+export default withSnackbar(withStyles(styles)(CodeBlock));
 
+// withSnackbar(),
