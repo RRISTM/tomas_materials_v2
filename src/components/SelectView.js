@@ -16,12 +16,12 @@ export class SelectView extends Component {
             mdChapters = mdChapters.split(separateHeader).pop();
             selectedView = (
                 <Route to={`${this.props.match.path}`} render={(routeProps) => (
-                    <PresentationView mdChapters={mdChapters} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} {...routeProps} />
+                    <PresentationView mdChapters={mdChapters} mdInfo={this.props.mdInfo} {...routeProps} />
                 )} />
             );
         } else {
             console.log('document mode');
-            selectedView = (<DocumentView mdChapters={mdChapters} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />);
+            selectedView = (<DocumentView mdChapters={mdChapters} mdInfo={this.props.mdInfo} />);
         }
         return (
             <Fragment>
@@ -31,7 +31,6 @@ export class SelectView extends Component {
     }
 }
 SelectView.propTypes = {
-    enqueueSnackbar: PropTypes.func.isRequired,
 };
 
 export default SelectView;
