@@ -154,7 +154,7 @@ class MainScreen extends Component {
         )} />
       );
       mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
-      let mdFileToPath = this.state.menuStructure.find((menuStructureContent) => (menuStructureContent.name === this.state.mdSelected));
+      // let mdFileToPath = this.state.menuStructure.find((menuStructureContent) => (menuStructureContent.name === this.state.mdSelected));
       showMd = this.state.mdFilesContent.map((mdFileContent, index) => {
         return (<Route key={index} path={`${this.props.match.path}/${mdFileContent.mdFile}`} render={(routeProps) => {
           return (<MySelectView mdInfo={mdFileContent} {...routeProps} />);

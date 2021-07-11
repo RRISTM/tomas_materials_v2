@@ -3,7 +3,7 @@ import ReactMarkdown from 'markdown-to-jsx';
 
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import { Box } from '@material-ui/core';
+// import { Box } from '@material-ui/core';
 
 import CodeBlock from './CodeBlock';
 import { withStyles } from '@material-ui/core/styles';
