@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { compose } from 'redux';
 
 import { Button, Divider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -115,7 +114,4 @@ class CodeBlock extends Component {
   }
 }
 
-// export default compose(withStyles(styles))(CodeBlock);
 export default withSnackbar(withStyles(styles)(CodeBlock));
-
-// withSnackbar(),
