@@ -4,8 +4,8 @@ import { Box, Fab, Fade, Tooltip } from '@material-ui/core';
 import { KeyboardArrowRight, KeyboardArrowLeft, Replay } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 
-import { Route, Switch, Redirect, Link } from "react-router-dom";
-
+import { Route, Switch, Redirect } from "react-router-dom";
+// import {  Link } from "react-router-dom";
 // import PropTypes from 'prop-types';
 // import { withStyles } from '@material-ui/core/styles';
 
@@ -128,7 +128,7 @@ export class PresentationView extends Component {
                 <Fade in={this.state.slide} unmountOnExit={true} mountOnEnter={true} onExited={this.onExited}>
                     {/*div is here to make fade work. fade is not accept custome component as child */}
                     <div>
-                        <MarkdownView children={this.state.mdChapters[this.state.slideToShow]} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />
+                        <MarkdownView children={this.state.mdChapters[this.state.slideToShow]} mdInfo={this.props.mdInfo} />
                     </div>
                 </Fade>
             </Fragment>
@@ -138,8 +138,8 @@ export class PresentationView extends Component {
                 {routesHandling}
                 {mdToShowIn}
                 <Tooltip title="First slide" aria-label="First slide">
-                    {/* <Fab aria-label={'First slide'} className={classes.fabLL} color={'primary'} onClick={this.firstSlide}> */}
-                    <Fab aria-label={'First slide'} className={classes.fabLL} color={'primary'} component={Link} to={`${this.props.match.url}/0`}>
+                    <Fab aria-label={'First slide'} className={classes.fabLL} color={'primary'} onClick={this.firstSlide}>
+                        {/* <Fab aria-label={'First slide'} className={classes.fabLL} color={'primary'} component={Link} to={`${this.props.match.url}/0`}> */}
                         <Replay />
                     </Fab>
                 </Tooltip>

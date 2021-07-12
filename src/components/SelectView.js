@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import DocumentView from './DocumentView';
 import PresentationView from './PresentationView';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Route } from "react-router-dom";
 
 export class SelectView extends Component {
