@@ -31,7 +31,6 @@ export class DrawerMenuItem extends Component {
         return searchFolder(item);
       } else {
         if (props.location.pathname.includes(`${props.match.url}/${item.file}`)) {
-          console.log("found");
           return true;
         } else {
           return false;
@@ -39,6 +38,11 @@ export class DrawerMenuItem extends Component {
       }
     }
     let item_inside = searchItem(this.props.item);
+    if (item_inside === undefined) {
+      item_inside = false;
+    } else {
+      item_inside = true;
+    }
     this.state = { expand: item_inside };
   }
 
@@ -58,7 +62,7 @@ export class DrawerMenuItem extends Component {
     if (item.type === 'Folder') {
       /*folder */
       let subFolder = item.children.map((value) => (
-        <Route to={`${this.props.match.path}`} render={(routeProps) => (
+        <Route key={value.name} to={`${this.props.match.path}`} render={(routeProps) => (
           <DrawerMenuItem key={value.name} item={value} depth={this.props.depth + 1} selectCb={this.props.selectCb} theme={theme} classes={classes} {...routeProps} />
         )} />
       ));

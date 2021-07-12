@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import MarkdownView from './MarkdownView';
 import { Box, Fab, Fade, Tooltip } from '@material-ui/core';
-import { KeyboardArrowRight, KeyboardArrowLeft, Replay, CallMerge } from '@material-ui/icons';
+import { KeyboardArrowRight, KeyboardArrowLeft, Replay } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 
-import { Route, Switch, Redirect, Link, matchPath } from "react-router-dom";
+import { Route, Switch, Redirect, Link } from "react-router-dom";
 
 // import PropTypes from 'prop-types';
 // import { withStyles } from '@material-ui/core/styles';
@@ -59,6 +59,7 @@ export class PresentationView extends Component {
         this.previousSlide = this.previousSlide.bind(this);
         this.firstSlide = this.firstSlide.bind(this);
         this.onExited = this.onExited.bind(this);
+        this.onEnter = this.onEnter.bind(this);
     }
 
     firstSlide() {
@@ -100,6 +101,10 @@ export class PresentationView extends Component {
         });
     }
 
+    onEnter(routeIndex) {
+        this.setState({ slideIndex: routeIndex, slideToShow: routeIndex, enter: false });
+    }
+
     render() {
         const { classes } = this.props;
         /*check first line */
@@ -111,7 +116,7 @@ export class PresentationView extends Component {
                     return (<Redirect push to={`${this.props.match.url}/${this.state.slideIndex}`} />);
                 } else {
                     if (this.state.enter) {
-                        this.setState({ slideIndex: routeIndex, slideToShow: routeIndex, enter: false });
+                        setTimeout(this.onEnter, 0, routeIndex);
                     }
                 }
                 return (<Fragment></Fragment>);

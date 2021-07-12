@@ -3,7 +3,7 @@ import ReactMarkdown from 'markdown-to-jsx';
 
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import { Box } from '@material-ui/core';
+// import { Box } from '@material-ui/core';
 
 import CodeBlock from './CodeBlock';
 import { withStyles } from '@material-ui/core/styles';
@@ -32,6 +32,7 @@ export class MarkdownView extends Component {
 
   render() {
     // const { classes } = this.props;
+    console.log(this);
     const options = {
       overrides: {
         h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4" className={props.classes.STdarkBlue}> {children}  </Typography>), props: { classes: this.props.classes } },
@@ -51,13 +52,12 @@ export class MarkdownView extends Component {
           , props: { classes: this.props.classes }
         },
         code: {
-          component: CodeBlock,
-          props: { enqueueSnackbar: this.props.enqueueSnackbar }
+          component: CodeBlock
         },
         pre: { component: ({ children, ...props }) => (<Fragment>{children}</Fragment>) },
         img: {
           component: ({ children, ...props }) => {
-            return (<Box><img alt={props.alt} src={process.env.PUBLIC_URL + this.props.mdInfo.mdPath + "/img/" + props.src.replace('./img/', '')} title={props.title} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', maxWidth: '100%', height: 'auto' }}></img></Box>)
+            return (<Fragment><img alt={props.alt} src={process.env.PUBLIC_URL + this.props.mdInfo.mdPath + "/img/" + props.src.replace('./img/', '')} title={props.title} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', maxWidth: '100%', height: 'auto' }}></img></Fragment>)
 
           }
         }
@@ -72,7 +72,6 @@ export class MarkdownView extends Component {
 }
 
 MarkdownView.propTypes = {
-  enqueueSnackbar: PropTypes.func.isRequired,
 };
 
 // export default withStyles(styles)(MarkdownView);
