@@ -9,7 +9,7 @@ import CodeBlock from './CodeBlock';
 import { withStyles } from '@material-ui/core/styles';
 
 
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 const styles = (theme) => ({
   STdarkBlue: {
@@ -32,7 +32,6 @@ export class MarkdownView extends Component {
 
   render() {
     // const { classes } = this.props;
-    console.log(this);
     const options = {
       overrides: {
         h1: { component: ({ children, ...props }) => (<Typography gutterBottom variant="h4" className={props.classes.STdarkBlue}> {children}  </Typography>), props: { classes: this.props.classes } },

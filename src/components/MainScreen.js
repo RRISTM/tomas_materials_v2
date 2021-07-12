@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import SelectView from './SelectView';
 import { AppBar, Toolbar, Typography, IconButton, Box, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import { SnackbarProvider, withSnackbar } from 'notistack';
+import { SnackbarProvider } from 'notistack';
 import DrawerMenu from './DrawerMenu';
 import { withStyles } from '@material-ui/core/styles';
 

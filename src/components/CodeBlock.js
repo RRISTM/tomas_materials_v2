@@ -52,7 +52,6 @@ class CodeBlock extends Component {
   }
 
   render() {
-    console.log(this);
     let buttonShow;
     let buttonText;
     let buttonColor;
