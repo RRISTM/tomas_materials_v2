@@ -92,6 +92,12 @@ class MainScreen extends Component {
   componentDidMount() {
     var mdFilesContent = [];
     let filesToLoad;
+    console.log('fetch test');
+    fetch(`https://raw.githubusercontent.com/Araw86/TOMAS_ThreadX_Materials/main/README.md`).then((response) => {
+      return response.text();
+    }).then((text) => {
+      console.log(text);
+    });
     fetch(process.env.PUBLIC_URL + '/filesToLoad.json').then((response) => {
       return response.json();
     }).then((jsonData) => {
