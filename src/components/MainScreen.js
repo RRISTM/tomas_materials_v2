@@ -97,12 +97,6 @@ class MainScreen extends Component {
     var mdFilesContent = [];
     let filesToLoad;
     let githubPage
-    console.log('fetch test');
-    fetch(`https://raw.githubusercontent.com/Araw86/TOMAS_ThreadX_Materials/main/README.md`).then((response) => {
-      return response.text();
-    }).then((text) => {
-      console.log(text);
-    });
     fetch(process.env.PUBLIC_URL + '/github.json').then((response) => {
       return response.json();
     }).then((jsonData) => {
@@ -175,7 +169,6 @@ class MainScreen extends Component {
       // let mdFileToPath = this.state.menuStructure.find((menuStructureContent) => (menuStructureContent.name === this.state.mdSelected));
       showMd = this.state.mdFilesContent.map((mdFileContent, index) => {
         return (<Route key={index} path={`${this.props.match.path}/${mdFileContent.mdFile}`} render={(routeProps) => {
-          console.log(this.state);
           return (
             <GithubContext.Provider value={this.state.githubPage}>
               <SelectView mdInfo={mdFileContent} {...routeProps} />
