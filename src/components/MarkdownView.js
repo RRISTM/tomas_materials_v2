@@ -8,6 +8,7 @@ import Link from '@material-ui/core/Link';
 import CodeBlock from './CodeBlock';
 import { withStyles } from '@material-ui/core/styles';
 
+import { GithubContext } from './GithubContext.js';
 
 // import PropTypes from 'prop-types';
 
@@ -56,7 +57,9 @@ export class MarkdownView extends Component {
         pre: { component: ({ children, ...props }) => (<Fragment>{children}</Fragment>) },
         img: {
           component: ({ children, ...props }) => {
-            return (<Fragment><img alt={props.alt} src={process.env.PUBLIC_URL + this.props.mdInfo.mdPath + "/img/" + props.src.replace('./img/', '')} title={props.title} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', maxWidth: '100%', height: 'auto' }}></img></Fragment>)
+            return (
+              <Fragment><img alt={props.alt} src={this.context + this.props.mdInfo.mdPath + "/img/" + props.src.replace('./img/', '')} title={props.title} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', maxWidth: '100%', height: 'auto' }}></img></Fragment>
+            )
 
           }
         }
@@ -72,6 +75,8 @@ export class MarkdownView extends Component {
 
 MarkdownView.propTypes = {
 };
+
+MarkdownView.contextType = GithubContext;
 
 // export default withStyles(styles)(MarkdownView);
 export default withStyles(styles)(MarkdownView);

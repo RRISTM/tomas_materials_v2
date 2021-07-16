@@ -40,7 +40,6 @@ export class DocumentView extends Component {
     }
 }
 DocumentView.propTypes = {
-    enqueueSnackbar: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(DocumentView);

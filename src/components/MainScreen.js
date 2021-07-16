@@ -9,6 +9,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { Route } from "react-router-dom";
 import { Fragment } from 'react';
+import { GithubContext } from './GithubContext.js';
+
 // import { filesToLoadArr, menuStructure } from './markdownFilesToLoad';
 
 //develop
@@ -73,6 +75,7 @@ const styles = theme => ({
   }
 });
 
+
 class MainScreen extends Component {
   constructor(props) {
     super(props);
@@ -82,7 +85,8 @@ class MainScreen extends Component {
       isDrawerOpen: true,
       menuStructure: [],
       mdfilesToLoadArr: [],
-      mdGithubLoc: ''
+      mdGithubLoc: '',
+      githubPage: ''
     };
     this.itemSelectedCb = this.itemSelectedCb.bind(this);
     this.drawerOpenClose = this.drawerOpenClose.bind(this);
@@ -92,23 +96,30 @@ class MainScreen extends Component {
   componentDidMount() {
     var mdFilesContent = [];
     let filesToLoad;
-    fetch(process.env.PUBLIC_URL + '/filesToLoad.json').then((response) => {
+    let githubPage
+    fetch(process.env.PUBLIC_URL + '/github.json').then((response) => {
       return response.json();
     }).then((jsonData) => {
-      filesToLoad = jsonData;
-    }).then(() => {
-      let requests = filesToLoad.filesToLoadArr.map(value => {
-        return fetch(process.env.PUBLIC_URL + value.path + "/" + value.file).then((response) => response.text()).then((text) => {
-          let preparedContent = { name: value.name, mdContent: text, mdPath: value.path, mdFile: value.file }
-          mdFilesContent.push(preparedContent);
+      githubPage = jsonData.githubLoc;
 
+      fetch(githubPage + '/filesToLoad.json').then((response) => {
+        return response.json();
+      }).then((jsonData) => {
+        filesToLoad = jsonData;
+      }).then(() => {
+        let requests = filesToLoad.filesToLoadArr.map(value => {
+          return fetch(githubPage + value.path + "/" + value.file).then((response) => response.text()).then((text) => {
+            let preparedContent = { name: value.name, mdContent: text, mdPath: value.path, mdFile: value.file }
+            mdFilesContent.push(preparedContent);
+          });
         });
-      });
-      Promise.all(requests).then(() => {
-        this.setState({ mdFilesContent: mdFilesContent, menuStructure: filesToLoad.menuStructure, mdfilesToLoadArr: filesToLoad.filesToLoadArr, mdGithubLoc: filesToLoad.githubLoc });
-      });
+        Promise.all(requests).then(() => {
+          this.setState({ mdFilesContent: mdFilesContent, menuStructure: filesToLoad.menuStructure, mdfilesToLoadArr: filesToLoad.filesToLoadArr, mdGithubLoc: filesToLoad.githubLoc, githubPage: githubPage });
+        });
+      })
+    });
 
-    })
+
 
 
   }
@@ -143,7 +154,9 @@ class MainScreen extends Component {
       );
       showMd = (
         <Route path={`${this.props.match.path}/${mdFileToPath.file}`} render={(routeProps) => (
-          <SelectView mdInfo={mdFileToShow} {...routeProps} />
+          <GithubContext.Provider value={this.state.githubPage}>
+            <SelectView mdInfo={mdFileToShow} {...routeProps} />
+          </GithubContext.Provider>
         )} />
       );
     } else {
@@ -156,7 +169,11 @@ class MainScreen extends Component {
       // let mdFileToPath = this.state.menuStructure.find((menuStructureContent) => (menuStructureContent.name === this.state.mdSelected));
       showMd = this.state.mdFilesContent.map((mdFileContent, index) => {
         return (<Route key={index} path={`${this.props.match.path}/${mdFileContent.mdFile}`} render={(routeProps) => {
-          return (<SelectView mdInfo={mdFileContent} {...routeProps} />);
+          return (
+            <GithubContext.Provider value={this.state.githubPage}>
+              <SelectView mdInfo={mdFileContent} {...routeProps} />
+            </GithubContext.Provider>
+          );
         }} />)
       });
       showMd.push(<Route key={'main screen not selected item'} exact path={`${this.props.match.path}`} render={(routeProps) => {
