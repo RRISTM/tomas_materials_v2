@@ -11,6 +11,8 @@ import { Route } from "react-router-dom";
 import { Fragment } from 'react';
 import { GithubContext } from './GithubContext.js';
 
+import { webVariant } from '../webConfig';
+
 // import { filesToLoadArr, menuStructure } from './markdownFilesToLoad';
 
 //develop
@@ -91,38 +93,54 @@ class MainScreen extends Component {
     this.itemSelectedCb = this.itemSelectedCb.bind(this);
     this.drawerOpenClose = this.drawerOpenClose.bind(this);
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
+    this.fetchRestOfFiles = this.fetchRestOfFiles.bind(this);
   }
 
   componentDidMount() {
-    var mdFilesContent = [];
+
+    let fileToFetchWithContent;
+    switch (webVariant) {
+      case 'githubFetch':
+        fetch(process.env.PUBLIC_URL + '/github.json').then((response) => {
+          return response.json();
+        }).then((jsonData) => {
+          fileToFetchWithContent = jsonData.githubLoc;
+          this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location found in github.json in public folder
+        });
+        break;
+      case 'local':
+        this.fetchRestOfFiles(process.env.PUBLIC_URL);// fetch from public folder
+        break;
+      case 'addressFetch':
+        fileToFetchWithContent = `https://raw.githubusercontent.com/${this.props.match.params.githubName}/${this.props.match.params.githubRepository}/master/doc`;
+        this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location based on address parameters
+        break;
+      default:
+
+    }
+  }
+
+  fetchRestOfFiles(fileToFetchWithContent) {
     let filesToLoad;
-    let githubPage
-    fetch(process.env.PUBLIC_URL + '/github.json').then((response) => {
+    var mdFilesContent = [];
+    fetch(fileToFetchWithContent + '/filesToLoad.json').then((response) => {
       return response.json();
     }).then((jsonData) => {
-      githubPage = jsonData.githubLoc;
-
-      fetch(githubPage + '/filesToLoad.json').then((response) => {
-        return response.json();
-      }).then((jsonData) => {
-        filesToLoad = jsonData;
-      }).then(() => {
-        let requests = filesToLoad.filesToLoadArr.map(value => {
-          return fetch(githubPage + value.path + "/" + value.file).then((response) => response.text()).then((text) => {
-            let preparedContent = { name: value.name, mdContent: text, mdPath: value.path, mdFile: value.file }
-            mdFilesContent.push(preparedContent);
-          });
+      filesToLoad = jsonData;
+    }).then(() => {
+      let requests = filesToLoad.filesToLoadArr.map(value => {
+        return fetch(fileToFetchWithContent + value.path + "/" + value.file).then((response) => response.text()).then((text) => {
+          let preparedContent = { name: value.name, mdContent: text, mdPath: value.path, mdFile: value.file }
+          mdFilesContent.push(preparedContent);
         });
-        Promise.all(requests).then(() => {
-          this.setState({ mdFilesContent: mdFilesContent, menuStructure: filesToLoad.menuStructure, mdfilesToLoadArr: filesToLoad.filesToLoadArr, mdGithubLoc: filesToLoad.githubLoc, githubPage: githubPage });
-        });
-      })
-    });
-
-
-
-
+      });
+      Promise.all(requests).then(() => {
+        this.setState({ mdFilesContent: mdFilesContent, menuStructure: filesToLoad.menuStructure, mdfilesToLoadArr: filesToLoad.filesToLoadArr, mdGithubLoc: filesToLoad.githubLoc, githubPage: fileToFetchWithContent });
+      });
+    })
   }
+
+
   itemSelectedCb(itemName) {
     this.setState({ mdSelected: itemName });
   }
@@ -242,14 +260,14 @@ class MainScreen extends Component {
           <SnackbarProvider maxSnack={3}>
             <div className={classes.toolbar} />
             {showMd}
-            <Route path={`${this.props.match.path}/About`}>
+            {/* <Route path={`${this.props.match.path}/About`}>
               <SelectView mdInfo={{
                 mdContent: "# Add ThreadX example test\n\n  <awarning>\n\nAlert test\n\n# H1 test \n\n\n\n</awarning>\n\n  This example is result of article `add_threadx` showing how to add ThreadX into CubeMX project. \n\n[Example link](https://github.com/RRISTM/stm32_threadx/tree/master/examples/threadx_add)"
                 , mdFile: "add_threadx_example.md",
                 mdPath: "/examples",
                 name: "Add threadx"
               }} />
-            </Route>
+            </Route> */}
           </SnackbarProvider>
         </Box>
         {/* </Box> */}

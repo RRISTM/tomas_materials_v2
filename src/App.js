@@ -7,6 +7,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import 'typeface-roboto';
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 
+import { Fragment } from 'react';
+
+import { webVariant } from './webConfig';
 
 const theme = createMuiTheme({
   typography: {
@@ -27,6 +30,19 @@ const theme = createMuiTheme({
 
 
 function App() {
+  let routeMainScreen;
+  switch (webVariant) {
+    case 'addressFetch':
+      routeMainScreen = (<Route path='/:githubName/:githubRepository' component={MainScreen} />);
+      break;
+    default:
+      routeMainScreen = (
+        <Fragment>
+          <Route path='/show' component={MainScreen} />);
+          <Redirect from='/' to='/show' />
+        </Fragment>
+      );
+  }
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <MuiThemeProvider
@@ -34,9 +50,11 @@ function App() {
         <CssBaseline />
         <div className="App">
           <Switch>
+            {routeMainScreen}
+            {/* <Route path='/:githubName/:githubRepository' component={MainScreen} /> */}
+            {/* <Route path='/show' component={MainScreen} />
+            <Route path='/show' component={MainScreen} /> */}
 
-            <Route path='/show' component={MainScreen} />
-            <Redirect from='/' to='/show' />
           </Switch>
           {/* <MainScreen /> */}
         </div>

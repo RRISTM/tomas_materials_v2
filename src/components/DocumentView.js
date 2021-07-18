@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MarkdownView from './MarkdownView';
 import { Box, Fab } from '@material-ui/core';
 import { KeyboardArrowUp } from '@material-ui/icons';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = (theme) => ({
@@ -39,7 +39,7 @@ export class DocumentView extends Component {
         );
     }
 }
-DocumentView.propTypes = {
-};
+// DocumentView.propTypes = {
+// };
 
 export default withStyles(styles)(DocumentView);
