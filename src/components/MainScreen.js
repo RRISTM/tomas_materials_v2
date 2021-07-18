@@ -242,10 +242,15 @@ class MainScreen extends Component {
           <SnackbarProvider maxSnack={3}>
             <div className={classes.toolbar} />
             {showMd}
+            <Route path={`${this.props.match.path}/About`}>
+              <SelectView mdInfo={{
+                mdContent: "# Add ThreadX example test\n\n  <awarning>\n\nAlert test\n\n# H1 test \n\n\n\n</awarning>\n\n  This example is result of article `add_threadx` showing how to add ThreadX into CubeMX project. \n\n[Example link](https://github.com/RRISTM/stm32_threadx/tree/master/examples/threadx_add)"
+                , mdFile: "add_threadx_example.md",
+                mdPath: "/examples",
+                name: "Add threadx"
+              }} />
+            </Route>
           </SnackbarProvider>
-          <Route path={`${this.props.match}/About`}>
-            About
-          </Route>
         </Box>
         {/* </Box> */}
       </div>

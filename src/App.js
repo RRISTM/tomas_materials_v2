@@ -3,6 +3,7 @@ import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { blue, pink } from '@material-ui/core/colors';
 import MainScreen from './components/MainScreen';
+import CssBaseline from "@material-ui/core/CssBaseline";
 import 'typeface-roboto';
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 
@@ -12,12 +13,14 @@ const theme = createMuiTheme({
     useNextVariants: true,
     fontFamily: [
       'Roboto', 'Arial'
-    ].join(','),
-    color: '#39A9DC'
+    ].join(',')
   },
   palette: {
     primary: blue,
     secondary: pink,
+    text: {
+      primary: '#002052'
+    }
   }
 });
 
@@ -28,7 +31,7 @@ function App() {
     <Router basename={process.env.PUBLIC_URL}>
       <MuiThemeProvider
         theme={theme}>
-
+        <CssBaseline />
         <div className="App">
           <Switch>
 
