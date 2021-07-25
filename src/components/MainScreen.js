@@ -94,6 +94,7 @@ class MainScreen extends Component {
     this.drawerOpenClose = this.drawerOpenClose.bind(this);
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.fetchRestOfFiles = this.fetchRestOfFiles.bind(this);
+    this.fetchGithubTags = this.fetchGithubTags.bind(this);
   }
 
   componentDidMount() {
@@ -120,9 +121,21 @@ class MainScreen extends Component {
     }
   }
 
+  fetchGithubTags(githubRepository) {
+    console.log('fetch test');
+    fetch(`https://api.github.com/repos/STMicroelectronics/STM32CubeH7/tags`).then((response) => {
+      return response.json();
+    }).then((text) => {
+      console.log(text);
+    });
+  }
+
   fetchRestOfFiles(fileToFetchWithContent) {
     let filesToLoad;
     var mdFilesContent = [];
+
+    this.fetchGithubTags();
+
     fetch(fileToFetchWithContent + '/filesToLoad.json').then((response) => {
       return response.json();
     }).then((jsonData) => {
