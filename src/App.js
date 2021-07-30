@@ -38,8 +38,11 @@ function App() {
     default:
       routeMainScreen = (
         <Fragment>
-          <Route path='/show' component={MainScreen} />);
-          <Redirect from='/' to='/show' />
+          {/* <Redirect from='/' exact to='/show' /> */}
+          <Route exact path="/">
+            <Redirect to="/show" />
+          </Route>
+          <Route path='/show' component={MainScreen} />
         </Fragment>
       );
   }

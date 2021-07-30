@@ -105,7 +105,7 @@ class MainScreen extends Component {
         fetch(process.env.PUBLIC_URL + '/github.json').then((response) => {
           return response.json();
         }).then((jsonData) => {
-          fileToFetchWithContent = jsonData.githubLoc;
+          fileToFetchWithContent = `https://raw.githubusercontent.com/${jsonData.githubName}/${jsonData.githubRepository}/master/doc`;
           this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location found in github.json in public folder
         });
         break;
@@ -121,8 +121,9 @@ class MainScreen extends Component {
     }
   }
 
-  fetchGithubTags(githubRepository) {
+  fetchGithubTags(githubName, githubRepo) {
     console.log('fetch test');
+    let githubPage = `https://api.github.com/repos/${githubName}/${githubRepo}/tags`;
     fetch(`https://api.github.com/repos/STMicroelectronics/STM32CubeH7/tags`).then((response) => {
       return response.json();
     }).then((text) => {
