@@ -33,7 +33,7 @@ function App() {
   let routeMainScreen;
   switch (webVariant) {
     case 'addressFetch':
-      routeMainScreen = (<Route path='/:githubName/:githubRepository' component={MainScreen} />);
+      routeMainScreen = (<Route path='/:githubName/:githubRepository/:gitTag' component={MainScreen} />);
       break;
     default:
       routeMainScreen = (
@@ -58,6 +58,15 @@ function App() {
             {/* <Route path='/show' component={MainScreen} />
             <Route path='/show' component={MainScreen} /> */}
 
+            {/* <Route path='/:githubName/:githubRepository' exact>
+              exact github path
+            </Route>
+            <Route path='/:githubName/:githubRepository/:gitTag' exact>
+              exact github path with tag
+            </Route>
+            <Route path='/:githubName/:githubRepository/:gitTag/:content' exac>
+              exact github path with tag content
+            </Route> */}
           </Switch>
           {/* <MainScreen /> */}
         </div>

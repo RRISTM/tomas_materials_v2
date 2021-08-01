@@ -105,7 +105,7 @@ class MainScreen extends Component {
         fetch(process.env.PUBLIC_URL + '/github.json').then((response) => {
           return response.json();
         }).then((jsonData) => {
-          fileToFetchWithContent = `https://raw.githubusercontent.com/${jsonData.githubName}/${jsonData.githubRepository}/master/doc`;
+          fileToFetchWithContent = `https://raw.githubusercontent.com/${jsonData.githubName}/${jsonData.githubRepository}/${jsonData.gitTag}/doc`;
           this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location found in github.json in public folder
         });
         break;
@@ -113,7 +113,7 @@ class MainScreen extends Component {
         this.fetchRestOfFiles(process.env.PUBLIC_URL);// fetch from public folder
         break;
       case 'addressFetch':
-        fileToFetchWithContent = `https://raw.githubusercontent.com/${this.props.match.params.githubName}/${this.props.match.params.githubRepository}/master/doc`;
+        fileToFetchWithContent = `https://raw.githubusercontent.com/${this.props.match.params.githubName}/${this.props.match.params.githubRepository}/${this.props.match.params.gitTag}/doc`;
         this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location based on address parameters
         break;
       default:
