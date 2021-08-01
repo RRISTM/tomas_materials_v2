@@ -105,7 +105,7 @@ class MainScreen extends Component {
         fetch(process.env.PUBLIC_URL + '/github.json').then((response) => {
           return response.json();
         }).then((jsonData) => {
-          fileToFetchWithContent = `https://raw.githubusercontent.com/${jsonData.githubName}/${jsonData.githubRepository}/${jsonData.gitTag}/doc`;
+          fileToFetchWithContent = `https://raw.githubusercontent.com/${jsonData.githubName}/${jsonData.githubRepository}/${this.props.match.params.gitTag}/doc`;
           this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location found in github.json in public folder
         });
         break;
