@@ -40,9 +40,9 @@ function App() {
         <Fragment>
           {/* <Redirect from='/' exact to='/show' /> */}
           <Route exact path="/">
-            <Redirect to="/show" />
+            <Redirect to="/master" />
           </Route>
-          <Route path='/show' component={MainScreen} />
+          <Route path='/:gitTag' component={MainScreen} />
         </Fragment>
       );
   }

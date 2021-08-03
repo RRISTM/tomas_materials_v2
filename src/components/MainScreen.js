@@ -255,6 +255,14 @@ class MainScreen extends Component {
         </Button>
       );
     }
+    let gitTagButtion;
+    if (true) {
+      gitTagButtion = (
+        <Button color="inherit">
+          Variant: {this.props.match.params.gitTag}
+        </Button>
+      );
+    }
     /*drawers */
     return (
       <div className={classes.root}>
@@ -268,6 +276,7 @@ class MainScreen extends Component {
               {mdFileToShow.name}
             </Typography>
             {githubButton}
+            {gitTagButtion}
           </Toolbar>
         </AppBar>
         <Box className={contentStyle}>
