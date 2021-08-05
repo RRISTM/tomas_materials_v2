@@ -13,6 +13,8 @@ import { GithubContext } from './GithubContext.js';
 
 import { webVariant } from '../webConfig';
 
+import SelectDialog from './SelectionDialog';
+
 // import { filesToLoadArr, menuStructure } from './markdownFilesToLoad';
 
 //develop
@@ -88,13 +90,18 @@ class MainScreen extends Component {
       menuStructure: [],
       mdfilesToLoadArr: [],
       mdGithubLoc: '',
-      githubPage: ''
+      githubPage: '',
+      selectTag: false
     };
+
+    this.tagDialog = React.createRef();
+
     this.itemSelectedCb = this.itemSelectedCb.bind(this);
     this.drawerOpenClose = this.drawerOpenClose.bind(this);
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.fetchRestOfFiles = this.fetchRestOfFiles.bind(this);
     this.fetchGithubTags = this.fetchGithubTags.bind(this);
+    this.openTagDialog = this.openTagDialog.bind(this);
   }
 
   componentDidMount() {
@@ -164,6 +171,10 @@ class MainScreen extends Component {
   }
   drawerOpenClose(isOpen) {
     this.setState({ isDrawerOpen: isOpen });
+  }
+  openTagDialog() {
+    console.log('openDialog');
+    this.tagDialog.current.openDialog();
   }
   render() {
     const { classes } = this.props;
@@ -258,11 +269,12 @@ class MainScreen extends Component {
     let gitTagButtion;
     if (true) {
       gitTagButtion = (
-        <Button color="inherit">
+        <Button color="inherit" onClick={this.openTagDialog}>
           Variant: {this.props.match.params.gitTag}
         </Button>
       );
     }
+    console.log(this.state);
     /*drawers */
     return (
       <div className={classes.root}>
@@ -280,6 +292,7 @@ class MainScreen extends Component {
           </Toolbar>
         </AppBar>
         <Box className={contentStyle}>
+          <SelectDialog tags={['v1.0.0', 'v1.1.0']} ref={this.tagDialog} />
           <SnackbarProvider maxSnack={3}>
             <div className={classes.toolbar} />
             {showMd}
