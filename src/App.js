@@ -43,6 +43,7 @@ function App() {
             <Redirect to="/master" />
           </Route>
           <Route path='/:gitTag' component={MainScreen} />
+          <Route path='/:gitTag/:fileName' component={MainScreen} />
         </Fragment>
       );
   }

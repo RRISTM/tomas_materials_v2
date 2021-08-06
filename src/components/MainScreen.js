@@ -166,14 +166,12 @@ class MainScreen extends Component {
     this.setState({ mdSelected: itemName });
   }
   handleDrawerOpen() {
-    console.log(this);
     this.drawerOpenClose(true);
   }
   drawerOpenClose(isOpen) {
     this.setState({ isDrawerOpen: isOpen });
   }
   openTagDialog() {
-    console.log('openDialog');
     this.tagDialog.current.openDialog();
   }
   render() {
@@ -274,7 +272,6 @@ class MainScreen extends Component {
         </Button>
       );
     }
-    console.log(this.state);
     /*drawers */
     return (
       <div className={classes.root}>
@@ -292,7 +289,9 @@ class MainScreen extends Component {
           </Toolbar>
         </AppBar>
         <Box className={contentStyle}>
-          <SelectDialog tags={['v1.0.0', 'v1.1.0']} ref={this.tagDialog} />
+          <Route to={`${this.props.match.path}`} render={(routeProps) => (
+            <SelectDialog tags={['v1.0.0', 'v1.1.0']} ref={this.tagDialog} {...routeProps} />
+          )} />
           <SnackbarProvider maxSnack={3}>
             <div className={classes.toolbar} />
             {showMd}

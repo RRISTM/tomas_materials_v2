@@ -10,6 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
 
+import { Link } from "react-router-dom";
 export class SelectionDialog extends Component {
     constructor(props) {
         super(props);
@@ -31,13 +32,25 @@ export class SelectionDialog extends Component {
     }
     render() {
         let tags = this.props.tags;
-
+        console.log(this);
+        /* assemble link */
+        let linkPath = '';
+        let fileName = '';
+        if (this.props.match.params.hasOwnProperty('githubName')) {
+            linkPath = linkPath + '/' + this.props.match.params.githubName;
+        }
+        if (this.props.match.params.hasOwnProperty('githubRepository')) {
+            linkPath = linkPath + '/' + this.props.match.params.githubRepository;
+        }
+        if (this.props.match.params.hasOwnProperty('fileName')) {
+            fileName = this.props.match.params.fileName;
+        }
         return (
             <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" open={this.state.open}>
                 <DialogTitle id="simple-dialog-title">Select page variant</DialogTitle>
                 <List>
                     {tags.map((tag) => (
-                        <ListItem button onClick={() => this.tagSelected(tag)} key={tag}>
+                        <ListItem button onClick={() => this.tagSelected(tag)} key={tag} component={Link} to={`${linkPath}/${tag}/${fileName}`}>
                             <ListItemAvatar>
                                 <Avatar>
                                     <CallSplitIcon />
