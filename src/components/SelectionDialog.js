@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
+import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
 
 import { Link } from "react-router-dom";
@@ -32,7 +31,6 @@ export class SelectionDialog extends Component {
     }
     render() {
         let tags = this.props.tags;
-        console.log(this);
         /* assemble link */
         let linkPath = '';
         let fileName = '';
@@ -48,6 +46,11 @@ export class SelectionDialog extends Component {
         return (
             <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" open={this.state.open}>
                 <DialogTitle id="simple-dialog-title">Select page variant</DialogTitle>
+                <DialogContent>
+                    {/* <DialogContentText> */}
+                    Page allow multiple vatiants for its content. They can be linked to specific SW or HW version.
+                    {/* </DialogContentText> */}
+                </DialogContent>
                 <List>
                     {tags.map((tag) => (
                         <ListItem button onClick={() => this.tagSelected(tag)} key={tag} component={Link} to={`${linkPath}/${tag}/${fileName}`}>

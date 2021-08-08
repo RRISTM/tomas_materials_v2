@@ -91,7 +91,8 @@ class MainScreen extends Component {
       mdfilesToLoadArr: [],
       mdGithubLoc: '',
       githubPage: '',
-      selectTag: false
+      selectTag: false,
+      tagList: []
     };
 
     this.tagDialog = React.createRef();
@@ -105,45 +106,37 @@ class MainScreen extends Component {
   }
 
   componentDidMount() {
-
-    let fileToFetchWithContent;
     switch (webVariant) {
       case 'githubFetch':
         fetch(process.env.PUBLIC_URL + '/github.json').then((response) => {
           return response.json();
         }).then((jsonData) => {
-          fileToFetchWithContent = `https://raw.githubusercontent.com/${jsonData.githubName}/${jsonData.githubRepository}/${this.props.match.params.gitTag}/doc`;
-          this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location found in github.json in public folder
+          this.fetchRestOfFiles(jsonData.githubName, jsonData.githubRepository, this.props.match.params.gitTag);//fetch from location found in github.json in public folder
         });
         break;
       case 'local':
+        console.log('!!local option currently not working!!')
         this.fetchRestOfFiles(process.env.PUBLIC_URL);// fetch from public folder
         break;
       case 'addressFetch':
-        fileToFetchWithContent = `https://raw.githubusercontent.com/${this.props.match.params.githubName}/${this.props.match.params.githubRepository}/${this.props.match.params.gitTag}/doc`;
-        this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location based on address parameters
+        this.fetchRestOfFiles(this.props.match.params.githubName, this.props.match.params.githubRepository, this.props.match.params.gitTag);//fetch from location based on address parameters
         break;
       default:
 
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    let fileToFetchWithContent;
-    console.log(this.props);
-    console.log(prevProps)
-    if (this.props.match.params.gitTag != prevProps.match.params.gitTag) {
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.gitTag !== prevProps.match.params.gitTag) {
       switch (webVariant) {
         case 'addressFetch':
-          fileToFetchWithContent = `https://raw.githubusercontent.com/${this.props.match.params.githubName}/${this.props.match.params.githubRepository}/${this.props.match.params.gitTag}/doc`;
-          this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location based on address parameters
+          this.fetchRestOfFiles(this.props.match.params.githubName, this.props.match.params.githubRepository, this.props.match.params.gitTag);//fetch from location based on address parameters
           break;
         case 'githubFetch':
           fetch(process.env.PUBLIC_URL + '/github.json').then((response) => {
             return response.json();
           }).then((jsonData) => {
-            fileToFetchWithContent = `https://raw.githubusercontent.com/${jsonData.githubName}/${jsonData.githubRepository}/${this.props.match.params.gitTag}/doc`;
-            this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location found in github.json in public folder
+            this.fetchRestOfFiles(jsonData.githubName, jsonData.githubRepository, this.props.match.params.gitTag);//fetch from location found in github.json in public folder
           });
           break;
         default:
@@ -153,21 +146,21 @@ class MainScreen extends Component {
   }
 
   fetchGithubTags(githubName, githubRepo) {
-    console.log('fetch test');
     let githubPage = `https://api.github.com/repos/${githubName}/${githubRepo}/tags`;
-    fetch(`https://api.github.com/repos/STMicroelectronics/STM32CubeH7/tags`).then((response) => {
+    fetch(githubPage).then((response) => {
       return response.json();
     }).then((text) => {
-      console.log(text);
+      let tagNames = text.map(tagJson => tagJson.name);
+      this.setState({ tagList: tagNames });
     });
   }
 
-  fetchRestOfFiles(fileToFetchWithContent) {
+  fetchRestOfFiles(githubName, githubRepository, gitTag) {
     let filesToLoad;
     var mdFilesContent = [];
 
-    this.fetchGithubTags();
-
+    this.fetchGithubTags(githubName, githubRepository);
+    let fileToFetchWithContent = `https://raw.githubusercontent.com/${githubName}/${githubRepository}/${gitTag}/doc`;
     fetch(fileToFetchWithContent + '/filesToLoad.json').then((response) => {
       return response.json();
     }).then((jsonData) => {
@@ -314,7 +307,7 @@ class MainScreen extends Component {
         </AppBar>
         <Box className={contentStyle}>
           <Route to={`${this.props.match.path}`} render={(routeProps) => (
-            <SelectDialog tags={['v1.0.0', 'v1.1.0']} ref={this.tagDialog} {...routeProps} />
+            <SelectDialog tags={this.state.tagList} ref={this.tagDialog} {...routeProps} />
           )} />
           <SnackbarProvider maxSnack={3}>
             <div className={classes.toolbar} />

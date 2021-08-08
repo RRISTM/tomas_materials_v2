@@ -87,15 +87,12 @@ export class DrawerMenuItem extends Component {
       if (this.props.match.params.hasOwnProperty('fileName') && (this.props.match.params.fileName === item.file)) {
         selectedItem = true;
       }
-      console.log(this.props.match);
-      console.log(this.props.match.path.search(':fileName'));
       let toLink = '';
       if (this.props.match.path.search(':fileName') > 0) {
         let pathASrray = this.props.match.url.split('/');
         pathASrray.pop();
         //console.log(pathASrray);
         toLink = pathASrray.join('/');
-        console.log(toLink);
       } else {
         toLink = this.props.match.url;
       }
