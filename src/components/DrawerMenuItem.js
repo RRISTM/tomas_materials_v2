@@ -30,7 +30,8 @@ export class DrawerMenuItem extends Component {
       if (item.type === 'Folder') {
         return searchFolder(item);
       } else {
-        if (props.location.pathname.includes(`${props.match.url}/${item.file}`)) {
+        // if (props.location.pathname.includes(`${props.match.url}/${item.file}`)) {
+        if (props.match.params.hasOwnProperty('fileName') && (props.match.params.fileName === item.file)) {
           return true;
         } else {
           return false;
@@ -83,11 +84,24 @@ export class DrawerMenuItem extends Component {
     } else if (item.type === 'File') {
       /*file */
       let selectedItem = false;
-      if (this.props.location.pathname.includes(`${this.props.match.url}/${item.file}`)) {
+      if (this.props.match.params.hasOwnProperty('fileName') && (this.props.match.params.fileName === item.file)) {
         selectedItem = true;
       }
+      console.log(this.props.match);
+      console.log(this.props.match.path.search(':fileName'));
+      let toLink = '';
+      if (this.props.match.path.search(':fileName') > 0) {
+        let pathASrray = this.props.match.url.split('/');
+        pathASrray.pop();
+        //console.log(pathASrray);
+        toLink = pathASrray.join('/');
+        console.log(toLink);
+      } else {
+        toLink = this.props.match.url;
+      }
+      toLink = toLink + `/${item.file}`;
       let fileItem = (
-        <ListItem button selected={selectedItem} style={itemNested} onClick={(e) => this.props.selectCb(item.name)} component={Link} to={`${this.props.match.url}/${item.file}`}>
+        <ListItem button selected={selectedItem} style={itemNested} onClick={(e) => this.props.selectCb(item.name)} component={Link} to={toLink}>
           <ListItemText disableTypography inset primary={item.name} className={classes.File} />
         </ListItem>
       );

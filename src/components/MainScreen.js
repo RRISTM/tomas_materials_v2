@@ -128,6 +128,30 @@ class MainScreen extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    let fileToFetchWithContent;
+    console.log(this.props);
+    console.log(prevProps)
+    if (this.props.match.params.gitTag != prevProps.match.params.gitTag) {
+      switch (webVariant) {
+        case 'addressFetch':
+          fileToFetchWithContent = `https://raw.githubusercontent.com/${this.props.match.params.githubName}/${this.props.match.params.githubRepository}/${this.props.match.params.gitTag}/doc`;
+          this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location based on address parameters
+          break;
+        case 'githubFetch':
+          fetch(process.env.PUBLIC_URL + '/github.json').then((response) => {
+            return response.json();
+          }).then((jsonData) => {
+            fileToFetchWithContent = `https://raw.githubusercontent.com/${jsonData.githubName}/${jsonData.githubRepository}/${this.props.match.params.gitTag}/doc`;
+            this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location found in github.json in public folder
+          });
+          break;
+        default:
+      }
+    }
+
+  }
+
   fetchGithubTags(githubName, githubRepo) {
     console.log('fetch test');
     let githubPage = `https://api.github.com/repos/${githubName}/${githubRepo}/tags`;
