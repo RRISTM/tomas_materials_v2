@@ -238,7 +238,6 @@ class MainScreen extends Component {
         )} />
       );
       mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
-      console.log(possibleRoute);
       // let mdFileToPath = this.state.menuStructure.find((menuStructureContent) => (menuStructureContent.name === this.state.mdSelected));
       showMd = this.state.mdFilesContent.map((mdFileContent, index) => {
         return (<Route key={index} path={`${possibleRoute}/${mdFileContent.mdFile}`} render={(routeProps) => {
