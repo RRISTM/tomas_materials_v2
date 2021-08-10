@@ -42,8 +42,8 @@ function App() {
           <Route exact path="/">
             <Redirect to="/master" />
           </Route>
-          <Route path='/:gitTag' component={MainScreen} />
-          <Route path='/:gitTag/:fileName' component={MainScreen} />
+          <Route path='/:gitTag' exact component={MainScreen} />
+          <Route path='/:gitTag/:fileName' exact component={MainScreen} />
         </Fragment>
       );
   }
@@ -58,6 +58,12 @@ function App() {
             {/* <Route path='/:githubName/:githubRepository' component={MainScreen} /> */}
             {/* <Route path='/show' component={MainScreen} />
             <Route path='/show' component={MainScreen} /> */}
+            {/* <Route path='/:gitTag' exact>
+              exact github path
+            </Route>
+            <Route path='/:gitTag/:fileName'>
+              exact github path with tag
+            </Route> */}
 
             {/* <Route path='/:githubName/:githubRepository' exact>
               exact github path

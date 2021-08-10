@@ -211,6 +211,7 @@ class MainScreen extends Component {
         )} />
       );
       showMd = (
+
         <Route path={`${this.props.match.path}/${mdFileToPath.file}`} render={(routeProps) => (
           <GithubContext.Provider value={this.state.githubPage}>
             <SelectView mdInfo={mdFileToShow} {...routeProps} />
@@ -289,6 +290,7 @@ class MainScreen extends Component {
         </Button>
       );
     }
+
     /*drawers */
     return (
       <div className={classes.root}>
@@ -310,7 +312,7 @@ class MainScreen extends Component {
             <SelectDialog tags={this.state.tagList} ref={this.tagDialog} {...routeProps} />
           )} />
           <SnackbarProvider maxSnack={3}>
-            <div className={classes.toolbar} />
+            <div className={classes.toolbar} key={'blank_div'} />
             {showMd}
             {/* <Route path={`${this.props.match.path}/About`}>
               <SelectView mdInfo={{
