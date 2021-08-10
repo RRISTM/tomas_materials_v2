@@ -199,6 +199,17 @@ class MainScreen extends Component {
     let mdFileToShow = {};
     let showDrawer;
     let showMd;
+    let possibleRoute = '';
+    switch (webVariant) {
+      case 'addressFetch':
+        possibleRoute = '/:githubName/:githubRepository/:gitTag';
+        break;
+      case 'githubFetch':
+        possibleRoute = '/:gitTag';
+        break;
+      default:
+    }
+
     if (this.state.mdFilesContent.length === 0) {
       mdFileToShow.name = "Loading";
       mdFileToShow.mdContent = "";
@@ -214,7 +225,7 @@ class MainScreen extends Component {
       );
       showMd = (
 
-        <Route path={`/:gitTag/${mdFileToPath.file}`} render={(routeProps) => (
+        <Route path={`${possibleRoute}/${mdFileToPath.file}`} render={(routeProps) => (
           <GithubContext.Provider value={this.state.githubPage}>
             <SelectView mdInfo={mdFileToShow} {...routeProps} />
           </GithubContext.Provider>
@@ -227,9 +238,10 @@ class MainScreen extends Component {
         )} />
       );
       mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
+      console.log(possibleRoute);
       // let mdFileToPath = this.state.menuStructure.find((menuStructureContent) => (menuStructureContent.name === this.state.mdSelected));
       showMd = this.state.mdFilesContent.map((mdFileContent, index) => {
-        return (<Route key={index} path={`/:gitTag/${mdFileContent.mdFile}`} render={(routeProps) => {
+        return (<Route key={index} path={`${possibleRoute}/${mdFileContent.mdFile}`} render={(routeProps) => {
           return (
             <GithubContext.Provider value={this.state.githubPage}>
               <SelectView mdInfo={mdFileContent} {...routeProps} />
