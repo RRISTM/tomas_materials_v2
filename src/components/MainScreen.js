@@ -212,13 +212,14 @@ class MainScreen extends Component {
       );
       showMd = (
 
-        <Route path={`${this.props.match.path}/${mdFileToPath.file}`} render={(routeProps) => (
+        <Route path={`/:gitTag/${mdFileToPath.file}`} render={(routeProps) => (
           <GithubContext.Provider value={this.state.githubPage}>
             <SelectView mdInfo={mdFileToShow} {...routeProps} />
           </GithubContext.Provider>
         )} />
       );
     } else {
+      console.log(this.props);
       showDrawer = (
         <Route to={`${this.props.match.path}`} render={(routeProps) => (
           <DrawerMenu classesToUse={classes} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} match={this.props.match} {...routeProps} />
@@ -227,7 +228,7 @@ class MainScreen extends Component {
       mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
       // let mdFileToPath = this.state.menuStructure.find((menuStructureContent) => (menuStructureContent.name === this.state.mdSelected));
       showMd = this.state.mdFilesContent.map((mdFileContent, index) => {
-        return (<Route key={index} path={`${this.props.match.path}/${mdFileContent.mdFile}`} render={(routeProps) => {
+        return (<Route key={index} path={`/:gitTag/${mdFileContent.mdFile}`} render={(routeProps) => {
           return (
             <GithubContext.Provider value={this.state.githubPage}>
               <SelectView mdInfo={mdFileContent} {...routeProps} />
