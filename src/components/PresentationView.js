@@ -108,7 +108,6 @@ export class PresentationView extends Component {
     render() {
         const { classes } = this.props;
         /*check first line */
-        console.log(this.props);
         //let separatedMdContent = this.state.mdChapters.map(mdPart => (<MarkdownView children={mdPart} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />));
         const routesHandling = (<Switch>
             <Route exact path={`${this.props.match.path}/:id`} render={({ match }) => {

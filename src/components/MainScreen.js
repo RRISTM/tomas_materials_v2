@@ -92,7 +92,10 @@ class MainScreen extends Component {
       mdGithubLoc: '',
       githubPage: '',
       selectTag: false,
-      tagList: []
+      tagList: [],
+      githubName: '',
+      githubRepository: '',
+      gitTag: ''
     };
 
     this.tagDialog = React.createRef();
@@ -158,7 +161,6 @@ class MainScreen extends Component {
   fetchRestOfFiles(githubName, githubRepository, gitTag) {
     let filesToLoad;
     var mdFilesContent = [];
-
     this.fetchGithubTags(githubName, githubRepository);
     let fileToFetchWithContent = `https://raw.githubusercontent.com/${githubName}/${githubRepository}/${gitTag}/doc`;
     fetch(fileToFetchWithContent + '/filesToLoad.json').then((response) => {
@@ -173,7 +175,7 @@ class MainScreen extends Component {
         });
       });
       Promise.all(requests).then(() => {
-        this.setState({ mdFilesContent: mdFilesContent, menuStructure: filesToLoad.menuStructure, mdfilesToLoadArr: filesToLoad.filesToLoadArr, mdGithubLoc: filesToLoad.githubLoc, githubPage: fileToFetchWithContent });
+        this.setState({ githubName: githubName, githubRepository: githubRepository, gitTag: gitTag, mdFilesContent: mdFilesContent, menuStructure: filesToLoad.menuStructure, mdfilesToLoadArr: filesToLoad.filesToLoadArr, mdGithubLoc: filesToLoad.githubLoc, githubPage: fileToFetchWithContent });
       });
     })
   }
@@ -219,7 +221,6 @@ class MainScreen extends Component {
         )} />
       );
     } else {
-      console.log(this.props);
       showDrawer = (
         <Route to={`${this.props.match.path}`} render={(routeProps) => (
           <DrawerMenu classesToUse={classes} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} match={this.props.match} {...routeProps} />
@@ -275,7 +276,7 @@ class MainScreen extends Component {
       return this.props.location.pathname.includes(element.file);
     });
     if (mdFileSource !== undefined) {
-      let hrefAddr = `${this.state.mdGithubLoc}${mdFileSource.path}/${mdFileSource.file}`;
+      let hrefAddr = `https://github.com/${this.state.githubName}/${this.state.githubRepository}/blob/${this.state.gitTag}/doc${mdFileSource.path}/${mdFileSource.file}`;
       mdFileToShow.name = mdFileSource.name;
       githubButton = (
         <Button target="_blank" href={hrefAddr} color="inherit">
