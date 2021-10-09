@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import MarkdownView from './MarkdownView';
-import { Box, Fab } from '@material-ui/core';
-import { KeyboardArrowUp } from '@material-ui/icons';
+import { Box, Fab } from '@mui/material';
+import { KeyboardArrowUp } from '@mui/icons-material';
 // import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@mui/styles';
 
 const styles = (theme) => ({
     fab: {

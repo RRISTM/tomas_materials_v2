@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import MarkdownView from './MarkdownView';
-import { Box, Fab, Fade, Tooltip } from '@material-ui/core';
-import { KeyboardArrowRight, KeyboardArrowLeft, Replay } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
+import { Box, Fab, Fade, Tooltip } from '@mui/material';
+import { KeyboardArrowRight, KeyboardArrowLeft, Replay } from '@mui/icons-material';
+import { withStyles } from '@mui/styles';
 
 import { Route, Switch, Redirect } from "react-router-dom";
 // import {  Link } from "react-router-dom";
 // import PropTypes from 'prop-types';
-// import { withStyles } from '@material-ui/core/styles';
+// import { withStyles } from '@mui/styles';
 
 const styles = (theme) => ({
     fabR: {

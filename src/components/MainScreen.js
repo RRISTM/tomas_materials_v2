@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 import SelectView from './SelectView';
-import { AppBar, Toolbar, Typography, IconButton, Box, Button } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import { AppBar, Toolbar, Typography, IconButton, Box, Button } from '@mui/material';
+import { Menu } from '@mui/icons-material';
 import { SnackbarProvider } from 'notistack';
 import DrawerMenu from './DrawerMenu';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@mui/styles';
 
 import { Route } from "react-router-dom";
 import { Fragment } from 'react';
@@ -220,7 +220,7 @@ class MainScreen extends Component {
         edge="start"
       // className={clsx(classes.menuButton, open && classes.hide)}
       >
-        <MenuIcon />
+        <Menu />
       </IconButton>);
       appBarStyle = classes.appBarClose;
       showDrawer = null;

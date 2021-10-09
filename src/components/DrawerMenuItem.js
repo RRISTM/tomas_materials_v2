@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { ListItem, ListItemText, Collapse, List } from '@material-ui/core';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import { withStyles } from '@material-ui/core/styles';
+import { ListItem, ListItemText, Collapse, List } from '@mui/material';
+import { ExpandLess } from '@mui/icons-material';
+import { ExpandMore } from '@mui/icons-material';
+import { withStyles } from '@mui/styles';
 import { Link, Route } from "react-router-dom";
 
 const styles = theme => ({

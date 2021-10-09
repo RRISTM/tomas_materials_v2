@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Drawer, List, Divider, IconButton, Toolbar } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { Drawer, List, Divider, IconButton, Toolbar } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import DrawerMenuItem from './DrawerMenuItem';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { ChevronLeft } from '@mui/icons-material';
 import { Route } from "react-router-dom";
-// import {MenuIcon,InboxIcon,MailIcon} from '@material-ui/icons';
+// import {MenuIcon,InboxIcon,MailIcon} from '@mui/icons-material';
 
 
 const styles = theme => ({
@@ -56,12 +56,12 @@ export class DrawerMenu extends Component {
             color="inherit"
             aria-label="open drawer"
             edge="start">
-            <ChevronLeftIcon />
+            <ChevronLeft />
           </IconButton>
           {/* </div> */}
         </Toolbar>
         <Divider />
-        { listCore}
+        {listCore}
       </Drawer>
     )
   }

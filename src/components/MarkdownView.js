@@ -1,13 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import ReactMarkdown from 'markdown-to-jsx';
 
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-
-import Alert from '@material-ui/lab/Alert';
+import { Typography, Link, Alert } from '@mui/material';
 
 import CodeBlock from './CodeBlock';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@mui/styles';
 
 import { GithubContext } from './GithubContext.js';
 

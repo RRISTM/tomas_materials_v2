@@ -1,9 +1,8 @@
 import React from 'react';
-import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { blue, pink } from '@material-ui/core/colors';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { blue, pink } from '@mui/material/colors';
 import MainScreen from './components/MainScreen';
-import CssBaseline from "@material-ui/core/CssBaseline";
+import CssBaseline from "@mui/material/CssBaseline";
 import 'typeface-roboto';
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 
@@ -11,7 +10,7 @@ import { Fragment } from 'react';
 
 import { webVariant } from './webConfig';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   typography: {
     useNextVariants: true,
     fontFamily: [
@@ -45,7 +44,7 @@ function App() {
   }
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <MuiThemeProvider
+      <ThemeProvider
         theme={theme}>
         <CssBaseline />
         <div className="App">
@@ -58,7 +57,7 @@ function App() {
           </Switch>
           {/* <MainScreen /> */}
         </div>
-      </MuiThemeProvider>
+      </ThemeProvider>
     </Router>
   );
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import { Button, Divider } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { Button, Divider } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
