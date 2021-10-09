@@ -25,3 +25,5 @@ yarn-error.log*
 **/theory_utility/
 **/examples/
 **/workshop/
+
+**/webConfig.js
