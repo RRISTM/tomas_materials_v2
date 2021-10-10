@@ -53,7 +53,7 @@ const styles = theme => ({
   // },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: 24,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -70,7 +70,7 @@ const styles = theme => ({
   },
   toolbar: theme.mixins.toolbar,
   nested: {
-    paddingLeft: theme.spacing(4)
+    paddingLeft: 32
   },
   title: {
     flexGrow: 1,

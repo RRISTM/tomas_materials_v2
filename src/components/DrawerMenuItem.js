@@ -55,7 +55,7 @@ export class DrawerMenuItem extends Component {
     if (this.props.depth > 0) {
       // console.log(this.props.classesToUse);
       // itemNested = this.props.classesToUse.nested;
-      let leftPadding = theme.spacing(4) * this.props.depth;
+      let leftPadding = 32 * this.props.depth;
       itemNested = { paddingLeft: leftPadding };
     }
     let completeItem = {};
