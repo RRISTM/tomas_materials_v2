@@ -1,5 +1,5 @@
 {
-  "githubLoc": "https://github.com/RRISTM/stm32_threadx/tree/master/doc",
+  "githubLoc": "https://raw.githubusercontent.com/RRISTM/stm32_threadx/master/doc",
   "filesToLoadArr": [
     {
       "name": "1. Add ThreadX",
