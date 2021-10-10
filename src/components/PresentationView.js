@@ -35,23 +35,23 @@ import { Route, Switch, Redirect } from "react-router-dom";
 const fabStyles = {
     fabR: {
         position: 'fixed',
-        bottom: 16,
-        right: 16
+        bottom: (theme) => theme.spacing(2),
+        right: (theme) => theme.spacing(2)
     },
     fabC: {
         position: 'fixed',
-        bottom: 80,
-        right: 16
+        bottom: (theme) => theme.spacing(10),
+        right: (theme) => theme.spacing(2)
     },
     fabL: {
         position: 'fixed',
-        bottom: 16,
-        right: 80
+        bottom: (theme) => theme.spacing(2),
+        right: (theme) => theme.spacing(10)
     },
     fabLL: {
         position: 'fixed',
-        bottom: 16,
-        right: 144,
+        bottom: (theme) => theme.spacing(2),
+        right: (theme) => theme.spacing(18),
     }
 };
 export class PresentationView extends Component {
