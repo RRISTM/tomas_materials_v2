@@ -6,6 +6,7 @@ import { Menu } from '@mui/icons-material';
 import { SnackbarProvider } from 'notistack';
 import DrawerMenu from './DrawerMenu';
 import { withStyles } from '@mui/styles';
+import { styled } from '@mui/system';
 
 import { Route } from "react-router-dom";
 import { Fragment } from 'react';
@@ -21,20 +22,23 @@ import { webVariant } from '../webConfig';
 // var mdContent =[];
 const drawerWidth = 320;
 
-const styles = theme => ({
+const mainScreenStyles = {
   root: {
     display: 'flex',
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    '& .MuiDrawer-paper': {
+      width: drawerWidth
+    }
   },
   drawerPaper: {
     width: drawerWidth,
   },
   appBarClose: {
     marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: (theme) => theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     })
@@ -42,7 +46,7 @@ const styles = theme => ({
   appBarOpen: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: (theme) => theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -54,7 +58,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: 24,
-    transition: theme.transitions.create('margin', {
+    transition: (theme) => theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
@@ -62,21 +66,26 @@ const styles = theme => ({
     marginLeft: 0,
   },
   contentShift: {
-    transition: theme.transitions.create('margin', {
+    transition: (theme) => theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    // marginLeft: drawerWidth,
     marginLeft: 0,
   },
-  toolbar: theme.mixins.toolbar,
+  toolbar: (theme) => {
+    console.log(this);
+    return theme.mixins.toolbar;
+  },
   nested: {
     paddingLeft: 32
   },
   title: {
     flexGrow: 1,
   }
-});
+};
 
+const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 class MainScreen extends Component {
   constructor(props) {
@@ -152,7 +161,7 @@ class MainScreen extends Component {
     this.setState({ isDrawerOpen: isOpen });
   }
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     /* md files */
     let mdFileToShow = {};
     let showDrawer;
@@ -167,7 +176,7 @@ class MainScreen extends Component {
       let mdFileToPath = this.state.menuStructure[0];
       showDrawer = (
         <Route to={`${this.props.match.path}`} render={(routeProps) => (
-          <DrawerMenu classesToUse={classes} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} match={this.props.match} {...routeProps} />
+          <DrawerMenu classesToUse={mainScreenStyles} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} match={this.props.match} {...routeProps} />
         )} />
       );
       showMd = (
@@ -180,7 +189,7 @@ class MainScreen extends Component {
     } else {
       showDrawer = (
         <Route to={`${this.props.match.path}`} render={(routeProps) => (
-          <DrawerMenu classesToUse={classes} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} match={this.props.match} {...routeProps} />
+          <DrawerMenu classesToUse={mainScreenStyles} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} match={this.props.match} {...routeProps} />
         )} />
       );
       mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
@@ -210,8 +219,8 @@ class MainScreen extends Component {
     let contentStyle;
     let iconMenu;
     if (this.state.isDrawerOpen) {
-      appBarStyle = classes.appBarOpen;
-      contentStyle = classes.contentShift;
+      appBarStyle = mainScreenStyles.appBarOpen;
+      contentStyle = mainScreenStyles.contentShift;
     } else {
       iconMenu = (<IconButton
         color="inherit"
@@ -222,9 +231,9 @@ class MainScreen extends Component {
       >
         <Menu />
       </IconButton>);
-      appBarStyle = classes.appBarClose;
+      appBarStyle = mainScreenStyles.appBarClose;
       showDrawer = null;
-      contentStyle = classes.content;
+      contentStyle = mainScreenStyles.content;
     }
     let githubButton;
     /* create githup source page button */
@@ -243,22 +252,23 @@ class MainScreen extends Component {
     }
     /*drawers */
     return (
-      <div className={classes.root}>
+      <Box className={mainScreenStyles.root}>
         {/* <Box className={appBarStyle}> */}
         {showDrawer}
 
-        <AppBar position="fixed" className={appBarStyle}>
+        <AppBar position="fixed" sx={appBarStyle}>
           <Toolbar>
             {iconMenu}
-            <Typography variant="h6" color="inherit" className={classes.title}>
+            <Typography variant="h6" color="inherit" sx={mainScreenStyles.title}>
               {mdFileToShow.name}
             </Typography>
             {githubButton}
           </Toolbar>
         </AppBar>
-        <Box className={contentStyle}>
+        <Box sx={contentStyle}>
           <SnackbarProvider maxSnack={3}>
-            <div className={classes.toolbar} />
+            <Offset />
+            {/* <Box sx={mainScreenStyles.toolbar} /> */}
             {showMd}
             {/* <Route path={`${this.props.match.path}/About`}>
               <SelectView mdInfo={{
@@ -271,9 +281,9 @@ class MainScreen extends Component {
           </SnackbarProvider>
         </Box>
         {/* </Box> */}
-      </div>
+      </Box>
     )
   }
 }
 
-export default withStyles(styles)(MainScreen)
+export default (MainScreen);

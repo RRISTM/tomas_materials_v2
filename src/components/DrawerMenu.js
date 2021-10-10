@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Drawer, List, Divider, IconButton, Toolbar } from '@mui/material';
-import { withStyles } from '@mui/styles';
 import DrawerMenuItem from './DrawerMenuItem';
 import { ChevronLeft } from '@mui/icons-material';
 import { Route } from "react-router-dom";
 // import {MenuIcon,InboxIcon,MailIcon} from '@mui/icons-material';
-
-
-const styles = theme => ({
-
-});
 
 export class DrawerMenu extends Component {
   constructor(props) {
@@ -37,14 +31,17 @@ export class DrawerMenu extends Component {
         {listToShow}
       </List>
     );
+    console.log(classes);
     return (
       <Drawer
-        className={classes.drawer}
+        sx={
+          classes.drawer
+        }
         variant="persistent"
         open={this.props.isDrawerOpen}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
+        // classes={{
+        //   paper: classes.drawerPaper,
+        // }}
         anchor="left"
       >
         {/* <div className={classes.toolbar} /> */}
@@ -73,4 +70,4 @@ DrawerMenu.propTypes = {
   isDrawerOpen: PropTypes.bool.isRequired,
 };
 
-export default withStyles(styles)(DrawerMenu);
+export default DrawerMenu;

@@ -2,35 +2,11 @@ import React, { Component, Fragment } from 'react';
 import MarkdownView from './MarkdownView';
 import { Box, Fab, Fade, Tooltip } from '@mui/material';
 import { KeyboardArrowRight, KeyboardArrowLeft, Replay } from '@mui/icons-material';
-import { withStyles } from '@mui/styles';
 
 import { Route, Switch, Redirect } from "react-router-dom";
 // import {  Link } from "react-router-dom";
 // import PropTypes from 'prop-types';
-// import { withStyles } from '@mui/styles';
 
-// const styles = (theme) => ({
-//     fabR: {
-//         position: 'fixed',
-//         bottom: theme.spacing(2),
-//         right: theme.spacing(2),
-//     },
-//     fabC: {
-//         position: 'fixed',
-//         bottom: theme.spacing(10),
-//         right: theme.spacing(2),
-//     },
-//     fabL: {
-//         position: 'fixed',
-//         bottom: theme.spacing(2),
-//         right: theme.spacing(10),
-//     },
-//     fabLL: {
-//         position: 'fixed',
-//         bottom: theme.spacing(2),
-//         right: theme.spacing(18),
-//     }
-// });
 
 const fabStyles = {
     fabR: {

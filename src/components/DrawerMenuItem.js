@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { ListItem, ListItemText, Collapse, List } from '@mui/material';
 import { ExpandLess } from '@mui/icons-material';
 import { ExpandMore } from '@mui/icons-material';
-import { withStyles } from '@mui/styles';
 import { Link, Route } from "react-router-dom";
 
-const styles = theme => ({
+const drawerMenuItemStyles = {
   Folder: {
     color: '#002052',
     fontWeight: 'bold'
@@ -15,7 +14,7 @@ const styles = theme => ({
     color: '#002052',
     fontWeight: '500'
   }
-});
+};
 
 export class DrawerMenuItem extends Component {
   constructor(props) {
@@ -48,7 +47,7 @@ export class DrawerMenuItem extends Component {
 
 
   render() {
-    const { theme, classes } = this.props;
+    // const { theme, classes } = this.props;
     let item = this.props.item;
     // let shortName = item.name.replace(/\s/g, '');
     let itemNested = {};
@@ -63,13 +62,13 @@ export class DrawerMenuItem extends Component {
       /*folder */
       let subFolder = item.children.map((value) => (
         <Route key={value.name} to={`${this.props.match.path}`} render={(routeProps) => (
-          <DrawerMenuItem key={value.name} item={value} depth={this.props.depth + 1} selectCb={this.props.selectCb} theme={theme} classes={classes} {...routeProps} />
+          <DrawerMenuItem key={value.name} item={value} depth={this.props.depth + 1} selectCb={this.props.selectCb} {...routeProps} />
         )} />
       ));
       let folderItem = (
         <Fragment>
           <ListItem button style={itemNested} onClick={(e) => this.setState({ expand: !this.state.expand })} >
-            <ListItemText inset primary={item.name} disableTypography className={classes.Folder} />
+            <ListItemText inset primary={item.name} disableTypography sx={drawerMenuItemStyles.Folder} />
             {this.state.expand ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={this.state.expand} timeout="auto" unmountOnExit>
@@ -88,7 +87,7 @@ export class DrawerMenuItem extends Component {
       }
       let fileItem = (
         <ListItem button selected={selectedItem} style={itemNested} onClick={(e) => this.props.selectCb(item.name)} component={Link} to={`${this.props.match.url}/${item.file}`}>
-          <ListItemText disableTypography inset primary={item.name} className={classes.File} />
+          <ListItemText disableTypography inset primary={item.name} sx={drawerMenuItemStyles.File} />
         </ListItem>
       );
       completeItem = fileItem;
@@ -111,4 +110,4 @@ DrawerMenuItem.propTypes = {
   match: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(DrawerMenuItem);
+export default DrawerMenuItem;
