@@ -5,8 +5,8 @@ import { KeyboardArrowUp } from '@mui/icons-material';
 
 const fabStyle = {
     position: 'fixed',
-    bottom: 2,
-    right: 2,
+    bottom: theme => theme.spacing(2),
+    right: theme => theme.spacing(2),
 };
 export class DocumentView extends Component {
     // constructor(props) {
