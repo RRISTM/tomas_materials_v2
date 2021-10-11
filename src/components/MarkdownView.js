@@ -4,25 +4,8 @@ import ReactMarkdown from 'markdown-to-jsx';
 import { Typography, Link, Alert } from '@mui/material';
 
 import CodeBlock from './CodeBlock';
-import { withStyles } from '@mui/styles';
 
 import { GithubContext } from './GithubContext.js';
-
-// import PropTypes from 'prop-types';
-
-const styles = (theme) => ({
-  STdarkBlue: {
-    color: '#002052'
-  },
-  STlightBlue: {
-    color: '#39A9DC'
-  },
-  fab: {
-    position: 'fixed',
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
-  }
-});
 export class MarkdownView extends Component {
   // constructor(props) {
   //   super(props);
@@ -112,5 +95,4 @@ MarkdownView.propTypes = {
 
 MarkdownView.contextType = GithubContext;
 
-// export default withStyles(styles)(MarkdownView);
-export default withStyles(styles)(MarkdownView);
+export default MarkdownView;

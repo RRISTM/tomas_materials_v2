@@ -5,7 +5,6 @@ import { AppBar, Toolbar, Typography, IconButton, Box, Button } from '@mui/mater
 import { Menu } from '@mui/icons-material';
 import { SnackbarProvider } from 'notistack';
 import DrawerMenu from './DrawerMenu';
-import { withStyles } from '@mui/styles';
 import { styled } from '@mui/system';
 
 import { Route } from "react-router-dom";
@@ -73,10 +72,6 @@ const mainScreenStyles = {
     // marginLeft: drawerWidth,
     marginLeft: 0,
   },
-  toolbar: (theme) => {
-    console.log(this);
-    return theme.mixins.toolbar;
-  },
   nested: {
     paddingLeft: 32
   },
@@ -84,8 +79,6 @@ const mainScreenStyles = {
     flexGrow: 1,
   }
 };
-
-const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 class MainScreen extends Component {
   constructor(props) {
@@ -252,8 +245,7 @@ class MainScreen extends Component {
     }
     /*drawers */
     return (
-      <Box className={mainScreenStyles.root}>
-        {/* <Box className={appBarStyle}> */}
+      <Box sx={mainScreenStyles.root}>
         {showDrawer}
 
         <AppBar position="fixed" sx={appBarStyle}>
@@ -267,20 +259,9 @@ class MainScreen extends Component {
         </AppBar>
         <Box sx={contentStyle}>
           <SnackbarProvider maxSnack={3}>
-            <Offset />
-            {/* <Box sx={mainScreenStyles.toolbar} /> */}
             {showMd}
-            {/* <Route path={`${this.props.match.path}/About`}>
-              <SelectView mdInfo={{
-                mdContent: "# Add ThreadX example test\n\n  <awarning>\n\nAlert test\n\n# H1 test \n\n\n\n</awarning>\n\n  This example is result of article `add_threadx` showing how to add ThreadX into CubeMX project. \n\n[Example link](https://github.com/RRISTM/stm32_threadx/tree/master/examples/threadx_add)"
-                , mdFile: "add_threadx_example.md",
-                mdPath: "/examples",
-                name: "Add threadx"
-              }} />
-            </Route> */}
           </SnackbarProvider>
         </Box>
-        {/* </Box> */}
       </Box>
     )
   }
