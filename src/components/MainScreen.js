@@ -146,7 +146,6 @@ class MainScreen extends Component {
     this.setState({ mdSelected: itemName });
   }
   handleDrawerOpen() {
-    console.log(this);
     this.drawerOpenClose(true);
   }
   drawerOpenClose(isOpen) {

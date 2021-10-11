@@ -12,7 +12,6 @@ export class DrawerMenu extends Component {
     this.closeDrawer = this.closeDrawer.bind(this);
   }
   closeDrawer() {
-    console.log(this);
     this.props.drawerChange(false);
   }
   render() {
@@ -31,7 +30,6 @@ export class DrawerMenu extends Component {
         {listToShow}
       </List>
     );
-    console.log(classes);
     return (
       <Drawer
         sx={

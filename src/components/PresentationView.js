@@ -132,7 +132,6 @@ export class PresentationView extends Component {
                 </Fade>
             </Fragment>
         );
-        console.log(this);
         return (
             <Box justify="flex-start" spacing={0} style={{ padding: 24 }}>
                 {routesHandling}
