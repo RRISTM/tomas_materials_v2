@@ -53,10 +53,10 @@ export class MarkdownView extends Component {
             );
           }
         },
-        asucess: {
+        asuccess: {
           component: ({ children, ...props }) => {
             return (
-              <Alert variant="filled" severity="sucess">
+              <Alert variant="filled" severity="success">
                 {children}
               </Alert>
             );
