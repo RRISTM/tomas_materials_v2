@@ -5,7 +5,6 @@ import { AppBar, Toolbar, Typography, IconButton, Box, Button } from '@mui/mater
 import { Menu } from '@mui/icons-material';
 import { SnackbarProvider } from 'notistack';
 import DrawerMenu from './DrawerMenu';
-import { styled } from '@mui/system';
 
 import { Route } from "react-router-dom";
 import { Fragment } from 'react';
