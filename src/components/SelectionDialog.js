@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 
 // import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
-import CallSplitIcon from '@material-ui/icons/CallSplit';
+import { Avatar, List, ListItem, ListItemAvatar, ListItemText, Dialog, DialogContent, DialogTitle } from '@mui/material';
+
+import { CallSplit } from '@mui/icons-material';
 
 import { Link } from "react-router-dom";
 export class SelectionDialog extends Component {
@@ -56,7 +52,7 @@ export class SelectionDialog extends Component {
                         <ListItem button onClick={() => this.tagSelected(tag)} key={tag} component={Link} to={`${linkPath}/${tag}/${fileName}`}>
                             <ListItemAvatar>
                                 <Avatar>
-                                    <CallSplitIcon />
+                                    <CallSplit />
                                 </Avatar>
                             </ListItemAvatar>
                             <ListItemText primary={tag} />
