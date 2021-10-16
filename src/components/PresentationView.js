@@ -109,7 +109,7 @@ export class PresentationView extends Component {
         /*check first line */
         //let separatedMdContent = this.state.mdChapters.map(mdPart => (<MarkdownView children={mdPart} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />));
         const routesHandling = (<Switch>
-            <Route exact path={`${this.props.match.url}/:id`} render={({ match }) => {
+            <Route exact path={`${this.props.match.path}/:id`} render={({ match }) => {
                 let routeIndex = parseInt(match.params.id);
                 if (this.state.reroute) {
                     return (<Redirect push to={`${this.props.match.url}/${this.state.slideIndex}`} />);

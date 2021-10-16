@@ -12,6 +12,8 @@ import { GithubContext } from './GithubContext.js';
 
 import { webVariant } from '../webConfig';
 
+import SelectDialog from './SelectionDialog';
+
 // import { filesToLoadArr, menuStructure } from './markdownFilesToLoad';
 
 //develop
@@ -89,41 +91,79 @@ class MainScreen extends Component {
       menuStructure: [],
       mdfilesToLoadArr: [],
       mdGithubLoc: '',
-      githubPage: ''
+      githubPage: '',
+      selectTag: false,
+      tagList: [],
+      githubName: '',
+      githubRepository: '',
+      gitTag: ''
     };
+
+    this.tagDialog = React.createRef();
+
     this.itemSelectedCb = this.itemSelectedCb.bind(this);
     this.drawerOpenClose = this.drawerOpenClose.bind(this);
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.fetchRestOfFiles = this.fetchRestOfFiles.bind(this);
+    this.fetchGithubTags = this.fetchGithubTags.bind(this);
+    this.openTagDialog = this.openTagDialog.bind(this);
   }
 
   componentDidMount() {
-
-    let fileToFetchWithContent;
     switch (webVariant) {
       case 'githubFetch':
         fetch(process.env.PUBLIC_URL + '/github.json').then((response) => {
           return response.json();
         }).then((jsonData) => {
-          fileToFetchWithContent = jsonData.githubLoc;
-          this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location found in github.json in public folder
+          this.fetchRestOfFiles(jsonData.githubName, jsonData.githubRepository, this.props.match.params.gitTag);//fetch from location found in github.json in public folder
         });
         break;
       case 'local':
+        console.log('!!local option currently not working!!')
         this.fetchRestOfFiles(process.env.PUBLIC_URL);// fetch from public folder
         break;
       case 'addressFetch':
-        fileToFetchWithContent = `https://raw.githubusercontent.com/${this.props.match.params.githubName}/${this.props.match.params.githubRepository}/master/doc`;
-        this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location based on address parameters
+        this.fetchRestOfFiles(this.props.match.params.githubName, this.props.match.params.githubRepository, this.props.match.params.gitTag);//fetch from location based on address parameters
         break;
       default:
 
     }
   }
 
-  fetchRestOfFiles(fileToFetchWithContent) {
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.gitTag !== prevProps.match.params.gitTag) {
+      switch (webVariant) {
+        case 'addressFetch':
+          this.fetchRestOfFiles(this.props.match.params.githubName, this.props.match.params.githubRepository, this.props.match.params.gitTag);//fetch from location based on address parameters
+          break;
+        case 'githubFetch':
+          fetch(process.env.PUBLIC_URL + '/github.json').then((response) => {
+            return response.json();
+          }).then((jsonData) => {
+            this.fetchRestOfFiles(jsonData.githubName, jsonData.githubRepository, this.props.match.params.gitTag);//fetch from location found in github.json in public folder
+          });
+          break;
+        default:
+      }
+    }
+
+  }
+
+  fetchGithubTags(githubName, githubRepo) {
+    let githubPage = `https://api.github.com/repos/${githubName}/${githubRepo}/tags`;
+    fetch(githubPage).then((response) => {
+      return response.json();
+    }).then((text) => {
+      let tagNames = text.map(tagJson => tagJson.name);
+      this.setState({ tagList: tagNames });
+    });
+  }
+
+  fetchRestOfFiles(githubName, githubRepository, gitTag) {
     let filesToLoad;
     var mdFilesContent = [];
+    this.fetchGithubTags(githubName, githubRepository);
+    let fileToFetchWithContent = `https://raw.githubusercontent.com/${githubName}/${githubRepository}/${gitTag}/doc`;
     fetch(fileToFetchWithContent + '/filesToLoad.json').then((response) => {
       return response.json();
     }).then((jsonData) => {
@@ -137,7 +177,7 @@ class MainScreen extends Component {
         });
       });
       Promise.all(requests).then(() => {
-        this.setState({ mdFilesContent: mdFilesContent, menuStructure: filesToLoad.menuStructure, mdfilesToLoadArr: filesToLoad.filesToLoadArr, mdGithubLoc: filesToLoad.githubLoc, githubPage: fileToFetchWithContent });
+        this.setState({ githubName: githubName, githubRepository: githubRepository, gitTag: gitTag, mdFilesContent: mdFilesContent, menuStructure: filesToLoad.menuStructure, mdfilesToLoadArr: filesToLoad.filesToLoadArr, mdGithubLoc: filesToLoad.githubLoc, githubPage: fileToFetchWithContent });
       });
     })
   }
@@ -152,12 +192,26 @@ class MainScreen extends Component {
   drawerOpenClose(isOpen) {
     this.setState({ isDrawerOpen: isOpen });
   }
+  openTagDialog() {
+    this.tagDialog.current.openDialog();
+  }
   render() {
     // const { classes } = this.props;
     /* md files */
     let mdFileToShow = {};
     let showDrawer;
     let showMd;
+    let possibleRoute = '';
+    switch (webVariant) {
+      case 'addressFetch':
+        possibleRoute = '/:githubName/:githubRepository/:gitTag';
+        break;
+      case 'githubFetch':
+        possibleRoute = '/:gitTag';
+        break;
+      default:
+    }
+
     if (this.state.mdFilesContent.length === 0) {
       mdFileToShow.name = "Loading";
       mdFileToShow.mdContent = "";
@@ -172,7 +226,8 @@ class MainScreen extends Component {
         )} />
       );
       showMd = (
-        <Route path={`${this.props.match.path}/${mdFileToPath.file}`} render={(routeProps) => (
+
+        <Route path={`${possibleRoute}/${mdFileToPath.file}`} render={(routeProps) => (
           <GithubContext.Provider value={this.state.githubPage}>
             <SelectView mdInfo={mdFileToShow} {...routeProps} />
           </GithubContext.Provider>
@@ -187,7 +242,7 @@ class MainScreen extends Component {
       mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
       // let mdFileToPath = this.state.menuStructure.find((menuStructureContent) => (menuStructureContent.name === this.state.mdSelected));
       showMd = this.state.mdFilesContent.map((mdFileContent, index) => {
-        return (<Route key={index} path={`${this.props.match.path}/${mdFileContent.mdFile}`} render={(routeProps) => {
+        return (<Route key={index} path={`${possibleRoute}/${mdFileContent.mdFile}`} render={(routeProps) => {
           return (
             <GithubContext.Provider value={this.state.githubPage}>
               <SelectView mdInfo={mdFileContent} {...routeProps} />
@@ -234,7 +289,7 @@ class MainScreen extends Component {
       return this.props.location.pathname.includes(element.file);
     });
     if (mdFileSource !== undefined) {
-      let hrefAddr = `${this.state.mdGithubLoc}${mdFileSource.path}/${mdFileSource.file}`;
+      let hrefAddr = `https://github.com/${this.state.githubName}/${this.state.githubRepository}/blob/${this.state.gitTag}/doc${mdFileSource.path}/${mdFileSource.file}`;
       mdFileToShow.name = mdFileSource.name;
       githubButton = (
         <Button target="_blank" href={hrefAddr} color="inherit">
@@ -242,6 +297,15 @@ class MainScreen extends Component {
         </Button>
       );
     }
+    let gitTagButtion;
+    if (true) {
+      gitTagButtion = (
+        <Button color="inherit" onClick={this.openTagDialog}>
+          Variant: {this.props.match.params.gitTag}
+        </Button>
+      );
+    }
+
     /*drawers */
     return (
       <Box sx={mainScreenStyles.root}>
@@ -254,10 +318,17 @@ class MainScreen extends Component {
               {mdFileToShow.name}
             </Typography>
             {githubButton}
+            {gitTagButtion}
           </Toolbar>
         </AppBar>
-        <Box sx={contentStyle}>
+        {/* <Box sx={contentStyle}>
+          <SnackbarProvider maxSnack={3}> */}
+        <Box className={contentStyle}>
+          <Route to={`${this.props.match.path}`} render={(routeProps) => (
+            <SelectDialog tags={this.state.tagList} ref={this.tagDialog} {...routeProps} />
+          )} />
           <SnackbarProvider maxSnack={3}>
+            {/* <div className={classes.toolbar} key={'blank_div'} /> */}
             {showMd}
           </SnackbarProvider>
         </Box>

@@ -32,13 +32,28 @@ function App() {
   let routeMainScreen;
   switch (webVariant) {
     case 'addressFetch':
-      routeMainScreen = (<Route path='/:githubName/:githubRepository' component={MainScreen} />);
+      routeMainScreen = (
+        <Fragment>
+          {/* <Route exact path="/:githubName/:githubRepository/"> */}
+          <Route path="/:githubName/:githubRepository/" render={(routeProps) => (
+            <Redirect to={`/${routeProps.match.params.githubName}/${routeProps.match.params.githubRepository}/master`} />
+          )
+          } />
+          {/* // </Route> */}
+          <Route path='/:githubName/:githubRepository/:gitTag' exact component={MainScreen} />
+          <Route path='/:githubName/:githubRepository/:gitTag/:fileName' component={MainScreen} />
+        </Fragment>
+      );
       break;
     default:
       routeMainScreen = (
         <Fragment>
-          <Route path='/show' component={MainScreen} />);
-          <Redirect from='/' to='/show' />
+          {/* <Redirect from='/' exact to='/show' /> */}
+          <Route exact path="/">
+            <Redirect to="/master" />
+          </Route>
+          <Route path='/:gitTag' exact component={MainScreen} />
+          <Route path='/:gitTag/:fileName' component={MainScreen} />
         </Fragment>
       );
   }
@@ -53,7 +68,22 @@ function App() {
             {/* <Route path='/:githubName/:githubRepository' component={MainScreen} /> */}
             {/* <Route path='/show' component={MainScreen} />
             <Route path='/show' component={MainScreen} /> */}
+            {/* <Route path='/:gitTag' exact>
+              exact github path
+            </Route>
+            <Route path='/:gitTag/:fileName'>
+              exact github path with tag
+            </Route> */}
 
+            {/* <Route path='/:githubName/:githubRepository' exact>
+              exact github path
+            </Route>
+            <Route path='/:githubName/:githubRepository/:gitTag' exact>
+              exact github path with tag
+            </Route>
+            <Route path='/:githubName/:githubRepository/:gitTag/:content' exac>
+              exact github path with tag content
+            </Route> */}
           </Switch>
           {/* <MainScreen /> */}
         </div>
