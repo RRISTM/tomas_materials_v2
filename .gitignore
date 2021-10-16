@@ -30,3 +30,5 @@ yarn-error.log*
 
 # specific configuration file
 **/webConfig.js
+
+**/webConfig.js
