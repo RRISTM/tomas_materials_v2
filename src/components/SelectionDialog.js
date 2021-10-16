@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 // import Button from '@material-ui/core/Button';
-import { Avatar, List, ListItem, ListItemAvatar, ListItemText, Dialog, DialogContent, DialogTitle } from '@mui/material';
+import { ListItemButton, List, ListItem, ListItemIcon, ListItemText, Dialog, DialogContent, DialogTitle } from '@mui/material';
 
-import { CallSplit } from '@mui/icons-material';
+import { AltRoute } from '@mui/icons-material';
 
 import { Link } from "react-router-dom";
 export class SelectionDialog extends Component {
@@ -49,14 +49,12 @@ export class SelectionDialog extends Component {
                 </DialogContent>
                 <List>
                     {tags.map((tag) => (
-                        <ListItem button onClick={() => this.tagSelected(tag)} key={tag} component={Link} to={`${linkPath}/${tag}/${fileName}`}>
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <CallSplit />
-                                </Avatar>
-                            </ListItemAvatar>
+                        <ListItemButton onClick={() => this.tagSelected(tag)} key={tag} component={Link} to={`${linkPath}/${tag}/${fileName}`}>
+                            <ListItemIcon >
+                                <AltRoute color="primary" />
+                            </ListItemIcon>
                             <ListItemText primary={tag} />
-                        </ListItem>
+                        </ListItemButton>
                     ))}
                 </List>
             </Dialog>

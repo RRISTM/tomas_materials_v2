@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import SelectView from './SelectView';
 import { AppBar, Toolbar, Typography, IconButton, Box, Button } from '@mui/material';
-import { Menu } from '@mui/icons-material';
+import { Menu, GitHub } from '@mui/icons-material';
+
 import { SnackbarProvider } from 'notistack';
 import DrawerMenu from './DrawerMenu';
 
@@ -12,7 +13,7 @@ import { GithubContext } from './GithubContext.js';
 
 import { webVariant } from '../webConfig';
 
-import SelectDialog from './SelectionDialog';
+
 
 // import { filesToLoadArr, menuStructure } from './markdownFilesToLoad';
 
@@ -96,17 +97,21 @@ class MainScreen extends Component {
       tagList: [],
       githubName: '',
       githubRepository: '',
-      gitTag: ''
+      gitTag: '',
+      pageOptions: {
+        'allowMenu': true,
+        'allowTagSelect': true
+      }
     };
 
-    this.tagDialog = React.createRef();
+
 
     this.itemSelectedCb = this.itemSelectedCb.bind(this);
     this.drawerOpenClose = this.drawerOpenClose.bind(this);
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.fetchRestOfFiles = this.fetchRestOfFiles.bind(this);
     this.fetchGithubTags = this.fetchGithubTags.bind(this);
-    this.openTagDialog = this.openTagDialog.bind(this);
+
   }
 
   componentDidMount() {
@@ -177,7 +182,17 @@ class MainScreen extends Component {
         });
       });
       Promise.all(requests).then(() => {
-        this.setState({ githubName: githubName, githubRepository: githubRepository, gitTag: gitTag, mdFilesContent: mdFilesContent, menuStructure: filesToLoad.menuStructure, mdfilesToLoadArr: filesToLoad.filesToLoadArr, mdGithubLoc: filesToLoad.githubLoc, githubPage: fileToFetchWithContent });
+        let isDrawerOpen = true;
+
+        if (!(('options' in filesToLoad) && ('allowMenu' in filesToLoad.options))) {
+          filesToLoad.options = this.state.pageOptions;
+          console.log('Add options to yout filesToLoad file');
+        }
+        if (filesToLoad.options.allowMenu === false) {
+          isDrawerOpen = false;
+        }
+
+        this.setState({ githubName: githubName, githubRepository: githubRepository, gitTag: gitTag, mdFilesContent: mdFilesContent, menuStructure: filesToLoad.menuStructure, mdfilesToLoadArr: filesToLoad.filesToLoadArr, mdGithubLoc: filesToLoad.githubLoc, githubPage: fileToFetchWithContent, pageOptions: filesToLoad.options, isDrawerOpen: isDrawerOpen });
       });
     })
   }
@@ -192,9 +207,7 @@ class MainScreen extends Component {
   drawerOpenClose(isOpen) {
     this.setState({ isDrawerOpen: isOpen });
   }
-  openTagDialog() {
-    this.tagDialog.current.openDialog();
-  }
+
   render() {
     // const { classes } = this.props;
     /* md files */
@@ -222,7 +235,7 @@ class MainScreen extends Component {
       let mdFileToPath = this.state.menuStructure[0];
       showDrawer = (
         <Route to={`${this.props.match.path}`} render={(routeProps) => (
-          <DrawerMenu classesToUse={mainScreenStyles} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} match={this.props.match} {...routeProps} />
+          <DrawerMenu classesToUse={mainScreenStyles} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} tagList={this.state.tagList} pageOptions={this.state.pageOptions} match={this.props.match} {...routeProps} />
         )} />
       );
       showMd = (
@@ -236,7 +249,7 @@ class MainScreen extends Component {
     } else {
       showDrawer = (
         <Route to={`${this.props.match.path}`} render={(routeProps) => (
-          <DrawerMenu classesToUse={mainScreenStyles} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} match={this.props.match} {...routeProps} />
+          <DrawerMenu classesToUse={mainScreenStyles} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} tagList={this.state.tagList} pageOptions={this.state.pageOptions} match={this.props.match} {...routeProps} />
         )} />
       );
       mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
@@ -269,15 +282,18 @@ class MainScreen extends Component {
       appBarStyle = mainScreenStyles.appBarOpen;
       contentStyle = mainScreenStyles.contentShift;
     } else {
-      iconMenu = (<IconButton
-        color="inherit"
-        aria-label="open drawer"
-        onClick={this.handleDrawerOpen}
-        edge="start"
-      // className={clsx(classes.menuButton, open && classes.hide)}
-      >
-        <Menu />
-      </IconButton>);
+      console.log(this.state)
+      if (('allowMenu' in this.state.pageOptions) && (this.state.pageOptions.allowMenu === true)) {
+        iconMenu = (<IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={this.handleDrawerOpen}
+          edge="start"
+        // className={clsx(classes.menuButton, open && classes.hide)}
+        >
+          <Menu />
+        </IconButton>);
+      }
       appBarStyle = mainScreenStyles.appBarClose;
       showDrawer = null;
       contentStyle = mainScreenStyles.content;
@@ -292,16 +308,8 @@ class MainScreen extends Component {
       let hrefAddr = `https://github.com/${this.state.githubName}/${this.state.githubRepository}/blob/${this.state.gitTag}/doc${mdFileSource.path}/${mdFileSource.file}`;
       mdFileToShow.name = mdFileSource.name;
       githubButton = (
-        <Button target="_blank" href={hrefAddr} color="inherit">
+        <Button target="_blank" href={hrefAddr} startIcon={<GitHub />} color="inherit">
           EDIT THIS PAGE
-        </Button>
-      );
-    }
-    let gitTagButtion;
-    if (true) {
-      gitTagButtion = (
-        <Button color="inherit" onClick={this.openTagDialog}>
-          Variant: {this.props.match.params.gitTag}
         </Button>
       );
     }
@@ -318,15 +326,13 @@ class MainScreen extends Component {
               {mdFileToShow.name}
             </Typography>
             {githubButton}
-            {gitTagButtion}
+
           </Toolbar>
         </AppBar>
         {/* <Box sx={contentStyle}>
           <SnackbarProvider maxSnack={3}> */}
         <Box className={contentStyle}>
-          <Route to={`${this.props.match.path}`} render={(routeProps) => (
-            <SelectDialog tags={this.state.tagList} ref={this.tagDialog} {...routeProps} />
-          )} />
+
           <SnackbarProvider maxSnack={3}>
             {/* <div className={classes.toolbar} key={'blank_div'} /> */}
             {showMd}

@@ -1,8 +1,10 @@
 {
   "title": "STM32 ThreadX",
   "githubLoc": "https://raw.githubusercontent.com/RRISTM/stm32_threadx/master/doc",
-  "allowMenu": false,
-  "allowTagSelect": false,
+  "options": {
+    "allowMenu": false,
+    "allowTagSelect": false
+  },
   "filesToLoadArr": [
     {
       "name": "1. Add ThreadX",
