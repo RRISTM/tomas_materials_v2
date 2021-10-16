@@ -127,6 +127,7 @@ class MainScreen extends Component {
     fetch(fileToFetchWithContent + '/filesToLoad.json').then((response) => {
       return response.json();
     }).then((jsonData) => {
+      document.title = jsonData.title;
       filesToLoad = jsonData;
     }).then(() => {
       let requests = filesToLoad.filesToLoadArr.map(value => {
