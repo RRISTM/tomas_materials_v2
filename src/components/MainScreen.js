@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 
 import SelectView from './SelectView';
-import { AppBar, Toolbar, Typography, IconButton, Box, Button } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import { AppBar, Toolbar, Typography, IconButton, Box, Button } from '@mui/material';
+import { Menu, GitHub } from '@mui/icons-material';
+
 import { SnackbarProvider } from 'notistack';
 import DrawerMenu from './DrawerMenu';
-import { withStyles } from '@material-ui/core/styles';
 
 import { Route } from "react-router-dom";
 import { Fragment } from 'react';
 import { GithubContext } from './GithubContext.js';
 
 import { webVariant } from '../webConfig';
+
+
 
 // import { filesToLoadArr, menuStructure } from './markdownFilesToLoad';
 
@@ -21,20 +23,23 @@ import { webVariant } from '../webConfig';
 // var mdContent =[];
 const drawerWidth = 320;
 
-const styles = theme => ({
+const mainScreenStyles = {
   root: {
     display: 'flex',
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    '& .MuiDrawer-paper': {
+      width: drawerWidth
+    }
   },
   drawerPaper: {
     width: drawerWidth,
   },
   appBarClose: {
     marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: (theme) => theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     })
@@ -42,7 +47,7 @@ const styles = theme => ({
   appBarOpen: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: (theme) => theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -53,8 +58,8 @@ const styles = theme => ({
   // },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
+    padding: 24,
+    transition: (theme) => theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
@@ -62,21 +67,20 @@ const styles = theme => ({
     marginLeft: 0,
   },
   contentShift: {
-    transition: theme.transitions.create('margin', {
+    transition: (theme) => theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    // marginLeft: drawerWidth,
     marginLeft: 0,
   },
-  toolbar: theme.mixins.toolbar,
   nested: {
-    paddingLeft: theme.spacing(4)
+    paddingLeft: 32
   },
   title: {
     flexGrow: 1,
   }
-});
-
+};
 
 class MainScreen extends Component {
   constructor(props) {
@@ -88,44 +92,87 @@ class MainScreen extends Component {
       menuStructure: [],
       mdfilesToLoadArr: [],
       mdGithubLoc: '',
-      githubPage: ''
+      githubPage: '',
+      selectTag: false,
+      tagList: [],
+      githubName: '',
+      githubRepository: '',
+      gitTag: '',
+      pageOptions: {
+        'allowMenu': true,
+        'allowTagSelect': true
+      }
     };
+
+
+
     this.itemSelectedCb = this.itemSelectedCb.bind(this);
     this.drawerOpenClose = this.drawerOpenClose.bind(this);
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.fetchRestOfFiles = this.fetchRestOfFiles.bind(this);
+    this.fetchGithubTags = this.fetchGithubTags.bind(this);
+
   }
 
   componentDidMount() {
-
-    let fileToFetchWithContent;
     switch (webVariant) {
       case 'githubFetch':
         fetch(process.env.PUBLIC_URL + '/github.json').then((response) => {
           return response.json();
         }).then((jsonData) => {
-          fileToFetchWithContent = jsonData.githubLoc;
-          this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location found in github.json in public folder
+          this.fetchRestOfFiles(jsonData.githubName, jsonData.githubRepository, this.props.match.params.gitTag);//fetch from location found in github.json in public folder
         });
         break;
       case 'local':
+        console.log('!!local option currently not working!!')
         this.fetchRestOfFiles(process.env.PUBLIC_URL);// fetch from public folder
         break;
       case 'addressFetch':
-        fileToFetchWithContent = `https://raw.githubusercontent.com/${this.props.match.params.githubName}/${this.props.match.params.githubRepository}/master/doc`;
-        this.fetchRestOfFiles(fileToFetchWithContent);//fetch from location based on address parameters
+        this.fetchRestOfFiles(this.props.match.params.githubName, this.props.match.params.githubRepository, this.props.match.params.gitTag);//fetch from location based on address parameters
         break;
       default:
 
     }
   }
 
-  fetchRestOfFiles(fileToFetchWithContent) {
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.gitTag !== prevProps.match.params.gitTag) {
+      switch (webVariant) {
+        case 'addressFetch':
+          this.fetchRestOfFiles(this.props.match.params.githubName, this.props.match.params.githubRepository, this.props.match.params.gitTag);//fetch from location based on address parameters
+          break;
+        case 'githubFetch':
+          fetch(process.env.PUBLIC_URL + '/github.json').then((response) => {
+            return response.json();
+          }).then((jsonData) => {
+            this.fetchRestOfFiles(jsonData.githubName, jsonData.githubRepository, this.props.match.params.gitTag);//fetch from location found in github.json in public folder
+          });
+          break;
+        default:
+      }
+    }
+
+  }
+
+  fetchGithubTags(githubName, githubRepo) {
+    let githubPage = `https://api.github.com/repos/${githubName}/${githubRepo}/tags`;
+    fetch(githubPage).then((response) => {
+      return response.json();
+    }).then((text) => {
+      let tagNames = text.map(tagJson => tagJson.name);
+      this.setState({ tagList: tagNames });
+    });
+  }
+
+  fetchRestOfFiles(githubName, githubRepository, gitTag) {
     let filesToLoad;
     var mdFilesContent = [];
+    this.fetchGithubTags(githubName, githubRepository);
+    let fileToFetchWithContent = `https://raw.githubusercontent.com/${githubName}/${githubRepository}/${gitTag}`;
     fetch(fileToFetchWithContent + '/filesToLoad.json').then((response) => {
       return response.json();
     }).then((jsonData) => {
+      document.title = jsonData.title;
       filesToLoad = jsonData;
     }).then(() => {
       let requests = filesToLoad.filesToLoadArr.map(value => {
@@ -135,7 +182,17 @@ class MainScreen extends Component {
         });
       });
       Promise.all(requests).then(() => {
-        this.setState({ mdFilesContent: mdFilesContent, menuStructure: filesToLoad.menuStructure, mdfilesToLoadArr: filesToLoad.filesToLoadArr, mdGithubLoc: filesToLoad.githubLoc, githubPage: fileToFetchWithContent });
+        let isDrawerOpen = true;
+
+        if (!(('options' in filesToLoad) && ('allowMenu' in filesToLoad.options))) {
+          filesToLoad.options = this.state.pageOptions;
+          console.log('Add options to yout filesToLoad file');
+        }
+        if (filesToLoad.options.allowMenu === false) {
+          isDrawerOpen = false;
+        }
+
+        this.setState({ githubName: githubName, githubRepository: githubRepository, gitTag: gitTag, mdFilesContent: mdFilesContent, menuStructure: filesToLoad.menuStructure, mdfilesToLoadArr: filesToLoad.filesToLoadArr, mdGithubLoc: filesToLoad.githubLoc, githubPage: fileToFetchWithContent, pageOptions: filesToLoad.options, isDrawerOpen: isDrawerOpen });
       });
     })
   }
@@ -145,18 +202,29 @@ class MainScreen extends Component {
     this.setState({ mdSelected: itemName });
   }
   handleDrawerOpen() {
-    console.log(this);
     this.drawerOpenClose(true);
   }
   drawerOpenClose(isOpen) {
     this.setState({ isDrawerOpen: isOpen });
   }
+
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     /* md files */
     let mdFileToShow = {};
     let showDrawer;
     let showMd;
+    let possibleRoute = '';
+    switch (webVariant) {
+      case 'addressFetch':
+        possibleRoute = '/:githubName/:githubRepository/:gitTag';
+        break;
+      case 'githubFetch':
+        possibleRoute = '/:gitTag';
+        break;
+      default:
+    }
+
     if (this.state.mdFilesContent.length === 0) {
       mdFileToShow.name = "Loading";
       mdFileToShow.mdContent = "";
@@ -167,11 +235,12 @@ class MainScreen extends Component {
       let mdFileToPath = this.state.menuStructure[0];
       showDrawer = (
         <Route to={`${this.props.match.path}`} render={(routeProps) => (
-          <DrawerMenu classesToUse={classes} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} match={this.props.match} {...routeProps} />
+          <DrawerMenu classesToUse={mainScreenStyles} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} tagList={this.state.tagList} pageOptions={this.state.pageOptions} match={this.props.match} {...routeProps} />
         )} />
       );
       showMd = (
-        <Route path={`${this.props.match.path}/${mdFileToPath.file}`} render={(routeProps) => (
+
+        <Route path={`${possibleRoute}/${mdFileToPath.file}`} render={(routeProps) => (
           <GithubContext.Provider value={this.state.githubPage}>
             <SelectView mdInfo={mdFileToShow} {...routeProps} />
           </GithubContext.Provider>
@@ -180,13 +249,13 @@ class MainScreen extends Component {
     } else {
       showDrawer = (
         <Route to={`${this.props.match.path}`} render={(routeProps) => (
-          <DrawerMenu classesToUse={classes} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} match={this.props.match} {...routeProps} />
+          <DrawerMenu classesToUse={mainScreenStyles} menuItems={this.state.menuStructure} selectCb={this.itemSelectedCb} isDrawerOpen={this.state.isDrawerOpen} drawerChange={this.drawerOpenClose} tagList={this.state.tagList} pageOptions={this.state.pageOptions} match={this.props.match} {...routeProps} />
         )} />
       );
       mdFileToShow = this.state.mdFilesContent.find((mdFileContent) => (mdFileContent.name === this.state.mdSelected));
       // let mdFileToPath = this.state.menuStructure.find((menuStructureContent) => (menuStructureContent.name === this.state.mdSelected));
       showMd = this.state.mdFilesContent.map((mdFileContent, index) => {
-        return (<Route key={index} path={`${this.props.match.path}/${mdFileContent.mdFile}`} render={(routeProps) => {
+        return (<Route key={index} path={`${possibleRoute}/${mdFileContent.mdFile}`} render={(routeProps) => {
           return (
             <GithubContext.Provider value={this.state.githubPage}>
               <SelectView mdInfo={mdFileContent} {...routeProps} />
@@ -210,21 +279,24 @@ class MainScreen extends Component {
     let contentStyle;
     let iconMenu;
     if (this.state.isDrawerOpen) {
-      appBarStyle = classes.appBarOpen;
-      contentStyle = classes.contentShift;
+      appBarStyle = mainScreenStyles.appBarOpen;
+      contentStyle = mainScreenStyles.contentShift;
     } else {
-      iconMenu = (<IconButton
-        color="inherit"
-        aria-label="open drawer"
-        onClick={this.handleDrawerOpen}
-        edge="start"
-      // className={clsx(classes.menuButton, open && classes.hide)}
-      >
-        <MenuIcon />
-      </IconButton>);
-      appBarStyle = classes.appBarClose;
+      console.log(this.state)
+      if (('allowMenu' in this.state.pageOptions) && (this.state.pageOptions.allowMenu === true)) {
+        iconMenu = (<IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={this.handleDrawerOpen}
+          edge="start"
+        // className={clsx(classes.menuButton, open && classes.hide)}
+        >
+          <Menu />
+        </IconButton>);
+      }
+      appBarStyle = mainScreenStyles.appBarClose;
       showDrawer = null;
-      contentStyle = classes.content;
+      contentStyle = mainScreenStyles.content;
     }
     let githubButton;
     /* create githup source page button */
@@ -233,47 +305,42 @@ class MainScreen extends Component {
       return this.props.location.pathname.includes(element.file);
     });
     if (mdFileSource !== undefined) {
-      let hrefAddr = `${this.state.mdGithubLoc}${mdFileSource.path}/${mdFileSource.file}`;
+      let hrefAddr = `https://github.com/${this.state.githubName}/${this.state.githubRepository}/blob/${this.state.gitTag}${mdFileSource.path}/${mdFileSource.file}`;
       mdFileToShow.name = mdFileSource.name;
       githubButton = (
-        <Button target="_blank" href={hrefAddr} color="inherit">
+        <Button target="_blank" href={hrefAddr} startIcon={<GitHub />} color="inherit">
           EDIT THIS PAGE
         </Button>
       );
     }
+
     /*drawers */
     return (
-      <div className={classes.root}>
-        {/* <Box className={appBarStyle}> */}
+      <Box sx={mainScreenStyles.root}>
         {showDrawer}
 
-        <AppBar position="fixed" className={appBarStyle}>
+        <AppBar position="fixed" sx={appBarStyle}>
           <Toolbar>
             {iconMenu}
-            <Typography variant="h6" color="inherit" className={classes.title}>
+            <Typography variant="h6" color="inherit" sx={mainScreenStyles.title}>
               {mdFileToShow.name}
             </Typography>
             {githubButton}
+
           </Toolbar>
         </AppBar>
+        {/* <Box sx={contentStyle}>
+          <SnackbarProvider maxSnack={3}> */}
         <Box className={contentStyle}>
+
           <SnackbarProvider maxSnack={3}>
-            <div className={classes.toolbar} />
+            {/* <div className={classes.toolbar} key={'blank_div'} /> */}
             {showMd}
-            {/* <Route path={`${this.props.match.path}/About`}>
-              <SelectView mdInfo={{
-                mdContent: "# Add ThreadX example test\n\n  <awarning>\n\nAlert test\n\n# H1 test \n\n\n\n</awarning>\n\n  This example is result of article `add_threadx` showing how to add ThreadX into CubeMX project. \n\n[Example link](https://github.com/RRISTM/stm32_threadx/tree/master/examples/threadx_add)"
-                , mdFile: "add_threadx_example.md",
-                mdPath: "/examples",
-                name: "Add threadx"
-              }} />
-            </Route> */}
           </SnackbarProvider>
         </Box>
-        {/* </Box> */}
-      </div>
+      </Box>
     )
   }
 }
 
-export default withStyles(styles)(MainScreen)
+export default (MainScreen);

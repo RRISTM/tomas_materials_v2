@@ -22,6 +22,14 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# testin files for page
 **/theory_utility/
 **/examples/
 **/workshop/
+**/filesToLoad.json
+**/github.json
+
+# specific configuration file
+**/webConfig.js
+
+**/webConfig.js

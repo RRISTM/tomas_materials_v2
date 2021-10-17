@@ -1,31 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import ReactMarkdown from 'markdown-to-jsx';
 
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-
-import Alert from '@material-ui/lab/Alert';
+import { Typography, Link, Alert } from '@mui/material';
 
 import CodeBlock from './CodeBlock';
-import { withStyles } from '@material-ui/core/styles';
 
 import { GithubContext } from './GithubContext.js';
-
-// import PropTypes from 'prop-types';
-
-const styles = (theme) => ({
-  STdarkBlue: {
-    color: '#002052'
-  },
-  STlightBlue: {
-    color: '#39A9DC'
-  },
-  fab: {
-    position: 'fixed',
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
-  }
-});
 export class MarkdownView extends Component {
   // constructor(props) {
   //   super(props);
@@ -73,10 +53,10 @@ export class MarkdownView extends Component {
             );
           }
         },
-        asucess: {
+        asuccess: {
           component: ({ children, ...props }) => {
             return (
-              <Alert variant="filled" severity="sucess">
+              <Alert variant="filled" severity="success">
                 {children}
               </Alert>
             );
@@ -115,5 +95,4 @@ MarkdownView.propTypes = {
 
 MarkdownView.contextType = GithubContext;
 
-// export default withStyles(styles)(MarkdownView);
-export default withStyles(styles)(MarkdownView);
+export default MarkdownView;

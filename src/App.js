@@ -1,9 +1,8 @@
 import React from 'react';
-import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { blue, pink } from '@material-ui/core/colors';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { blue, pink } from '@mui/material/colors';
 import MainScreen from './components/MainScreen';
-import CssBaseline from "@material-ui/core/CssBaseline";
+import CssBaseline from "@mui/material/CssBaseline";
 import 'typeface-roboto';
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 
@@ -11,7 +10,7 @@ import { Fragment } from 'react';
 
 import { webVariant } from './webConfig';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   typography: {
     useNextVariants: true,
     fontFamily: [
@@ -33,19 +32,34 @@ function App() {
   let routeMainScreen;
   switch (webVariant) {
     case 'addressFetch':
-      routeMainScreen = (<Route path='/:githubName/:githubRepository' component={MainScreen} />);
+      routeMainScreen = (
+        <Fragment>
+          {/* <Route exact path="/:githubName/:githubRepository/"> */}
+          <Route path="/:githubName/:githubRepository/" render={(routeProps) => (
+            <Redirect to={`/${routeProps.match.params.githubName}/${routeProps.match.params.githubRepository}/master`} />
+          )
+          } />
+          {/* // </Route> */}
+          <Route path='/:githubName/:githubRepository/:gitTag' exact component={MainScreen} />
+          <Route path='/:githubName/:githubRepository/:gitTag/:fileName' component={MainScreen} />
+        </Fragment>
+      );
       break;
     default:
       routeMainScreen = (
         <Fragment>
-          <Route path='/show' component={MainScreen} />);
-          <Redirect from='/' to='/show' />
+          {/* <Redirect from='/' exact to='/show' /> */}
+          <Route exact path="/">
+            <Redirect to="/master" />
+          </Route>
+          <Route path='/:gitTag' exact component={MainScreen} />
+          <Route path='/:gitTag/:fileName' component={MainScreen} />
         </Fragment>
       );
   }
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <MuiThemeProvider
+      <ThemeProvider
         theme={theme}>
         <CssBaseline />
         <div className="App">
@@ -54,11 +68,26 @@ function App() {
             {/* <Route path='/:githubName/:githubRepository' component={MainScreen} /> */}
             {/* <Route path='/show' component={MainScreen} />
             <Route path='/show' component={MainScreen} /> */}
+            {/* <Route path='/:gitTag' exact>
+              exact github path
+            </Route>
+            <Route path='/:gitTag/:fileName'>
+              exact github path with tag
+            </Route> */}
 
+            {/* <Route path='/:githubName/:githubRepository' exact>
+              exact github path
+            </Route>
+            <Route path='/:githubName/:githubRepository/:gitTag' exact>
+              exact github path with tag
+            </Route>
+            <Route path='/:githubName/:githubRepository/:gitTag/:content' exac>
+              exact github path with tag content
+            </Route> */}
           </Switch>
           {/* <MainScreen /> */}
         </div>
-      </MuiThemeProvider>
+      </ThemeProvider>
     </Router>
   );
 }

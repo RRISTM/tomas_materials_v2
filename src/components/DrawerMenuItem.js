@@ -1,12 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { ListItem, ListItemText, Collapse, List } from '@material-ui/core';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import { withStyles } from '@material-ui/core/styles';
+import { ListItem, ListItemText, Collapse, List } from '@mui/material';
+import { ExpandLess } from '@mui/icons-material';
+import { ExpandMore } from '@mui/icons-material';
 import { Link, Route } from "react-router-dom";
 
-const styles = theme => ({
+const drawerMenuItemStyles = {
   Folder: {
     color: '#002052',
     fontWeight: 'bold'
@@ -15,7 +14,7 @@ const styles = theme => ({
     color: '#002052',
     fontWeight: '500'
   }
-});
+};
 
 export class DrawerMenuItem extends Component {
   constructor(props) {
@@ -30,7 +29,8 @@ export class DrawerMenuItem extends Component {
       if (item.type === 'Folder') {
         return searchFolder(item);
       } else {
-        if (props.location.pathname.includes(`${props.match.url}/${item.file}`)) {
+        // if (props.location.pathname.includes(`${props.match.url}/${item.file}`)) {
+        if (props.match.params.hasOwnProperty('fileName') && (props.match.params.fileName === item.file)) {
           return true;
         } else {
           return false;
@@ -48,14 +48,14 @@ export class DrawerMenuItem extends Component {
 
 
   render() {
-    const { theme, classes } = this.props;
+    // const { theme, classes } = this.props;
     let item = this.props.item;
     // let shortName = item.name.replace(/\s/g, '');
     let itemNested = {};
     if (this.props.depth > 0) {
       // console.log(this.props.classesToUse);
       // itemNested = this.props.classesToUse.nested;
-      let leftPadding = theme.spacing(4) * this.props.depth;
+      let leftPadding = 32 * this.props.depth;
       itemNested = { paddingLeft: leftPadding };
     }
     let completeItem = {};
@@ -63,13 +63,13 @@ export class DrawerMenuItem extends Component {
       /*folder */
       let subFolder = item.children.map((value) => (
         <Route key={value.name} to={`${this.props.match.path}`} render={(routeProps) => (
-          <DrawerMenuItem key={value.name} item={value} depth={this.props.depth + 1} selectCb={this.props.selectCb} theme={theme} classes={classes} {...routeProps} />
+          <DrawerMenuItem key={value.name} item={value} depth={this.props.depth + 1} selectCb={this.props.selectCb} {...routeProps} />
         )} />
       ));
       let folderItem = (
         <Fragment>
           <ListItem button style={itemNested} onClick={(e) => this.setState({ expand: !this.state.expand })} >
-            <ListItemText inset primary={item.name} disableTypography className={classes.Folder} />
+            <ListItemText inset primary={item.name} disableTypography sx={drawerMenuItemStyles.Folder} />
             {this.state.expand ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={this.state.expand} timeout="auto" unmountOnExit>
@@ -83,12 +83,26 @@ export class DrawerMenuItem extends Component {
     } else if (item.type === 'File') {
       /*file */
       let selectedItem = false;
-      if (this.props.location.pathname.includes(`${this.props.match.url}/${item.file}`)) {
+      if (this.props.match.params.hasOwnProperty('fileName') && (this.props.match.params.fileName === item.file)) {
         selectedItem = true;
       }
+      let toLink = '';
+      if (this.props.match.path.search(':fileName') > 0) {
+        let pathASrray = this.props.match.url.split('/');
+        pathASrray.pop();
+        //console.log(pathASrray);
+        toLink = pathASrray.join('/');
+      } else {
+        toLink = this.props.match.url;
+      }
+      toLink = toLink + `/${item.file}`;
       let fileItem = (
-        <ListItem button selected={selectedItem} style={itemNested} onClick={(e) => this.props.selectCb(item.name)} component={Link} to={`${this.props.match.url}/${item.file}`}>
-          <ListItemText disableTypography inset primary={item.name} className={classes.File} />
+        // <<<<<<< HEAD
+        //         <ListItem button selected={selectedItem} style={itemNested} onClick={(e) => this.props.selectCb(item.name)} component={Link} to={`${this.props.match.url}/${item.file}`}>
+        //           <ListItemText disableTypography inset primary={item.name} sx={drawerMenuItemStyles.File} />
+        // =======
+        <ListItem button selected={selectedItem} style={itemNested} onClick={(e) => this.props.selectCb(item.name)} component={Link} to={toLink}>
+          <ListItemText disableTypography inset primary={item.name} sx={drawerMenuItemStyles.File} />
         </ListItem>
       );
       completeItem = fileItem;
@@ -111,4 +125,4 @@ DrawerMenuItem.propTypes = {
   match: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(DrawerMenuItem);
+export default DrawerMenuItem;
