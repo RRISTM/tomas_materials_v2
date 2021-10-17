@@ -168,7 +168,7 @@ class MainScreen extends Component {
     let filesToLoad;
     var mdFilesContent = [];
     this.fetchGithubTags(githubName, githubRepository);
-    let fileToFetchWithContent = `https://raw.githubusercontent.com/${githubName}/${githubRepository}/${gitTag}/doc`;
+    let fileToFetchWithContent = `https://raw.githubusercontent.com/${githubName}/${githubRepository}/${gitTag}`;
     fetch(fileToFetchWithContent + '/filesToLoad.json').then((response) => {
       return response.json();
     }).then((jsonData) => {
@@ -305,7 +305,7 @@ class MainScreen extends Component {
       return this.props.location.pathname.includes(element.file);
     });
     if (mdFileSource !== undefined) {
-      let hrefAddr = `https://github.com/${this.state.githubName}/${this.state.githubRepository}/blob/${this.state.gitTag}/doc${mdFileSource.path}/${mdFileSource.file}`;
+      let hrefAddr = `https://github.com/${this.state.githubName}/${this.state.githubRepository}/blob/${this.state.gitTag}${mdFileSource.path}/${mdFileSource.file}`;
       mdFileToShow.name = mdFileSource.name;
       githubButton = (
         <Button target="_blank" href={hrefAddr} startIcon={<GitHub />} color="inherit">

@@ -27,6 +27,7 @@ yarn-error.log*
 **/examples/
 **/workshop/
 **/filesToLoad.json
+**/github.json
 
 # specific configuration file
 **/webConfig.js
