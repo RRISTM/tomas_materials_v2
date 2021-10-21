@@ -1,36 +1,35 @@
 import React, { Component, Fragment } from 'react';
 import MarkdownView from './MarkdownView';
-import { Box, Fab, Fade, Tooltip } from '@material-ui/core';
-import { KeyboardArrowRight, KeyboardArrowLeft, Replay } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
+import { Box, Fab, Fade, Tooltip } from '@mui/material';
+import { KeyboardArrowRight, KeyboardArrowLeft, Replay } from '@mui/icons-material';
 
 import { Route, Switch, Redirect } from "react-router-dom";
 // import {  Link } from "react-router-dom";
 // import PropTypes from 'prop-types';
-// import { withStyles } from '@material-ui/core/styles';
 
-const styles = (theme) => ({
+
+const fabStyles = {
     fabR: {
         position: 'fixed',
-        bottom: theme.spacing(2),
-        right: theme.spacing(2),
+        bottom: (theme) => theme.spacing(2),
+        right: (theme) => theme.spacing(2)
     },
     fabC: {
         position: 'fixed',
-        bottom: theme.spacing(10),
-        right: theme.spacing(2),
+        bottom: (theme) => theme.spacing(10),
+        right: (theme) => theme.spacing(2)
     },
     fabL: {
         position: 'fixed',
-        bottom: theme.spacing(2),
-        right: theme.spacing(10),
+        bottom: (theme) => theme.spacing(2),
+        right: (theme) => theme.spacing(10)
     },
     fabLL: {
         position: 'fixed',
-        bottom: theme.spacing(2),
-        right: theme.spacing(18),
+        bottom: (theme) => theme.spacing(2),
+        right: (theme) => theme.spacing(18),
     }
-});
+};
 export class PresentationView extends Component {
     constructor(props) {
         super(props);
@@ -106,11 +105,11 @@ export class PresentationView extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        // const { classes } = this.props;
         /*check first line */
         //let separatedMdContent = this.state.mdChapters.map(mdPart => (<MarkdownView children={mdPart} enqueueSnackbar={this.props.enqueueSnackbar} mdInfo={this.props.mdInfo} />));
         const routesHandling = (<Switch>
-            <Route exact path={`${this.props.match.url}/:id`} render={({ match }) => {
+            <Route exact path={`${this.props.match.path}/:id`} render={({ match }) => {
                 let routeIndex = parseInt(match.params.id);
                 if (this.state.reroute) {
                     return (<Redirect push to={`${this.props.match.url}/${this.state.slideIndex}`} />);
@@ -138,21 +137,25 @@ export class PresentationView extends Component {
                 {routesHandling}
                 {mdToShowIn}
                 <Tooltip title="First slide" aria-label="First slide">
-                    <Fab aria-label={'First slide'} className={classes.fabLL} color={'primary'} onClick={this.firstSlide}>
+                    {/* <Fab aria-label={'First slide'} className={classes.fabLL} color={'primary'} onClick={this.firstSlide}> */}
+                    <Fab aria-label={'First slide'} sx={fabStyles.fabLL} color={'primary'} onClick={this.firstSlide}>
                         {/* <Fab aria-label={'First slide'} className={classes.fabLL} color={'primary'} component={Link} to={`${this.props.match.url}/0`}> */}
                         <Replay />
                     </Fab>
                 </Tooltip>
                 <Tooltip title="Previous slide" aria-label="Previous slide">
-                    <Fab aria-label={'Previous slide'} className={classes.fabL} color={'primary'} onClick={this.previousSlide}>
+                    {/* <Fab aria-label={'Previous slide'} className={classes.fabL} color={'primary'} onClick={this.previousSlide}> */}
+                    <Fab aria-label={'Previous slide'} sx={fabStyles.fabL} color={'primary'} onClick={this.previousSlide}>
                         <KeyboardArrowLeft />
                     </Fab>
                 </Tooltip>
-                <Fab aria-label={'Slide'} className={classes.fabC} variant="extended">
+                {/* <Fab aria-label={'Slide'} className={classes.fabC} variant="extended"> */}
+                <Fab aria-label={'Slide'} sx={fabStyles.fabC} variant="extended">
                     {`  ${this.state.slideIndex + 1} / ${this.state.mdChapters.length}  `}
                 </Fab>
                 <Tooltip title="Next slide" aria-label="Next slide">
-                    <Fab aria-label={'Next slide'} className={classes.fabR} color={'primary'} onClick={this.nextSlide}>
+                    {/* <Fab aria-label={'Next slide'} className={classes.fabR} color={'primary'} onClick={this.nextSlide}> */}
+                    <Fab aria-label={'Next slide'} sx={fabStyles.fabR} color={'primary'} onClick={this.nextSlide}>
                         <KeyboardArrowRight />
                     </Fab>
                 </Tooltip>
@@ -162,4 +165,4 @@ export class PresentationView extends Component {
     }
 }
 
-export default withStyles(styles)(PresentationView);
+export default PresentationView;

@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import MarkdownView from './MarkdownView';
-import { Box, Fab } from '@material-ui/core';
-import { KeyboardArrowUp } from '@material-ui/icons';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { Box, Fab } from '@mui/material';
+import { KeyboardArrowUp } from '@mui/icons-material';
 
-const styles = (theme) => ({
-    fab: {
-        position: 'fixed',
-        bottom: theme.spacing(2),
-        right: theme.spacing(2),
-    }
-});
-
+const fabStyle = {
+    position: 'fixed',
+    bottom: theme => theme.spacing(2),
+    right: theme => theme.spacing(2),
+};
 export class DocumentView extends Component {
     // constructor(props) {
     //     super(props);
@@ -24,7 +19,6 @@ export class DocumentView extends Component {
     };
 
     render() {
-        const { classes } = this.props;
         const mdChapterRegex = /(^#\s.*\r\n\r\n)/g;
         let mdChapters = this.props.mdChapters;
         mdChapters = mdChapters.split(mdChapterRegex);
@@ -32,14 +26,14 @@ export class DocumentView extends Component {
         return (
             <Box justify="flex-start" spacing={0} style={{ padding: 24 }}>
                 {separatedMdContent}
-                <Fab aria-label={'Add'} className={classes.fab} color={'primary'} onClick={this.scrollTop}>
+                <Fab aria-label={'Add'} sx={fabStyle} color={'primary'} onClick={this.scrollTop}>
                     <KeyboardArrowUp />
                 </Fab>
             </Box>
         );
     }
 }
-DocumentView.propTypes = {
-};
+// DocumentView.propTypes = {
+// };
 
-export default withStyles(styles)(DocumentView);
+export default DocumentView;

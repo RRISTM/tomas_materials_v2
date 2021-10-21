@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
-import { Button, Divider } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { Button, Divider } from '@mui/material';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
@@ -9,16 +8,6 @@ import { withSnackbar } from 'notistack';
 
 // import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 // import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  input: {
-    display: 'none',
-  }
-});
-
 class CodeBlock extends Component {
   // function CodeBlock({ children, ...props }) {
   constructor(props) {
@@ -113,4 +102,4 @@ class CodeBlock extends Component {
   }
 }
 
-export default withSnackbar(withStyles(styles)(CodeBlock));
+export default withSnackbar(CodeBlock);
