@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/TOMAS_ThreadX_Materials/static/css/main.9f588f0a.chunk.css",
+    "main.js": "/TOMAS_ThreadX_Materials/static/js/main.49d61613.chunk.js",
+    "main.js.map": "/TOMAS_ThreadX_Materials/static/js/main.49d61613.chunk.js.map",
+    "runtime-main.js": "/TOMAS_ThreadX_Materials/static/js/runtime-main.9da810f4.js",
+    "runtime-main.js.map": "/TOMAS_ThreadX_Materials/static/js/runtime-main.9da810f4.js.map",
+    "static/css/2.987814b2.chunk.css": "/TOMAS_ThreadX_Materials/static/css/2.987814b2.chunk.css",
+    "static/js/2.02c6e6cd.chunk.js": "/TOMAS_ThreadX_Materials/static/js/2.02c6e6cd.chunk.js",
+    "static/js/2.02c6e6cd.chunk.js.map": "/TOMAS_ThreadX_Materials/static/js/2.02c6e6cd.chunk.js.map",
+    "index.html": "/TOMAS_ThreadX_Materials/index.html",
+    "static/css/2.987814b2.chunk.css.map": "/TOMAS_ThreadX_Materials/static/css/2.987814b2.chunk.css.map",
+    "static/css/main.9f588f0a.chunk.css.map": "/TOMAS_ThreadX_Materials/static/css/main.9f588f0a.chunk.css.map",
+    "static/js/2.02c6e6cd.chunk.js.LICENSE.txt": "/TOMAS_ThreadX_Materials/static/js/2.02c6e6cd.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/TOMAS_ThreadX_Materials/static/media/roboto-latin-900italic.cb5ad999.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9da810f4.js",
+    "static/css/2.987814b2.chunk.css",
+    "static/js/2.02c6e6cd.chunk.js",
+    "static/css/main.9f588f0a.chunk.css",
+    "static/js/main.49d61613.chunk.js"
+  ]
+}
