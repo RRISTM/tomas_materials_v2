@@ -1,6 +1,6 @@
 {
-  "short_name": "STM32TX",
-  "name": "STM32 ThreadX",
+  "short_name": "STM32",
+  "name": "STM32",
   "icons": [
     {
       "src": "fST_Butterfly.ico",
