@@ -35,7 +35,7 @@ function App() {
       routeMainScreen = (
         <Fragment>
           {/* <Route exact path="/:githubName/:githubRepository/"> */}
-          <Route path="/:githubName/:githubRepository/" render={(routeProps) => (
+          <Route path="/:githubName/:githubRepository/" exact render={(routeProps) => (
             <Redirect to={`/${routeProps.match.params.githubName}/${routeProps.match.params.githubRepository}/master`} />
           )
           } />
