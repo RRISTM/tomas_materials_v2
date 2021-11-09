@@ -335,6 +335,7 @@ class MainScreen extends Component {
 
           <SnackbarProvider maxSnack={3}>
             {/* <div className={classes.toolbar} key={'blank_div'} /> */}
+            <Toolbar />
             {showMd}
           </SnackbarProvider>
         </Box>
