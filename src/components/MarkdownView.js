@@ -39,7 +39,11 @@ export class MarkdownView extends Component {
         img: {
           component: ({ children, ...props }) => {
             return (
-              <Fragment><img alt={props.alt} src={this.context + this.props.mdInfo.mdPath + "/img/" + props.src.replace('./img/', '')} title={props.title} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', maxWidth: '100%', height: 'auto' }}></img></Fragment>
+              <Fragment>
+                <img alt={props.alt} src={this.context + this.props.mdInfo.mdPath + "/img/" + props.src.replace('./img/', '')} title={props.title} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', maxWidth: '100%', height: 'auto' }}>
+                </img>
+                <br />
+              </Fragment>
             )
 
           }

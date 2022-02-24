@@ -41,7 +41,7 @@ class CodeBlock extends Component {
   }
 
   render() {
-    let buttonShow;
+    let buttonShow = [];
     let buttonText;
     let buttonColor;
     if (this.state.timeoutCnt > 0) {
@@ -53,18 +53,21 @@ class CodeBlock extends Component {
     }
     // const { classes } = props;
     /*copy the clipboard */
-    if (this.props.className !== undefined) {
-      buttonShow = (
-        <div>
-          <Button variant="contained" size="small" style={{ marginBottom: 12 }} color={buttonColor} onClick={this.copyToClipBoard}>
-            {buttonText}
-          </Button>
-        </div>);
-    } else {
-      buttonShow = [];
-    }
+
     let code_content;
-    if (this.props.className === "lang-c") {
+
+    if ((this.props.className !== undefined) && this.props.className.includes('lang-')) {
+      let filteredLanguageName = this.props.className.split('lang-').pop()
+      if (filteredLanguageName.includes('-nc')) {
+        filteredLanguageName = filteredLanguageName.split('-nc')[0];
+      } else {
+        buttonShow = (
+          <div>
+            <Button variant="contained" size="small" style={{ marginBottom: 12 }} color={buttonColor} onClick={this.copyToClipBoard}>
+              {buttonText}
+            </Button>
+          </div>);
+      }
       let codeLines = this.props.children.split(/\r\n|\r|\n/).length;
       let showLineNumbers;
       if (codeLines === 1) {
@@ -76,7 +79,7 @@ class CodeBlock extends Component {
         <div>
           <Divider />
           <div>
-            <SyntaxHighlighter language="c" style={atomOneLight} showLineNumbers={showLineNumbers} wrapLongLines={true} codeTagProps={{ style: { fontFamily: 'inherit' } }}>
+            <SyntaxHighlighter language={filteredLanguageName} style={atomOneLight} showLineNumbers={showLineNumbers} wrapLongLines={true} codeTagProps={{ style: { fontFamily: 'inherit' } }}>
               {/* <SyntaxHighlighter language="cpp" style={prism} showLineNumbers="true" codeTagProps={{style: {fontFamily: 'inherit'} }}> */}
               {this.props.children}
             </SyntaxHighlighter>

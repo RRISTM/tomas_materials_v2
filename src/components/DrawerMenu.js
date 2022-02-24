@@ -46,7 +46,6 @@ export class DrawerMenu extends Component {
       </List>
     );
     let gitTagButton;
-    console.log(this.props);
     if (this.props.pageOptions.allowTagSelect) {
       gitTagButton = (
         <Button color="inherit" onClick={this.openTagDialog} startIcon={<LocalOffer />} sx={tagButtonStyle}>

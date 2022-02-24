@@ -282,7 +282,7 @@ class MainScreen extends Component {
       appBarStyle = mainScreenStyles.appBarOpen;
       contentStyle = mainScreenStyles.contentShift;
     } else {
-      console.log(this.state)
+      console.log(this)
       if (('allowMenu' in this.state.pageOptions) && (this.state.pageOptions.allowMenu === true)) {
         iconMenu = (<IconButton
           color="inherit"
@@ -337,6 +337,7 @@ class MainScreen extends Component {
             {/* <div className={classes.toolbar} key={'blank_div'} /> */}
             <Toolbar />
             {showMd}
+            <Toolbar />
           </SnackbarProvider>
         </Box>
       </Box>
