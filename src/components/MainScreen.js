@@ -148,6 +148,9 @@ class MainScreen extends Component {
             this.fetchRestOfFiles(jsonData.githubName, jsonData.githubRepository, this.props.match.params.gitTag);//fetch from location found in github.json in public folder
           });
           break;
+        case 'local':
+
+          break;
         default:
       }
     }
@@ -167,9 +170,21 @@ class MainScreen extends Component {
   fetchRestOfFiles(githubName, githubRepository, gitTag) {
     let filesToLoad;
     var mdFilesContent = [];
-    this.fetchGithubTags(githubName, githubRepository);
-    let fileToFetchWithContent = `https://raw.githubusercontent.com/${githubName}/${githubRepository}/${gitTag}`;
-    fetch(fileToFetchWithContent + '/filesToLoad.json').then((response) => {
+    let fileToFetchWithContent = "";
+    switch (webVariant) {
+      case 'local':
+        fileToFetchWithContent = '.';
+        break;
+      default:
+        this.fetchGithubTags(githubName, githubRepository);
+        fileToFetchWithContent = `https://raw.githubusercontent.com/${githubName}/${githubRepository}/${gitTag}`;
+    }
+    fetch(fileToFetchWithContent + '/filesToLoad.json', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }).then((response) => {
       return response.json();
     }).then((jsonData) => {
       document.title = jsonData.title;
@@ -337,7 +352,13 @@ class MainScreen extends Component {
             {/* <div className={classes.toolbar} key={'blank_div'} /> */}
             <Toolbar />
             {showMd}
-            <Toolbar />
+
+            {/* <Toolbar /> */}
+            <Box
+              sx={{
+                height: 80
+              }}
+            />
           </SnackbarProvider>
         </Box>
       </Box>

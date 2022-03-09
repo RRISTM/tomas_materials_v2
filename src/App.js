@@ -45,6 +45,18 @@ function App() {
         </Fragment>
       );
       break;
+    case 'local':
+      routeMainScreen = (
+        <Fragment>
+          {/* <Redirect from='/' exact to='/show' /> */}
+          <Route exact path="/">
+            <Redirect to="/show" />
+          </Route>
+          {/* <Route path='/:gitTag' exact component={MainScreen} /> */}
+          <Route path='/:fileName' component={MainScreen} />
+        </Fragment>
+      );
+      break;
     default:
       routeMainScreen = (
         <Fragment>
