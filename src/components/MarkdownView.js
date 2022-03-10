@@ -5,10 +5,6 @@ import { Typography, Link, Alert } from '@mui/material';
 
 import CodeBlock from './CodeBlock';
 
-import SvgCarousel from './SvgCarousel';
-
-import ImageTagSelector from './ImageTagSelector';
-
 import { GithubContext } from './GithubContext.js';
 export class MarkdownView extends Component {
   // constructor(props) {
@@ -44,7 +40,9 @@ export class MarkdownView extends Component {
           component: ({ children, ...props }) => {
             return (
               <Fragment>
-                <ImageTagSelector {...props} mdInfo={this.props.mdInfo} />
+                <img alt={props.alt} src={this.context + this.props.mdInfo.mdPath + "/img/" + props.src.replace('./img/', '')} title={props.title} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', maxWidth: '100%', height: 'auto' }}>
+                </img>
+                <br />
               </Fragment>
             )
 

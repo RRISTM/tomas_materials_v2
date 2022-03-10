@@ -21,12 +21,7 @@ export class SelectView extends Component {
             );
         } else {
             console.log('document mode');
-            // selectedView = (<DocumentView mdChapters={mdChapters} mdInfo={this.props.mdInfo} />);
-            selectedView = (
-                <Route to={`${this.props.match.path}`} render={(routeProps) => (
-                    <DocumentView mdChapters={mdChapters} mdInfo={this.props.mdInfo} {...routeProps} />
-                )} />
-            );
+            selectedView = (<DocumentView mdChapters={mdChapters} mdInfo={this.props.mdInfo} />);
         }
         return (
             <Fragment>
