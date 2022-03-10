@@ -21,10 +21,12 @@ export class ImageTagSelector extends Component {
             default:
                 variantPath = this.props.pathContext;
         }
+        console.log(variantPath);
+        console.log(this.props.mdInfo);
         if (srcImageName.match(jsonRegex) !== null) {
             imageDisplay = (
                 <Fragment>
-                    <SvgCarousel src={variantPath + this.props.mdInfo.mdPath + "/img/" + this.props.src.replace('./img/', '')} mdPath={this.props.mdInfo.mdPath} />
+                    <SvgCarousel src={variantPath + this.props.mdInfo.mdPath + "/img/" + this.props.src.replace('./img/', '')} mdPath={variantPath + this.props.mdInfo.mdPath} />
                 </Fragment>
             );
         }

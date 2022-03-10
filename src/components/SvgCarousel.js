@@ -69,12 +69,12 @@ export class SvgCarousel extends Component {
         let imagesToShow = [];
         if (this.state.imagesLoaded) {
             imagesToShow = this.state.imageDescription.sequence.map((value, index) => {
-                let hidden = { display: 'none' };
+                let hidden = { display: 'none', maxWidth: '100%', height: 'auto' };
                 if (index === this.state.imageIndex) {
-                    hidden = {};
+                    hidden = { maxWidth: '100%', height: 'auto' };
                 }
                 const item = (
-                    <Box sx={{ justifyContent: "center", display: "flex" }}>
+                    <Box key={index} sx={{ justifyContent: "center", display: "flex" }}>
                         <img key={index} alt={index} src={this.props.mdPath + '/img/' + value.name} title={value.name} style={hidden}>
                         </img>
                     </Box>
