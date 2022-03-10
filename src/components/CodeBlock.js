@@ -91,12 +91,13 @@ class CodeBlock extends Component {
     } else {
       code_content = (
         <i>
-          {/* // <Typography variant="i"> */}
-
-          <code>
-            {this.props.children}
-          </code>
-          {/* // </Typography> */}
+          <b>
+            {/* // <Typography variant="i"> */}
+            <code>
+              {this.props.children}
+            </code>
+            {/* // </Typography> */}
+          </b>
         </i>
       );
     }
