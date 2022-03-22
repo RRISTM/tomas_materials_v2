@@ -11,7 +11,6 @@ export class ImageTagSelector extends Component {
         let imageDisplay;
         /* */
         const srcImageName = this.props.src;
-        console.log(this);
         const jsonRegex = /.json/;
         let variantPath = ''
         switch (webVariant) {
@@ -21,8 +20,6 @@ export class ImageTagSelector extends Component {
             default:
                 variantPath = this.props.pathContext;
         }
-        console.log(variantPath);
-        console.log(this.props.mdInfo);
         if (srcImageName.match(jsonRegex) !== null) {
             imageDisplay = (
                 <Fragment>

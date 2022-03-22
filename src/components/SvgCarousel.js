@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
-import { Container, Box, Button, MobileStepper } from '@mui/material';
+import { Container, Box, Button, MobileStepper, Fab } from '@mui/material';
 
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
+import { KeyboardArrowLeft, KeyboardArrowRight, PlayArrow, Pause } from '@mui/icons-material';
 
 export class SvgCarousel extends Component {
     static propTypes = { src: PropTypes.string };
@@ -11,26 +11,24 @@ export class SvgCarousel extends Component {
     constructor(props) {
 
         super(props);
-        this.state = { imageDescription: {}, imagesLoaded: false, imageIndex: 0, imageCount: 0, timeoutId: null };
+        this.state = { imageDescription: {}, imagesLoaded: false, imageIndex: 0, imageCount: 0, timeoutId: null, pause: true };
         this.handleNext = this.handleNext.bind(this);
         this.handleBack = this.handleBack.bind(this);
         this.onTimeout = this.onTimeout.bind(this);
         this.onMouseEnter = this.onMouseEnter.bind(this);
         this.onMouseLeave = this.onMouseLeave.bind(this);
+        this.handlePausePlay = this.handlePausePlay.bind(this);
     }
     componentWillUnmount() {
         clearTimeout(this.state.timeoutId);
     }
     componentDidMount() {
         /* featch */
-        console.log(this.props);
         const sourcePath = this.props.src;
         fetch(sourcePath).then((response) => {
             return response.json();
         }).then((jsonData) => {
-            /*set loaded data to state */
-            let timeoutId = setTimeout(this.onTimeout, jsonData.interval);
-            this.setState({ imageDescription: jsonData, imagesLoaded: true, imageCount: jsonData.sequence.length, timeoutId: timeoutId });
+            this.setState({ imageDescription: jsonData, imagesLoaded: true, imageCount: jsonData.sequence.length });
         });
     }
 
@@ -63,6 +61,19 @@ export class SvgCarousel extends Component {
         this.setState({ timeoutId: timeoutId });
     }
 
+    handlePausePlay() {
+        let newPause = false;
+        if (this.state.pause) {
+            newPause = false;
+            const timeoutId = setTimeout(this.onTimeout, this.state.imageDescription.interval);
+            this.setState({ timeoutId: timeoutId, pause: newPause });
+        } else {
+            newPause = true;
+            clearTimeout(this.state.timeoutId);
+            this.setState({ pause: newPause });
+        }
+    }
+
     render() {
         const imagePath = this.state.imageDescription.path;
         const { sequence } = this.state.imageDescription;
@@ -74,7 +85,7 @@ export class SvgCarousel extends Component {
                     hidden = { maxWidth: '100%', height: 'auto' };
                 }
                 const item = (
-                    <Box key={index} sx={{ justifyContent: "center", display: "flex" }}>
+                    <Box key={index} sx={{ justifyContent: "center", display: "flex" }} onClick={this.handlePausePlay}>
                         <img key={index} alt={index} src={this.props.mdPath + '/img/' + value.name} title={value.name} style={hidden}>
                         </img>
                     </Box>
@@ -99,7 +110,10 @@ export class SvgCarousel extends Component {
                     </Carousel>
 
                 </Container> */}
-                <Container onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+                <Fab size="small" sx={{ position: 'absolute' }} aria-label="Play/Pause" onClick={this.handlePausePlay}>
+                    {this.state.pause ? <PlayArrow /> : <Pause />}
+                </Fab>
+                <Container >
                     {imagesToShow}
                     <MobileStepper
                         variant={stepVariant}
@@ -108,10 +122,12 @@ export class SvgCarousel extends Component {
                         activeStep={this.state.imageIndex}
                         // sx={{ maxWidth: 400, flexGrow: 1 }}
                         nextButton={
-                            <Button size="small" onClick={this.handleNext} >
-                                Next
-                                <KeyboardArrowRight />
-                            </Button>
+                            <Fragment>
+                                <Button size="small" onClick={this.handleNext} >
+                                    Next
+                                    <KeyboardArrowRight />
+                                </Button>
+                            </Fragment>
                         }
                         backButton={
                             <Button size="small" onClick={this.handleBack} >
