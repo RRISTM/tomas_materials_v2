@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
 
-import { Container, Box, Button, MobileStepper, Fab } from '@mui/material';
+import { Container, Box, Button, Paper, MobileStepper, Alert, Fab } from '@mui/material';
 
 import { KeyboardArrowLeft, KeyboardArrowRight, PlayArrow, Pause } from '@mui/icons-material';
 
@@ -75,9 +75,10 @@ export class SvgCarousel extends Component {
     }
 
     render() {
-        const imagePath = this.state.imageDescription.path;
+        // const imagePath = this.state.imageDescription.path;
         const { sequence } = this.state.imageDescription;
         let imagesToShow = [];
+        let textToShow = [];
         if (this.state.imagesLoaded) {
             imagesToShow = this.state.imageDescription.sequence.map((value, index) => {
                 let hidden = { display: 'none', maxWidth: '100%', height: 'auto' };
@@ -92,6 +93,26 @@ export class SvgCarousel extends Component {
                 );
                 return item;
             });
+
+            textToShow = this.state.imageDescription.sequence.map((value, index) => {
+                let hidden = { display: 'none', padding: theme => theme.spacing(2) };
+                if (index === this.state.imageIndex) {
+                    hidden = { padding: theme => theme.spacing(2) };
+                }
+                if (value.hasOwnProperty('text')) {
+                    const item = (
+                        <Box sx={hidden}>
+                            <Alert key={index} variant="outlined" severity="info" >
+                                {value.text}
+                            </Alert>
+                        </Box>
+                    );
+                    return item;
+                } else {
+                    return null;
+                }
+
+            });
         }
 
         let stepsCount = 0;
@@ -103,14 +124,17 @@ export class SvgCarousel extends Component {
             }
         }
         return (
-            <Box>
+            <Paper>
                 {/* <Container>
                     <Carousel autoPlay={true} timeout={timeout} interval={interval} animation={'fade'}>
                         {imagesToShow}
                     </Carousel>
 
                 </Container> */}
-                <Fab size="small" sx={{ position: 'absolute' }} aria-label="Play/Pause" onClick={this.handlePausePlay}>
+                <Fab size="small" sx={{
+                    top: theme => theme.spacing(2),
+                    left: theme => theme.spacing(2)
+                }} aria-label="Play/Pause" onClick={this.handlePausePlay}>
                     {this.state.pause ? <PlayArrow /> : <Pause />}
                 </Fab>
                 <Container >
@@ -137,10 +161,12 @@ export class SvgCarousel extends Component {
                         }
                     />
                 </Container>
-            </Box>
 
-
-
+                {/* <Alert sx={{ margin: theme => theme.spacing(2) }} variant="outlined" severity="info">
+                    This is an info alert — check it out!
+                </Alert> */}
+                {textToShow}
+            </Paper >
         )
     }
 }

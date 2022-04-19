@@ -52,6 +52,12 @@ export class DrawerMenu extends Component {
           {this.props.match.params.gitTag}
         </Button>
       );
+    } else {
+      if (Array.isArray(this.props.tagList)) {
+        gitTagButton = <Button color="inherit" startIcon={<LocalOffer />} sx={tagButtonStyle}>
+          {this.props.tagList[0]}
+        </Button>
+      }
     }
     return (
       <Drawer

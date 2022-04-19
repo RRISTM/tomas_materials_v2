@@ -124,6 +124,7 @@ class MainScreen extends Component {
         });
         break;
       case 'local':
+        console.log('!!local option currently not working!!')
         this.fetchRestOfFiles(process.env.PUBLIC_URL);// fetch from public folder
         break;
       case 'addressFetch':
@@ -298,6 +299,7 @@ class MainScreen extends Component {
       appBarStyle = mainScreenStyles.appBarOpen;
       contentStyle = mainScreenStyles.contentShift;
     } else {
+      console.log(this)
       if (('allowMenu' in this.state.pageOptions) && (this.state.pageOptions.allowMenu === true)) {
         iconMenu = (<IconButton
           color="inherit"

@@ -8,11 +8,13 @@ import { Link, Route } from "react-router-dom";
 const drawerMenuItemStyles = {
   Folder: {
     color: '#002052',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    paddingLeft: 0
   },
   File: {
     color: '#002052',
-    fontWeight: '500'
+    fontWeight: '500',
+    paddingLeft: 0
   }
 };
 

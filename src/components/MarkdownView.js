@@ -5,7 +5,7 @@ import { Typography, Link, Alert } from '@mui/material';
 
 import CodeBlock from './CodeBlock';
 
-import SvgCarousel from './SvgCarousel';
+// import SvgCarousel from './SvgCarousel';
 
 import ImageTagSelector from './ImageTagSelector';
 

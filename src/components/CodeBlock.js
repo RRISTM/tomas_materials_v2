@@ -55,11 +55,13 @@ class CodeBlock extends Component {
     /*copy the clipboard */
 
     let code_content;
+    let lineNumber = 1;
 
     if ((this.props.className !== undefined) && this.props.className.includes('lang-')) {
       let filteredLanguageName = this.props.className.split('lang-').pop()
+      /*handle -nc tag */
       if (filteredLanguageName.includes('-nc')) {
-        filteredLanguageName = filteredLanguageName.split('-nc')[0];
+        filteredLanguageName = filteredLanguageName.replace('-nc', '');
       } else {
         buttonShow = (
           <div>
@@ -73,13 +75,21 @@ class CodeBlock extends Component {
       if (codeLines === 1) {
         showLineNumbers = false;
       } else {
+
         showLineNumbers = true;
+      }
+      if (filteredLanguageName.includes("-line")) {
+        lineNumber = parseInt(filteredLanguageName.match(/-line(\d+)/)[0].replace('-line', ''));
+
+        filteredLanguageName = filteredLanguageName.replace(/-line(\d+)/, '');
+      } else {
+        showLineNumbers = false;
       }
       code_content = (
         <div>
           <Divider />
           <div>
-            <SyntaxHighlighter language={filteredLanguageName} style={atomOneLight} showLineNumbers={showLineNumbers} wrapLongLines={true} codeTagProps={{ style: { fontFamily: 'inherit' } }}>
+            <SyntaxHighlighter language={filteredLanguageName} style={atomOneLight} showLineNumbers={showLineNumbers} startingLineNumber={lineNumber} wrapLongLines={true} codeTagProps={{ style: { fontFamily: 'inherit' } }}>
               {/* <SyntaxHighlighter language="cpp" style={prism} showLineNumbers="true" codeTagProps={{style: {fontFamily: 'inherit'} }}> */}
               {this.props.children}
             </SyntaxHighlighter>
